@@ -1,13 +1,13 @@
-package Skillmatch;
+package com.skillmatch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class SkillMatchApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(SkillMatchApplication.class, args);
 	}
 
 }
