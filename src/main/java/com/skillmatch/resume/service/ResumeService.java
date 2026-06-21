@@ -105,7 +105,7 @@ public class ResumeService {
                     text = text.substring(0, MAX_EXTRACTED_TEXT_LENGTH);
                 }
                 resume.setExtractedText(text);
-                resume.setStatus(ResumeStatus.PARSED);
+                resume.setStatus(ResumeStatus.TEXT_EXTRACTED);
             } catch (Exception e) {
                 resume.setStatus(ResumeStatus.FAILED);
             }

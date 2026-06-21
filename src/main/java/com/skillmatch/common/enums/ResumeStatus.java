@@ -2,6 +2,7 @@ package com.skillmatch.common.enums;
 
 public enum ResumeStatus {
     UPLOADED,
-    PARSED,
+    TEXT_EXTRACTED,
+    ANALYZED,
     FAILED
 }
