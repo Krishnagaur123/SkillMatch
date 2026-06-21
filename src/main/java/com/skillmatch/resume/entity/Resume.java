@@ -26,6 +26,9 @@ public class Resume extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_resumes_user"))
     private User user;
 
+    @Column(name = "title", nullable = false, length = 255)
+    private String title;
+
     @Column(name = "file_name", nullable = false, length = 255)
     private String fileName;
 
@@ -35,11 +38,16 @@ public class Resume extends BaseEntity {
     @Column(name = "file_size")
     private Long fileSize;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 50)
     @Builder.Default
-    private String status = "UPLOADED";
+    private ResumeStatus status = ResumeStatus.UPLOADED;
 
-    @Column(name = "extracted_text")
+    @Column(name = "is_active", nullable = false)
+    @Builder.Default
+    private Boolean active = true;
+
+    @Column(name = "extracted_text", columnDefinition = "TEXT")
     private String extractedText;
 
     @Column(name = "uploaded_at", nullable = false)
