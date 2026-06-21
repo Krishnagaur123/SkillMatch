@@ -49,7 +49,7 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "provider", nullable = false, length = 50)
-    private com.skillmatch.common.enums.OAuthProvider provider;
+    private com.skillmatch.auth.enums.AuthProvider provider;
 
     @Column(name = "provider_user_id", nullable = false, length = 255)
     private String providerUserId;
