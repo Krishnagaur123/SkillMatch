@@ -6,7 +6,7 @@ import com.skillmatch.auth.repository.RefreshTokenRepository;
 import com.skillmatch.auth.util.JwtService;
 import com.skillmatch.user.entity.User;
 import com.skillmatch.user.repository.UserRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

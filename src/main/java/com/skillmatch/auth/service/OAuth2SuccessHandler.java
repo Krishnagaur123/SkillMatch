@@ -51,6 +51,9 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Value("${app.jwt.refresh-token-expiration-days}")
     private int refreshTokenExpirationDays;
 
+    @Value("${app.cookie.secure:false}")
+    private boolean cookieSecure;
+
     @Override
     public void onAuthenticationSuccess(
             HttpServletRequest request,
@@ -98,10 +101,10 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private Cookie buildCookie(String name, String value, int maxAgeSeconds) {
         Cookie cookie = new Cookie(name, value);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);           // transmitted over HTTPS only
+        cookie.setSecure(cookieSecure);
         cookie.setPath("/");
         cookie.setMaxAge(maxAgeSeconds);
-        cookie.setAttribute("SameSite", "Strict");
+        cookie.setAttribute("SameSite", "Lax");
         return cookie;
     }
 }

@@ -13,10 +13,7 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Stateless JWT utility — creates and validates signed JWTs using HMAC-SHA256.
- * Token lifetime is configured via application properties.
- */
+
 @Slf4j
 @Component
 public class JwtService {
@@ -34,13 +31,7 @@ public class JwtService {
         this.accessTokenExpirationMs = accessTokenExpirationMs;
     }
 
-    /**
-     * Generates a signed JWT access token.
-     *
-     * @param userId the subject (stored as UUID string in the "sub" claim)
-     * @param email  stored as a custom claim
-     * @return compact JWT string
-     */
+
     public String generateAccessToken(UUID userId, String email) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + accessTokenExpirationMs);
@@ -54,11 +45,7 @@ public class JwtService {
                 .compact();
     }
 
-    /**
-     * Validates the token signature and expiry.
-     *
-     * @return true if the token is well-formed, signed with our key, and not expired
-     */
+
     public boolean validateToken(String token) {
         try {
             parseClaims(token);
@@ -69,16 +56,12 @@ public class JwtService {
         }
     }
 
-    /**
-     * Extracts the user ID from the token subject claim.
-     */
+
     public UUID extractUserId(String token) {
         return UUID.fromString(parseClaims(token).getSubject());
     }
 
-    /**
-     * Extracts the email from the token's custom claim.
-     */
+
     public String extractEmail(String token) {
         return parseClaims(token).get(CLAIM_EMAIL, String.class);
     }

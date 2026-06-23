@@ -6,10 +6,13 @@ import com.skillmatch.resume.dto.ResumeUploadResponse;
 import com.skillmatch.resume.entity.Resume;
 import com.skillmatch.resume.entity.ResumeStatus;
 import com.skillmatch.resume.parser.ResumeParserService;
+import com.skillmatch.resume.repository.ResumeEducationRepository;
+import com.skillmatch.resume.repository.ResumeExperienceRepository;
 import com.skillmatch.resume.repository.ResumeRepository;
+import com.skillmatch.resume.repository.ResumeSkillRepository;
 import com.skillmatch.user.entity.User;
 import com.skillmatch.user.service.CurrentUserService;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -33,6 +36,10 @@ public class ResumeService {
     private final CurrentUserService currentUserService;
     private final ResumeRepository resumeRepository;
     private final ResumeParserService resumeParserService;
+    private final ResumeAnalysisService resumeAnalysisService;
+    private final ResumeSkillRepository resumeSkillRepository;
+    private final ResumeEducationRepository resumeEducationRepository;
+    private final ResumeExperienceRepository resumeExperienceRepository;
 
     @Value("${app.resume.storage-path}")
     private String storagePath;
@@ -111,6 +118,11 @@ public class ResumeService {
             }
 
             resume = resumeRepository.save(resume);
+
+            if (resume.getStatus() == ResumeStatus.TEXT_EXTRACTED) {
+                resumeAnalysisService.analyze(resume);
+            }
+
             return toUploadResponse(resume);
         } catch (Exception e) {
             try {
@@ -121,6 +133,7 @@ public class ResumeService {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<ResumeSummaryResponse> listCurrentUserResumes() {
         User user = currentUserService.getCurrentUser();
         return resumeRepository.findAllByUserOrderByUploadedAtDesc(user)
@@ -129,6 +142,7 @@ public class ResumeService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public ResumeDetailResponse getResume(UUID resumeId) {
         User user = currentUserService.getCurrentUser();
         Resume resume = resumeRepository.findByIdAndUser(resumeId, user)
@@ -188,6 +202,13 @@ public class ResumeService {
     }
 
     private ResumeDetailResponse toDetailResponse(Resume resume) {
+        List<String> skillNames = resumeSkillRepository.findAllByResumeWithSkill(resume)
+                .stream()
+                .map(rs -> rs.getSkill().getName())
+                .toList();
+        int educationCount = (int) resumeEducationRepository.countByResume(resume);
+        int experienceCount = (int) resumeExperienceRepository.countByResume(resume);
+
         return new ResumeDetailResponse(
                 resume.getId(),
                 resume.getTitle(),
@@ -195,7 +216,10 @@ public class ResumeService {
                 resume.getFileSize(),
                 resume.getStatus(),
                 resume.getActive(),
-                resume.getUploadedAt()
+                resume.getUploadedAt(),
+                skillNames,
+                educationCount,
+                experienceCount
         );
     }
 }

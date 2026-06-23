@@ -2,6 +2,7 @@ package com.skillmatch.skill.entity;
 
 import com.skillmatch.common.entity.BaseEntity;
 import com.skillmatch.opportunity.entity.OpportunitySkill;
+import com.skillmatch.resume.entity.ResumeSkill;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -45,4 +46,8 @@ public class Skill extends BaseEntity {
     @OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)
     @Builder.Default
     private List<OpportunitySkill> opportunitySkills = new ArrayList<>();
+
+    @OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<ResumeSkill> resumeSkills = new ArrayList<>();
 }

@@ -39,6 +39,9 @@ public class AuthController {
     @Value("${app.jwt.access-token-expiration-ms}")
     private long accessTokenExpirationMs;
 
+    @Value("${app.cookie.secure:false}")
+    private boolean cookieSecure;
+
     /**
      * Exchanges a valid refresh token for a fresh JWT access token.
      * If the {@code refresh_token} cookie is present, it takes precedence over the body.
@@ -100,20 +103,20 @@ public class AuthController {
     private Cookie expiredCookie(String name) {
         Cookie cookie = new Cookie(name, "");
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+        cookie.setSecure(cookieSecure);
         cookie.setPath("/");
         cookie.setMaxAge(0);
-        cookie.setAttribute("SameSite", "Strict");
+        cookie.setAttribute("SameSite", "Lax");
         return cookie;
     }
 
     private Cookie buildAccessTokenCookie(String token) {
         Cookie cookie = new Cookie(ACCESS_TOKEN_COOKIE, token);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+        cookie.setSecure(cookieSecure);
         cookie.setPath("/");
         cookie.setMaxAge((int) (accessTokenExpirationMs / 1000));
-        cookie.setAttribute("SameSite", "Strict");
+        cookie.setAttribute("SameSite", "Lax");
         return cookie;
     }
 }

@@ -53,4 +53,7 @@ public class Resume extends BaseEntity {
     @Column(name = "uploaded_at", nullable = false)
     @Builder.Default
     private LocalDateTime uploadedAt = LocalDateTime.now();
+
+    @Column(name = "analyzed_at")
+    private LocalDateTime analyzedAt;
 }
