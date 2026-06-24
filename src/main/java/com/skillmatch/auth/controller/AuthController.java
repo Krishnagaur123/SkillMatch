@@ -14,18 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
-/**
- * Auth REST endpoints.
- *
- * <ul>
- *   <li>{@code POST /api/v1/auth/refresh} — exchange a refresh token for a new access JWT</li>
- *   <li>{@code POST /api/v1/auth/logout}  — revoke the refresh token and clear cookies</li>
- * </ul>
- *
- * Both endpoints accept the token from the request body <em>or</em> fall back to the
- * {@code refresh_token} HttpOnly cookie, giving maximum flexibility to both browser
- * and native API clients.
- */
+
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -42,10 +31,7 @@ public class AuthController {
     @Value("${app.cookie.secure:false}")
     private boolean cookieSecure;
 
-    /**
-     * Exchanges a valid refresh token for a fresh JWT access token.
-     * If the {@code refresh_token} cookie is present, it takes precedence over the body.
-     */
+
     @PostMapping("/refresh")
     public ResponseEntity<Void> refresh(
             @Valid @RequestBody(required = false) RefreshRequest body,
@@ -53,15 +39,17 @@ public class AuthController {
             HttpServletResponse response
     ) {
         String token = resolveRefreshToken(body == null ? null : body.refreshToken(), request);
-        String newAccessToken = authService.refreshToken(token);
-        response.addCookie(buildAccessTokenCookie(newAccessToken));
-        return ResponseEntity.noContent().build();
+        try {
+            String newAccessToken = authService.refreshToken(token);
+            response.addCookie(buildAccessTokenCookie(newAccessToken));
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            clearAuthCookies(response);
+            throw e;
+        }
     }
 
-    /**
-     * Revokes the refresh token and clears both auth cookies.
-     * The access token will expire naturally within 15 minutes (stateless — no server-side revocation).
-     */
+
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(
             @Valid @RequestBody(required = false) LogoutRequest body,
@@ -74,9 +62,6 @@ public class AuthController {
         return ResponseEntity.noContent().build();
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
-    /** Resolves the refresh token: body first, then cookie. */
     private String resolveRefreshToken(String bodyToken, HttpServletRequest request) {
         if (bodyToken != null && !bodyToken.isBlank()) {
             return bodyToken;
@@ -94,7 +79,6 @@ public class AuthController {
                 org.springframework.http.HttpStatus.BAD_REQUEST, "Refresh token is required");
     }
 
-    /** Expires both HttpOnly cookies immediately. */
     private void clearAuthCookies(HttpServletResponse response) {
         response.addCookie(expiredCookie(ACCESS_TOKEN_COOKIE));
         response.addCookie(expiredCookie(REFRESH_TOKEN_COOKIE));

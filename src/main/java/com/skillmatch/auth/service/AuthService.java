@@ -78,7 +78,12 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Refresh token has expired");
         }
 
-        User user = stored.getUser();
+        User user = userRepository.findById(stored.getUser().getId())
+                .orElseThrow(() -> {
+                    refreshTokenRepository.delete(stored);
+                    return new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User no longer exists");
+                });
+
         return jwtService.generateAccessToken(user.getId(), user.getEmail());
     }
 
