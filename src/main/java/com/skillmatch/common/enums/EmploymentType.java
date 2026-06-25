@@ -1,6 +1,8 @@
 package com.skillmatch.common.enums;
 
 public enum EmploymentType {
-    INTERNSHIP,
-    FULL_TIME
+    FULL_TIME,
+    INTERN,
+    CONTRACT,
+    INTERNSHIP
 }

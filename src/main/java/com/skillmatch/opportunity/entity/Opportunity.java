@@ -2,6 +2,7 @@ package com.skillmatch.opportunity.entity;
 
 import com.skillmatch.application.entity.Application;
 import com.skillmatch.common.entity.BaseEntity;
+import com.skillmatch.common.enums.ExperienceLevel;
 import com.skillmatch.company.entity.Company;
 import jakarta.persistence.*;
 import lombok.*;
@@ -56,6 +57,14 @@ public class Opportunity extends BaseEntity {
     @Column(name = "employment_type", length = 50)
     private com.skillmatch.common.enums.EmploymentType employmentType;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "experience_level", length = 50)
+    private ExperienceLevel experienceLevel;
+
+    @Column(name = "is_active", nullable = false)
+    @Builder.Default
+    private Boolean active = true;
+
     @Column(name = "application_url", columnDefinition = "TEXT")
     private String applicationUrl;
 
@@ -82,6 +91,15 @@ public class Opportunity extends BaseEntity {
     )
     @Builder.Default
     private List<OpportunitySkill> opportunitySkills = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "opportunity",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @Builder.Default
+    private List<OpportunityTargetRole> opportunityTargetRoles = new ArrayList<>();
 
     @OneToMany(mappedBy = "opportunity", fetch = FetchType.LAZY)
     @Builder.Default
