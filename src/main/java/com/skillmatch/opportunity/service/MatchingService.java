@@ -1,6 +1,7 @@
 package com.skillmatch.opportunity.service;
 
 import com.skillmatch.common.enums.SkillImportance;
+import com.skillmatch.common.util.SkillImportanceWeights;
 import com.skillmatch.opportunity.entity.OpportunitySkill;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,6 @@ import java.util.UUID;
 
 @Service
 public class MatchingService {
-
-    private static final int WEIGHT_REQUIRED = 5;
-    private static final int WEIGHT_PREFERRED = 2;
-    private static final int WEIGHT_GOOD_TO_HAVE = 1;
 
     public MatchResult calculate(List<OpportunitySkill> skills, Set<UUID> resumeSkillIds) {
         int maxScore = 0;
@@ -47,10 +44,6 @@ public class MatchingService {
     }
 
     private int weightOf(SkillImportance importance) {
-        return switch (importance) {
-            case REQUIRED -> WEIGHT_REQUIRED;
-            case PREFERRED -> WEIGHT_PREFERRED;
-            case GOOD_TO_HAVE -> WEIGHT_GOOD_TO_HAVE;
-        };
+        return SkillImportanceWeights.weightOf(importance);
     }
 }
