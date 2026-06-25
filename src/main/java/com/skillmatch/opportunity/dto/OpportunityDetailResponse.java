@@ -20,6 +20,8 @@ public record OpportunityDetailResponse(
         LocalDateTime postedAt,
         LocalDateTime expiresAt,
         boolean active,
-        List<String> skills,
+        List<String> requiredSkills,
+        List<String> preferredSkills,
+        List<String> goodToHaveSkills,
         List<String> targetRoles
 ) {}

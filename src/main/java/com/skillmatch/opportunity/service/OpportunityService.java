@@ -1,5 +1,6 @@
 package com.skillmatch.opportunity.service;
 
+import com.skillmatch.common.enums.SkillImportance;
 import com.skillmatch.opportunity.dto.OpportunityDetailResponse;
 import com.skillmatch.opportunity.dto.OpportunitySummaryResponse;
 import com.skillmatch.opportunity.entity.Opportunity;
@@ -47,6 +48,24 @@ public class OpportunityService {
     }
 
     @Transactional(readOnly = true)
+    List<Opportunity> findAllOpportunities(UUID targetRoleId, String location) {
+        String normalizedLocation = (location == null || location.isBlank()) ? null : location.trim();
+        boolean hasLocation = normalizedLocation != null;
+        boolean hasRole = targetRoleId != null;
+
+        if (hasLocation && hasRole) {
+            return opportunityRepository.findDistinctByActiveTrueAndLocationContainingIgnoreCaseAndOpportunityTargetRolesTargetRoleId(
+                    normalizedLocation, targetRoleId);
+        } else if (hasLocation) {
+            return opportunityRepository.findAllByActiveTrueAndLocationContainingIgnoreCase(normalizedLocation);
+        } else if (hasRole) {
+            return opportunityRepository.findDistinctByActiveTrueAndOpportunityTargetRolesTargetRoleId(targetRoleId);
+        } else {
+            return opportunityRepository.findAllByActiveTrue();
+        }
+    }
+
+    @Transactional(readOnly = true)
     public OpportunityDetailResponse getOpportunity(UUID opportunityId) {
         Opportunity opportunity = opportunityRepository.findByIdAndActiveTrue(opportunityId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opportunity not found"));
@@ -64,13 +83,15 @@ public class OpportunityService {
         );
     }
 
-    private OpportunityDetailResponse toDetailResponse(Opportunity opportunity) {
-        List<String> skillNames = opportunitySkillRepository
-                .findAllByOpportunityWithSkill(opportunity)
+    private List<String> skillNamesByImportance(Opportunity opportunity, SkillImportance importance) {
+        return opportunitySkillRepository
+                .findAllByOpportunityWithSkillAndImportance(opportunity, importance)
                 .stream()
                 .map(os -> os.getSkill().getName())
                 .toList();
+    }
 
+    private OpportunityDetailResponse toDetailResponse(Opportunity opportunity) {
         List<String> targetRoleNames = opportunityTargetRoleRepository
                 .findAllByOpportunityWithTargetRole(opportunity)
                 .stream()
@@ -90,7 +111,9 @@ public class OpportunityService {
                 opportunity.getPostedAt(),
                 opportunity.getExpiresAt(),
                 opportunity.getActive(),
-                skillNames,
+                skillNamesByImportance(opportunity, SkillImportance.REQUIRED),
+                skillNamesByImportance(opportunity, SkillImportance.PREFERRED),
+                skillNamesByImportance(opportunity, SkillImportance.GOOD_TO_HAVE),
                 targetRoleNames
         );
     }

@@ -1,6 +1,7 @@
 package com.skillmatch.opportunity.entity;
 
 import com.skillmatch.common.entity.BaseEntity;
+import com.skillmatch.common.enums.SkillImportance;
 import com.skillmatch.skill.entity.Skill;
 import jakarta.persistence.*;
 import lombok.*;
@@ -44,7 +45,7 @@ public class OpportunitySkill extends BaseEntity {
     private Skill skill;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "priority", nullable = false, length = 50)
+    @Column(name = "importance", nullable = false, length = 50)
     @Builder.Default
-    private com.skillmatch.common.enums.SkillPriority priority = com.skillmatch.common.enums.SkillPriority.REQUIRED;
+    private SkillImportance importance = SkillImportance.REQUIRED;
 }
