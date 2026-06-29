@@ -1,5 +1,6 @@
 package com.skillmatch.opportunity.service;
 
+import com.skillmatch.company.dto.CompanySummaryResponse;
 import com.skillmatch.opportunity.dto.OpportunityRecommendation;
 import com.skillmatch.opportunity.entity.Opportunity;
 import com.skillmatch.opportunity.entity.OpportunitySkill;
@@ -76,10 +77,16 @@ public class RecommendationService {
     }
 
     private OpportunityRecommendation toRecommendation(Opportunity opportunity, MatchResult result) {
+        CompanySummaryResponse companySummary = new CompanySummaryResponse(
+                opportunity.getCompany().getId(),
+                opportunity.getCompany().getName(),
+                opportunity.getCompany().getLogoUrl()
+        );
+
         return new OpportunityRecommendation(
                 opportunity.getId(),
                 opportunity.getTitle(),
-                opportunity.getCompany().getName(),
+                companySummary,
                 opportunity.getLocation(),
                 opportunity.getEmploymentType(),
                 opportunity.getExperienceLevel(),

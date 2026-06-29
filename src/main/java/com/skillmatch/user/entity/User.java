@@ -1,7 +1,6 @@
 package com.skillmatch.user.entity;
 
 import com.skillmatch.application.entity.Application;
-import com.skillmatch.auth.entity.RefreshToken;
 import com.skillmatch.common.entity.BaseEntity;
 import com.skillmatch.notification.entity.Notification;
 import com.skillmatch.resume.entity.Resume;
@@ -98,13 +97,4 @@ public class User extends BaseEntity {
     )
     @Builder.Default
     private List<Notification> notifications = new ArrayList<>();
-
-    @OneToMany(
-            mappedBy = "user",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @Builder.Default
-    private List<RefreshToken> refreshTokens = new ArrayList<>();
 }

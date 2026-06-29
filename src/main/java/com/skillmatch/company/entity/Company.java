@@ -5,7 +5,6 @@ import com.skillmatch.opportunity.entity.Opportunity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -30,27 +29,26 @@ public class Company extends BaseEntity {
     @Column(name = "name", nullable = false, unique = true, length = 255)
     private String name;
 
+    @Column(name = "logo_url", columnDefinition = "TEXT")
+    private String logoUrl;
+
     @Column(name = "website", length = 512)
     private String website;
 
     @Column(name = "industry", length = 255)
     private String industry;
 
+    @Column(name = "headquarters", length = 255)
+    private String headquarters;
+
     @Column(name = "employee_count")
     private Integer employeeCount;
 
-    @Column(name = "estimated_ctc", precision = 15, scale = 2)
-    private BigDecimal estimatedCtc;
+    @Column(name = "founded_year")
+    private Integer foundedYear;
 
-    @Column(name = "estimated_stipend", precision = 15, scale = 2)
-    private BigDecimal estimatedStipend;
-
-    @Column(name = "ppo_available", nullable = false)
-    @Builder.Default
-    private Boolean ppoAvailable = false;
-
-    @Column(name = "ppo_ctc", precision = 15, scale = 2)
-    private BigDecimal ppoCtc;
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     @Builder.Default

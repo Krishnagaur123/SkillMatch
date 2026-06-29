@@ -1,6 +1,7 @@
 package com.skillmatch.opportunity.service;
 
 import com.skillmatch.common.enums.SkillImportance;
+import com.skillmatch.company.dto.CompanySummaryResponse;
 import com.skillmatch.opportunity.dto.OpportunityDetailResponse;
 import com.skillmatch.opportunity.dto.OpportunitySummaryResponse;
 import com.skillmatch.opportunity.entity.Opportunity;
@@ -73,10 +74,16 @@ public class OpportunityService {
     }
 
     private OpportunitySummaryResponse toSummaryResponse(Opportunity opportunity) {
+        CompanySummaryResponse companySummary = new CompanySummaryResponse(
+                opportunity.getCompany().getId(),
+                opportunity.getCompany().getName(),
+                opportunity.getCompany().getLogoUrl()
+        );
+
         return new OpportunitySummaryResponse(
                 opportunity.getId(),
                 opportunity.getTitle(),
-                opportunity.getCompany().getName(),
+                companySummary,
                 opportunity.getLocation(),
                 opportunity.getExperienceLevel(),
                 opportunity.getEmploymentType()
@@ -98,10 +105,16 @@ public class OpportunityService {
                 .map(otr -> otr.getTargetRole().getName())
                 .toList();
 
+        CompanySummaryResponse companySummary = new CompanySummaryResponse(
+                opportunity.getCompany().getId(),
+                opportunity.getCompany().getName(),
+                opportunity.getCompany().getLogoUrl()
+        );
+
         return new OpportunityDetailResponse(
                 opportunity.getId(),
                 opportunity.getTitle(),
-                opportunity.getCompany().getName(),
+                companySummary,
                 opportunity.getLocation(),
                 opportunity.getEmploymentType(),
                 opportunity.getExperienceLevel(),

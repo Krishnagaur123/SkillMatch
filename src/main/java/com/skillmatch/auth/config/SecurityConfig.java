@@ -27,6 +27,7 @@ public class SecurityConfig {
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final SecurityErrorHandler securityErrorHandler;
+    private final com.skillmatch.auth.repository.HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository;
 
     @Value("${app.cors.allowed-origins}")
     private List<String> allowedOrigins;
@@ -35,19 +36,24 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
             .csrf(AbstractHttpConfigurer::disable)
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .requestCache(cache -> cache.disable())
 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
-                .requestMatchers("/api/v1/auth/**").permitAll()
+                    .requestMatchers(
+                            "/oauth2/**",
+                            "/login/**",
+                            "/login/oauth2/**",
+                            "/api/v1/auth/**"
+                    ).permitAll()
                 .anyRequest().authenticated()
             )
 
             .oauth2Login(oauth2 -> oauth2
+                .authorizationEndpoint(endpoint -> endpoint
+                        .authorizationRequestRepository(cookieAuthorizationRequestRepository)
+                )
                 .successHandler(oAuth2SuccessHandler)
             )
 
