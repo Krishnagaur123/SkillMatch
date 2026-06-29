@@ -94,7 +94,8 @@ public class RecommendationService {
                 result.matchedSkills(),
                 result.missingRequiredSkills(),
                 result.missingPreferredSkills(),
-                result.missingGoodToHaveSkills()
+                result.missingGoodToHaveSkills(),
+                opportunity.getApplyUrl()
         );
     }
 }

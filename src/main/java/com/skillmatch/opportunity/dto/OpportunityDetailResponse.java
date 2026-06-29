@@ -16,7 +16,7 @@ public record OpportunityDetailResponse(
         EmploymentType employmentType,
         ExperienceLevel experienceLevel,
         String description,
-        String applicationUrl,
+        String applyUrl,
         String source,
         LocalDateTime postedAt,
         LocalDateTime expiresAt,

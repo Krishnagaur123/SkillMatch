@@ -90,6 +90,21 @@ public class OpportunityService {
         );
     }
 
+    public com.skillmatch.opportunity.dto.OpportunityCardResponse toCardResponse(Opportunity opportunity) {
+        CompanySummaryResponse companySummary = new CompanySummaryResponse(
+                opportunity.getCompany().getId(),
+                opportunity.getCompany().getName(),
+                opportunity.getCompany().getLogoUrl()
+        );
+
+        return new com.skillmatch.opportunity.dto.OpportunityCardResponse(
+                opportunity.getId(),
+                opportunity.getTitle(),
+                opportunity.getLocation(),
+                companySummary
+        );
+    }
+
     private List<String> skillNamesByImportance(Opportunity opportunity, SkillImportance importance) {
         return opportunitySkillRepository
                 .findAllByOpportunityWithSkillAndImportance(opportunity, importance)
@@ -119,7 +134,7 @@ public class OpportunityService {
                 opportunity.getEmploymentType(),
                 opportunity.getExperienceLevel(),
                 opportunity.getDescription(),
-                opportunity.getApplicationUrl(),
+                opportunity.getApplyUrl(),
                 opportunity.getSource(),
                 opportunity.getPostedAt(),
                 opportunity.getExpiresAt(),

@@ -5,13 +5,29 @@ import com.skillmatch.common.util.SkillImportanceWeights;
 import com.skillmatch.opportunity.entity.OpportunitySkill;
 import org.springframework.stereotype.Service;
 
+import com.skillmatch.opportunity.repository.OpportunitySkillRepository;
+import com.skillmatch.resume.repository.ResumeSkillRepository;
+import com.skillmatch.user.entity.User;
+import com.skillmatch.opportunity.entity.Opportunity;
+import lombok.RequiredArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class MatchingService {
+
+    private final ResumeSkillRepository resumeSkillRepository;
+    private final OpportunitySkillRepository opportunitySkillRepository;
+
+    public MatchResult matchForUser(User user, Opportunity opportunity) {
+        Set<UUID> resumeSkillIds = resumeSkillRepository.findSkillIdsByActiveResumeOfUser(user);
+        List<OpportunitySkill> oppSkills = opportunitySkillRepository.findAllByOpportunityWithSkill(opportunity);
+        return calculate(oppSkills, resumeSkillIds);
+    }
 
     public MatchResult calculate(List<OpportunitySkill> skills, Set<UUID> resumeSkillIds) {
         int maxScore = 0;

@@ -18,5 +18,6 @@ public record OpportunityRecommendation(
         List<String> matchedSkills,
         List<String> missingRequiredSkills,
         List<String> missingPreferredSkills,
-        List<String> missingGoodToHaveSkills
+        List<String> missingGoodToHaveSkills,
+        String applyUrl
 ) {}

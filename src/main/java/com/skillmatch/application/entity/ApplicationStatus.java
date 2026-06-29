@@ -1,4 +1,4 @@
-package com.skillmatch.common.enums;
+package com.skillmatch.application.entity;
 
 public enum ApplicationStatus {
     APPLIED,

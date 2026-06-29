@@ -65,8 +65,8 @@ public class Opportunity extends BaseEntity {
     @Builder.Default
     private Boolean active = true;
 
-    @Column(name = "application_url", columnDefinition = "TEXT")
-    private String applicationUrl;
+    @Column(name = "apply_url", columnDefinition = "TEXT")
+    private String applyUrl;
 
     @Column(name = "source", length = 255)
     private String source;

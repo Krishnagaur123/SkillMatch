@@ -35,11 +35,19 @@ public class Application extends BaseEntity {
         @Enumerated(EnumType.STRING)
         @Column(name = "status", nullable = false, length = 50)
         @Builder.Default
-        private com.skillmatch.common.enums.ApplicationStatus status = com.skillmatch.common.enums.ApplicationStatus.SAVED;
+        private com.skillmatch.common.enums.ApplicationStatus status = com.skillmatch.common.enums.ApplicationStatus.APPLIED;
 
         @Column(name = "applied_at")
         private LocalDateTime appliedAt;
 
         @Column(name = "notes", columnDefinition = "TEXT")
         private String notes;
+
+        @Column(name = "updated_at", nullable = false)
+        private LocalDateTime updatedAt;
+
+        @PreUpdate
+        public void onPreUpdate() {
+                this.updatedAt = LocalDateTime.now();
+        }
 }
