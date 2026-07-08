@@ -1,0 +1,118 @@
+.root {
+  padding-block: 6.5rem;
+  background-color: var(--color-surface-950);
+  border-top: 1px solid var(--sidebar-border);
+}
+
+.container {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  max-width: 44rem;
+  margin-inline: auto;
+  padding: 3.5rem 2rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid oklch(0.20 0 0);
+  background-color: oklch(0.12 0 0);
+  box-shadow: 0 20px 50px oklch(0 0 0 / 0.3);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: oklch(0.98 0 0);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: oklch(0.65 0 0);
+  max-width: 32rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8125rem 1.75rem;
+  border-radius: var(--radius-md);
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  outline: none;
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+}
+
+.primaryBtn:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px oklch(0.47 0.22 265 / 0.3);
+}
+
+.primaryBtn:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8125rem 1.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid oklch(0.30 0 0);
+  background-color: transparent;
+  color: oklch(0.8 0 0);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  outline: none;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.secondaryBtn:hover {
+  border-color: oklch(0.45 0 0);
+  color: oklch(0.95 0 0);
+  background-color: oklch(0.16 0 0);
+  transform: translateY(-1px);
+}
+
+.secondaryBtn:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: 2.5rem;
+  }
+}

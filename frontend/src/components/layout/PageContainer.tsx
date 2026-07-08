@@ -1,11 +1,22 @@
-import type { ReactNode } from 'react'
+import { forwardRef } from 'react'
+import type { HTMLAttributes } from 'react'
 import styles from './PageContainer.module.css'
 
-interface PageContainerProps {
-  children: ReactNode
-  className?: string
-}
+export type PageContainerProps = HTMLAttributes<HTMLDivElement>
 
-export default function PageContainer({ children, className }: PageContainerProps) {
-  return <div className={[styles.root, className].filter(Boolean).join(' ')}>{children}</div>
-}
+export const PageContainer = forwardRef<HTMLDivElement, PageContainerProps>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={[styles.root, className].filter(Boolean).join(' ')}
+        {...props}
+      >
+        {children}
+      </div>
+    )
+  }
+)
+PageContainer.displayName = 'PageContainer'
+
+export default PageContainer

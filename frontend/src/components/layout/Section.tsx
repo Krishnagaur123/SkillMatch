@@ -1,11 +1,22 @@
-import type { ReactNode } from 'react'
+import { forwardRef } from 'react'
+import type { HTMLAttributes } from 'react'
 import styles from './Section.module.css'
 
-interface SectionProps {
-  children: ReactNode
-  className?: string
-}
+export type SectionProps = HTMLAttributes<HTMLDivElement>
 
-export default function Section({ children, className }: SectionProps) {
-  return <section className={[styles.root, className].filter(Boolean).join(' ')}>{children}</section>
-}
+export const Section = forwardRef<HTMLDivElement, SectionProps>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <section
+        ref={ref}
+        className={[styles.root, className].filter(Boolean).join(' ')}
+        {...props}
+      >
+        {children}
+      </section>
+    )
+  }
+)
+Section.displayName = 'Section'
+
+export default Section

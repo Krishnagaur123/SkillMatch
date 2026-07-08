@@ -1,11 +1,19 @@
-import { PageContainer, PageContent, PageHeader } from '@/components/layout'
+import {
+  HeroSection,
+  FeaturesSection,
+  HowItWorksSection,
+  TechStackSection,
+  CallToActionSection,
+} from '@/features/landing'
 
 export default function LandingPage() {
   return (
-    <PageContainer>
-      <PageContent>
-        <PageHeader title="SkillMatch" description="Find opportunities that match your skills." />
-      </PageContent>
-    </PageContainer>
+    <>
+      <HeroSection />
+      <FeaturesSection />
+      <HowItWorksSection />
+      <TechStackSection />
+      <CallToActionSection />
+    </>
   )
 }

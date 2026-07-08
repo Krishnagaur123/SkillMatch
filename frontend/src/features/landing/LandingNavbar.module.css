@@ -1,0 +1,218 @@
+.root {
+  width: 100%;
+  background-color: oklch(1 0 0 / 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-default);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.scrolled {
+  background-color: oklch(1 0 0 / 0.92);
+  border-color: var(--border-strong);
+  box-shadow: 0 4px 20px oklch(0 0 0 / 0.03);
+}
+
+.inner {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  height: 4.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.brand {
+  display: inline-flex;
+  text-decoration: none;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  outline: none;
+}
+
+.brand:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.brand :global(.name) {
+  color: var(--text-primary);
+}
+
+.links {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.link {
+  display: inline-flex;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.link:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-subtle);
+}
+
+.link:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.linkActive {
+  color: var(--accent);
+  background-color: var(--color-brand-50);
+}
+
+.actions {
+  display: none;
+  margin-left: auto;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5625rem 1.25rem;
+  border-radius: var(--radius-md);
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  outline: none;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.ctaBtn:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.ctaBtn:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.mobileToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.mobileToggle:hover {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+.mobileToggle:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.mobileMenu {
+  border-top: 1px solid var(--border-default);
+  padding: 1rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: var(--bg-card);
+  box-shadow: 0 8px 30px oklch(0 0 0 / 0.05);
+}
+
+.mobileLinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mobileLink {
+  display: block;
+  padding: 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.mobileLink:hover {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+.mobileLinkActive {
+  color: var(--accent);
+  background-color: var(--color-brand-50);
+}
+
+.mobileCta {
+  display: inline-flex;
+  justify-content: center;
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding-inline: 2rem;
+    height: 5rem;
+  }
+
+  .links {
+    display: flex;
+  }
+
+  .actions {
+    display: flex;
+  }
+
+  .mobileToggle {
+    display: none;
+  }
+
+  .mobileMenu {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    padding-inline: 2.5rem;
+  }
+}

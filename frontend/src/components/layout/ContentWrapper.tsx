@@ -1,11 +1,22 @@
-import type { ReactNode } from 'react'
+import { forwardRef } from 'react'
+import type { HTMLAttributes } from 'react'
 import styles from './ContentWrapper.module.css'
 
-interface ContentWrapperProps {
-  children: ReactNode
-  className?: string
-}
+export type ContentWrapperProps = HTMLAttributes<HTMLDivElement>
 
-export default function ContentWrapper({ children, className }: ContentWrapperProps) {
-  return <div className={[styles.root, className].filter(Boolean).join(' ')}>{children}</div>
-}
+export const ContentWrapper = forwardRef<HTMLDivElement, ContentWrapperProps>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={[styles.root, className].filter(Boolean).join(' ')}
+        {...props}
+      >
+        {children}
+      </div>
+    )
+  }
+)
+ContentWrapper.displayName = 'ContentWrapper'
+
+export default ContentWrapper
