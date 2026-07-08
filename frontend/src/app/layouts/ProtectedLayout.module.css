@@ -1,0 +1,43 @@
+.root {
+  display: flex;
+  min-height: 100dvh;
+}
+
+.sidebar {
+  width: 16rem;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow-y: auto;
+  border-right: 1px solid var(--border-default);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.topNav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: 3.5rem;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-default);
+  background-color: var(--bg-card);
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  background-color: var(--bg-page);
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
+}

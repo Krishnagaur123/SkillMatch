@@ -1,46 +1,49 @@
 
-target/
-build/
+# ── OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
 
-.mvn/wrapper/maven-wrapper.jar
+# ── Logs
+*.log
+server.log
 
-.idea/
-*.iml
-*.iws
-*.ipr
-
-.vscode/
-
-.classpath
-.project
-.settings/
-.factorypath
-.apt_generated/
-.springBeans
-.sts4-cache/
-
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-
-uploads/
-
+# ── Environment
 .env
 .env.*
 !.env.example
 
-*.log
-server.log
+# ── Backend
+backend/target/
+backend/build/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/uploads/
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/.factorypath
+backend/.apt_generated/
+backend/.springBeans
+backend/.sts4-cache/
+backend/.idea/
+backend/*.iml
+backend/*.iws
+backend/*.ipr
+backend/.vscode/
 
-.DS_Store
-Thumbs.db
-Desktop.ini
+# ── Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+frontend/.idea/
+frontend/.vscode/
 
+# ── Coverage
 coverage/
 jacoco/
 *.exec
 
-HELP.md
+# IntelliJ
+.idea/
