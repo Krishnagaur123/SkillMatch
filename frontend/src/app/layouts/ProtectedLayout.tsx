@@ -1,21 +1,28 @@
 import { Outlet } from 'react-router-dom'
-import { Sidebar, TopNavigation } from '@/components/navigation'
+import { Sidebar, TopNavigation, MobileDrawer } from '@/components/navigation'
+import { SidebarContext } from '@/app/providers/SidebarContext'
+import { useSidebarState } from '@/hooks/useSidebarState'
 import styles from './ProtectedLayout.module.css'
 
 export default function ProtectedLayout() {
+  const sidebarState = useSidebarState()
+
   return (
-    <div className={styles.root}>
-      <aside className={styles.sidebar}>
-        <Sidebar />
-      </aside>
-      <div className={styles.body}>
-        <div className={styles.topNav}>
-          <TopNavigation />
+    <SidebarContext.Provider value={sidebarState}>
+      <div className={styles.root}>
+        <div className={styles.sidebar}>
+          <Sidebar />
         </div>
-        <main className={styles.main}>
-          <Outlet />
-        </main>
+        <MobileDrawer />
+        <div className={styles.body}>
+          <div className={styles.topNav}>
+            <TopNavigation />
+          </div>
+          <main className={styles.main}>
+            <Outlet />
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarContext.Provider>
   )
 }

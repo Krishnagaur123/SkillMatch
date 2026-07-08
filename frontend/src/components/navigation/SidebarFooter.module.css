@@ -17,6 +17,13 @@
   border-radius: var(--radius-md);
 }
 
+.user.collapsed {
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  align-items: center;
+}
+
 .userInfo {
   flex: 1;
   min-width: 0;
@@ -58,4 +65,9 @@
 .logoutBtn:hover {
   background-color: var(--sidebar-item-hover);
   color: var(--sidebar-text-primary);
+}
+
+.logoutBtn:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }

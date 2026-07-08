@@ -11,6 +11,7 @@
   cursor: pointer;
   transition: background-color 0.12s ease, color 0.12s ease;
   width: 100%;
+  position: relative;
 }
 
 .item:hover {
@@ -18,10 +19,32 @@
   color: var(--sidebar-text-primary);
 }
 
+.item:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
 .active {
   background-color: var(--sidebar-item-active);
   color: var(--sidebar-text-primary);
   font-weight: 500;
+}
+
+.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  border-radius: 0 2px 2px 0;
+  background-color: var(--accent);
+}
+
+.collapsed {
+  justify-content: center;
+  padding: 0.5rem;
 }
 
 .disabled {

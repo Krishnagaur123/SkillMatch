@@ -1,5 +1,6 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import type { LucideIcon } from 'lucide-react'
+import { useSidebar } from '@/app/providers/SidebarContext'
 import styles from './SidebarNavItem.module.css'
 
 interface SidebarNavItemProps {
@@ -9,13 +10,32 @@ interface SidebarNavItemProps {
   disabled?: boolean
 }
 
-export default function SidebarNavItem({ title, icon: Icon, route, disabled = false }: SidebarNavItemProps) {
+export default function SidebarNavItem({
+  title,
+  icon: Icon,
+  route,
+  disabled = false,
+}: SidebarNavItemProps) {
+  const { collapsed, closeDrawer } = useSidebar()
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    closeDrawer()
+    navigate(route)
+  }
+
   if (disabled) {
     return (
       <li>
-        <span className={[styles.item, styles.disabled].join(' ')} aria-disabled="true">
-          <Icon className={styles.icon} size={18} />
-          <span className={styles.label}>{title}</span>
+        <span
+          className={[styles.item, styles.disabled, collapsed ? styles.collapsed : '']
+            .filter(Boolean)
+            .join(' ')}
+          aria-disabled="true"
+          title={collapsed ? title : undefined}
+        >
+          <Icon className={styles.icon} size={18} aria-hidden="true" />
+          {!collapsed && <span className={styles.label}>{title}</span>}
         </span>
       </li>
     )
@@ -25,11 +45,17 @@ export default function SidebarNavItem({ title, icon: Icon, route, disabled = fa
     <li>
       <NavLink
         to={route}
-        className={({ isActive }) => [styles.item, isActive ? styles.active : ''].filter(Boolean).join(' ')}
+        onClick={handleClick}
+        title={collapsed ? title : undefined}
+        className={({ isActive }) =>
+          [styles.item, isActive ? styles.active : '', collapsed ? styles.collapsed : '']
+            .filter(Boolean)
+            .join(' ')
+        }
         end={route === '/'}
       >
-        <Icon className={styles.icon} size={18} />
-        <span className={styles.label}>{title}</span>
+        <Icon className={styles.icon} size={18} aria-hidden="true" />
+        {!collapsed && <span className={styles.label}>{title}</span>}
       </NavLink>
     </li>
   )

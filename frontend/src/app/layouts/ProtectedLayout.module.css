@@ -4,13 +4,12 @@
 }
 
 .sidebar {
-  width: 16rem;
   flex-shrink: 0;
   position: sticky;
   top: 0;
   height: 100dvh;
-  overflow-y: auto;
-  border-right: 1px solid var(--border-default);
+  overflow: hidden;
+  display: none;
 }
 
 .body {
@@ -26,8 +25,6 @@
   z-index: 40;
   height: 3.5rem;
   flex-shrink: 0;
-  border-bottom: 1px solid var(--border-default);
-  background-color: var(--bg-card);
 }
 
 .main {
@@ -36,8 +33,8 @@
   background-color: var(--bg-page);
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .sidebar {
-    display: none;
+    display: block;
   }
 }

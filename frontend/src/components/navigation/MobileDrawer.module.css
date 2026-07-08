@@ -1,0 +1,18 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 49;
+  background-color: oklch(0 0 0 / 0.5);
+}
+
+.drawer {
+  position: fixed;
+  inset-block: 0;
+  left: 0;
+  z-index: 50;
+  width: 16rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 24px oklch(0 0 0 / 0.3);
+  outline: none;
+}

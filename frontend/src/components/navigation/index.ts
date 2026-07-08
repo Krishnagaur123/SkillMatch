@@ -1,6 +1,7 @@
 export { default as AppBrand } from './AppBrand'
 export { default as Avatar } from './Avatar'
 export { default as Breadcrumb } from './Breadcrumb'
+export { default as MobileDrawer } from './MobileDrawer'
 export { default as Sidebar } from './Sidebar'
 export { default as SidebarNav } from './SidebarNav'
 export { default as SidebarNavItem } from './SidebarNavItem'
