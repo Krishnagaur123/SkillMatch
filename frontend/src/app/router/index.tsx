@@ -8,6 +8,7 @@ import ProtectedLayout from '@/app/layouts/ProtectedLayout'
 const LandingPage = lazy(() => import('@/pages/landing/LandingPage'))
 const DashboardPage = lazy(() => import('@/pages/dashboard/DashboardPage'))
 const ResumesPage = lazy(() => import('@/pages/resumes/ResumesPage'))
+const ResumeDetailPage = lazy(() => import('@/pages/resumes/ResumeDetailPage'))
 const OpportunitiesPage = lazy(() => import('@/pages/opportunities/OpportunitiesPage'))
 const ApplicationsPage = lazy(() => import('@/pages/applications/ApplicationsPage'))
 const AnalyticsPage = lazy(() => import('@/pages/analytics/AnalyticsPage'))
@@ -26,6 +27,7 @@ export default function AppRouter() {
         <Route element={<ProtectedLayout />}>
           <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
           <Route path={ROUTES.RESUMES} element={<ResumesPage />} />
+          <Route path={ROUTES.RESUME_DETAIL} element={<ResumeDetailPage />} />
           <Route path={ROUTES.OPPORTUNITIES} element={<OpportunitiesPage />} />
           <Route path={ROUTES.APPLICATIONS} element={<ApplicationsPage />} />
           <Route path={ROUTES.ANALYTICS} element={<AnalyticsPage />} />

@@ -2,6 +2,7 @@ export const ROUTES = {
   LANDING: '/',
   DASHBOARD: '/dashboard',
   RESUMES: '/resumes',
+  RESUME_DETAIL: '/resumes/:resumeId',
   OPPORTUNITIES: '/opportunities',
   APPLICATIONS: '/applications',
   ANALYTICS: '/analytics',

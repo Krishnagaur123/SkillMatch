@@ -10,10 +10,29 @@ export interface EmptyStateProps extends HTMLAttributes<HTMLDivElement> {
   icon?: ReactNode
   actionLabel?: string
   onAction?: () => void
+  primaryAction?: { label: string; onClick: () => void }
+  secondaryAction?: { label: string; onClick: () => void }
 }
 
 export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
-  ({ className, title, description, icon = <FolderOpen size={36} />, actionLabel, onAction, ...props }, ref) => {
+  (
+    {
+      className,
+      title,
+      description,
+      icon = <FolderOpen size={36} />,
+      actionLabel,
+      onAction,
+      primaryAction,
+      secondaryAction,
+      ...props
+    },
+    ref
+  ) => {
+    const hasPrimary = (actionLabel && onAction) || primaryAction
+    const primLabel = primaryAction ? primaryAction.label : actionLabel
+    const primClick = primaryAction ? primaryAction.onClick : onAction
+
     return (
       <div ref={ref} className={[styles.container, className].filter(Boolean).join(' ')} {...props}>
         <div className={styles.iconWrapper} aria-hidden="true">
@@ -21,10 +40,19 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
         </div>
         <h3 className={styles.title}>{title}</h3>
         {description && <p className={styles.description}>{description}</p>}
-        {actionLabel && onAction && (
-          <Button variant="secondary" size="sm" onClick={onAction} className={styles.actionBtn}>
-            {actionLabel}
-          </Button>
+        {(hasPrimary || secondaryAction) && (
+          <div className={styles.actionsRow} style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', marginTop: '1rem' }}>
+            {hasPrimary && primLabel && primClick && (
+              <Button variant="primary" size="sm" onClick={primClick}>
+                {primLabel}
+              </Button>
+            )}
+            {secondaryAction && (
+              <Button variant="secondary" size="sm" onClick={secondaryAction.onClick}>
+                {secondaryAction.label}
+              </Button>
+            )}
+          </div>
         )}
       </div>
     )
