@@ -10,6 +10,7 @@ const DashboardPage = lazy(() => import('@/pages/dashboard/DashboardPage'))
 const ResumesPage = lazy(() => import('@/pages/resumes/ResumesPage'))
 const ResumeDetailPage = lazy(() => import('@/pages/resumes/ResumeDetailPage'))
 const OpportunitiesPage = lazy(() => import('@/pages/opportunities/OpportunitiesPage'))
+const OpportunityDetailPage = lazy(() => import('@/pages/opportunities/OpportunityDetailPage'))
 const ApplicationsPage = lazy(() => import('@/pages/applications/ApplicationsPage'))
 const AnalyticsPage = lazy(() => import('@/pages/analytics/AnalyticsPage'))
 const CompaniesPage = lazy(() => import('@/pages/companies/CompaniesPage'))
@@ -29,6 +30,7 @@ export default function AppRouter() {
           <Route path={ROUTES.RESUMES} element={<ResumesPage />} />
           <Route path={ROUTES.RESUME_DETAIL} element={<ResumeDetailPage />} />
           <Route path={ROUTES.OPPORTUNITIES} element={<OpportunitiesPage />} />
+          <Route path={ROUTES.OPPORTUNITY_DETAIL} element={<OpportunityDetailPage />} />
           <Route path={ROUTES.APPLICATIONS} element={<ApplicationsPage />} />
           <Route path={ROUTES.ANALYTICS} element={<AnalyticsPage />} />
           <Route path={ROUTES.COMPANIES} element={<CompaniesPage />} />

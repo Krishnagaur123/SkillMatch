@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import apiClient from '@/services/api/client'
 import { queryKeys } from '@/constants/queryKeys'
 
@@ -42,5 +42,26 @@ export function useApplications() {
   return useQuery<ApplicationResponse[], Error>({
     queryKey: queryKeys.applications.all(),
     queryFn: fetchApplications,
+  })
+}
+
+export interface CreateApplicationRequest {
+  opportunityId: string
+  status: ApplicationStatus
+}
+
+async function createApplication(request: CreateApplicationRequest): Promise<ApplicationResponse> {
+  const response = await apiClient.post<ApplicationResponse>('/api/v1/applications', request)
+  return response.data
+}
+
+export function useCreateApplication() {
+  const queryClient = useQueryClient()
+  return useMutation<ApplicationResponse, Error, CreateApplicationRequest>({
+    mutationFn: createApplication,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: queryKeys.applications.all() })
+      void queryClient.invalidateQueries({ queryKey: queryKeys.analytics.career() })
+    },
   })
 }

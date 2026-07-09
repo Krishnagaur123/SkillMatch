@@ -4,6 +4,7 @@ export const ROUTES = {
   RESUMES: '/resumes',
   RESUME_DETAIL: '/resumes/:resumeId',
   OPPORTUNITIES: '/opportunities',
+  OPPORTUNITY_DETAIL: '/opportunities/:id',
   APPLICATIONS: '/applications',
   ANALYTICS: '/analytics',
   COMPANIES: '/companies',
