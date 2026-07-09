@@ -68,17 +68,19 @@ StatusBadge.displayName = 'StatusBadge'
 export interface SkillBadgeProps extends HTMLAttributes<HTMLSpanElement> {
   name: string
   isMissing?: boolean
+  variant?: 'resume' | 'manual'
 }
 
 export const SkillBadge = forwardRef<HTMLSpanElement, SkillBadgeProps>(
-  ({ className, name, isMissing = false, ...props }, ref) => {
+  ({ className, name, isMissing = false, variant = 'manual', children, ...props }, ref) => {
+    const variantClass = variant === 'resume' ? styles.skillResume : styles.skillManual
     return (
       <span
         ref={ref}
         className={[
           styles.badge,
           styles.skillBadge,
-          isMissing ? styles.skillMissing : styles.skillMatched,
+          isMissing ? styles.skillMissing : variantClass,
           className,
         ]
           .filter(Boolean)
@@ -89,6 +91,7 @@ export const SkillBadge = forwardRef<HTMLSpanElement, SkillBadgeProps>(
       >
         {name}
         {isMissing && <span className={styles.skillMissingText}>Missing</span>}
+        {children}
       </span>
     )
   }

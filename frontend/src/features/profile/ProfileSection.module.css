@@ -1,0 +1,323 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.containerEditing {
+  gap: 1rem;
+}
+
+/* ─── Search input ─────────────────────────────────────────── */
+
+.searchWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.75rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem 2.375rem 0.5rem 2.25rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  font-family: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  line-height: 1.4;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px oklch(from var(--accent) l c h / 0.12);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--bg-subtle);
+}
+
+.spinner {
+  position: absolute;
+  right: 0.75rem;
+  color: var(--text-muted);
+  animation: spin 0.8s linear infinite;
+}
+
+.clearBtn {
+  position: absolute;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  padding: 0;
+  transition: color 0.12s ease, background-color 0.12s ease;
+}
+
+.clearBtn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-subtle);
+}
+
+.clearBtn:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 1px;
+}
+
+/* ─── Portal dropdown ──────────────────────────────────────── */
+
+.dropdown {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 4px 6px -1px oklch(0 0 0 / 0.07),
+    0 10px 20px -4px oklch(0 0 0 / 0.08);
+  max-height: 224px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: dropdownEnter 0.1s ease;
+}
+
+@keyframes dropdownEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dropdownList {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+}
+
+.dropdownItem {
+  padding: 0.4375rem 0.875rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: background-color 0.08s ease, color 0.08s ease;
+  user-select: none;
+  line-height: 1.4;
+}
+
+.dropdownItemActive {
+  background-color: var(--bg-subtle);
+  color: var(--accent);
+}
+
+.dropdownEmpty {
+  padding: 0.875rem 1rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  text-align: center;
+  font-style: italic;
+}
+
+.dropdownLoading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.dropdownSpinner {
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+/* ─── Badge list ───────────────────────────────────────────── */
+
+.badgeList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-start;
+  min-height: 1.5rem;
+}
+
+/* View-mode badge — read-only, no interactive semantics */
+.viewBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3125rem 0.6875rem;
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  user-select: none;
+  background-color: var(--color-brand-50);
+  color: var(--color-brand-700);
+  border: 1px solid var(--color-brand-200);
+  transition: background-color 0.12s ease;
+}
+
+.viewBadgeResume {
+  composes: viewBadge;
+  background-color: oklch(0.97 0.02 140);
+  color: oklch(0.40 0.12 140);
+  border: 1px solid oklch(0.90 0.05 140);
+}
+
+.viewBadgeManual {
+  composes: viewBadge;
+  background-color: var(--color-brand-50);
+  color: var(--color-brand-700);
+  border: 1px solid var(--color-brand-200);
+}
+
+/* ─── Stats Summary ────────────────────────────────────────── */
+
+.statsSummary {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statValue {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.statDivider {
+  width: 1px;
+  height: 1.5rem;
+  background-color: var(--border-default);
+  flex-shrink: 0;
+}
+
+/* ─── Empty states ─────────────────────────────────────────── */
+
+.emptyText {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.emptyState {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.25rem 0;
+}
+
+.emptyStateIcon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  margin-top: 0.0625rem;
+}
+
+.emptyStateContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.emptyStateTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.emptyStateDesc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: 42ch;
+}
+
+.inlineLink {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.inlineLink:hover {
+  text-decoration: underline;
+}
+
+.addSkillAction {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: transparent;
+  border: 1px dashed var(--color-brand-300);
+  padding: 0.3125rem 0.6875rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+  user-select: none;
+}
+
+.addSkillAction:hover {
+  background-color: var(--color-brand-50);
+  border-color: var(--accent);
+}
+
+/* ─── Animations ───────────────────────────────────────────── */
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

@@ -29,18 +29,19 @@ public class UserSkillService {
     private final SkillRepository skillRepository;
     private final UserSkillRepository userSkillRepository;
     private final ResumeSkillRepository resumeSkillRepository;
+    private final com.skillmatch.user.repository.UserRepository userRepository;
 
 
     @Transactional(readOnly = true)
     public List<UserSkillResponse> listCurrentUserSkills() {
         User user = currentUserService.getCurrentUser();
 
-        Set<UUID> effectiveIds = getEffectiveSkillIds(user);
-        if (effectiveIds.isEmpty()) {
+        Set<UUID> manualIds = getManualSkillIds(user);
+        if (manualIds.isEmpty()) {
             return List.of();
         }
 
-        return skillRepository.findAllByIdIn(effectiveIds)
+        return skillRepository.findAllByIdIn(manualIds)
                 .stream()
                 .sorted(Comparator.comparing(Skill::getName, String.CASE_INSENSITIVE_ORDER))
                 .map(s -> new UserSkillResponse(s.getId(), s.getName()))
@@ -72,9 +73,11 @@ public class UserSkillService {
 
     @Transactional
     public void removeSkill(UUID skillId) {
-        User user = currentUserService.getCurrentUser();
+        User currentUser = currentUserService.getCurrentUser();
+        User userWithSkills = userRepository.findWithUserSkillsById(currentUser.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
-        Set<UUID> resumeSkillIds = getResumeSkillIds(user);
+        Set<UUID> resumeSkillIds = getResumeSkillIds(userWithSkills);
 
         if (resumeSkillIds.contains(skillId)) {
             // Reject — resume-derived skills cannot be manually deleted.
@@ -86,10 +89,8 @@ public class UserSkillService {
                     "Skill \"" + name + "\" is derived from your resume and cannot be removed manually");
         }
 
-        // If not a resume skill, delete the manual mapping (no-op if it doesn't exist).
-        skillRepository.findById(skillId).ifPresent(skill ->
-                userSkillRepository.deleteByUserAndSkill(user, skill)
-        );
+        userWithSkills.getUserSkills().removeIf(us -> us.getSkill().getId().equals(skillId));
+        userRepository.save(userWithSkills);
     }
 
 

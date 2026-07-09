@@ -20,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @EntityGraph(attributePaths = "targetRoles")
     Optional<User> findWithTargetRolesById(UUID id);
+
+    @EntityGraph(attributePaths = "userSkills")
+    Optional<User> findWithUserSkillsById(UUID id);
 }

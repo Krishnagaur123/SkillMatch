@@ -23,5 +23,12 @@ export const queryKeys = {
   },
   users: {
     skills: () => ['users', 'skills'] as const,
+    targetRoles: () => ['users', 'targetRoles'] as const,
+  },
+  roles: {
+    all: () => ['roles', 'all'] as const,
+  },
+  skills: {
+    catalog: (query: string) => ['skills', 'catalog', query] as const,
   },
 } as const

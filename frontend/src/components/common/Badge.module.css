@@ -91,6 +91,26 @@
   background-color: var(--color-brand-100);
 }
 
+.skillResume {
+  background-color: oklch(0.97 0.02 140);
+  color: oklch(0.40 0.12 140);
+  border: 1px solid oklch(0.90 0.05 140);
+}
+
+.skillResume:hover {
+  background-color: oklch(0.94 0.03 140);
+}
+
+.skillManual {
+  background-color: var(--color-brand-50);
+  color: var(--color-brand-700);
+  border: 1px solid var(--color-brand-200);
+}
+
+.skillManual:hover {
+  background-color: var(--color-brand-100);
+}
+
 .skillMissing {
   background-color: var(--bg-card);
   color: var(--text-secondary);
