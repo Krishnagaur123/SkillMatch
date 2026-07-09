@@ -14,6 +14,9 @@ public interface SkillRepository extends JpaRepository<Skill, UUID> {
 
     Optional<Skill> findByNameIgnoreCase(String name);
 
-
     List<Skill> findAllByIdIn(Set<UUID> ids);
+
+    List<Skill> findAllByOrderByNameAsc();
+
+    List<Skill> findByNameContainingIgnoreCaseOrderByNameAsc(String query);
 }
