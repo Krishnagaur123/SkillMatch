@@ -8,6 +8,7 @@ export const ROUTES = {
   APPLICATIONS: '/applications',
   ANALYTICS: '/analytics',
   COMPANIES: '/companies',
+  COMPANY_DETAIL: '/companies/:id',
   PROFILE: '/profile',
   AUTH_CALLBACK: '/auth/callback',
 } as const

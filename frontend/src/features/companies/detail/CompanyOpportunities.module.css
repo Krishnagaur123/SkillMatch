@@ -1,0 +1,155 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 2.5rem 1.5rem;
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-subtle);
+  text-align: center;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.emptyDesc {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* Interactive opportunity row */
+.oppRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-card);
+  box-shadow: 0 1px 3px oklch(0 0 0 / 0.02);
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease, transform 0.12s ease;
+}
+
+.oppRow:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 4px 16px oklch(0 0 0 / 0.05);
+  transform: translateY(-1px);
+}
+
+.oppRow:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  border-color: var(--accent);
+}
+
+.oppMain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3125rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.oppTitle {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.oppMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  flex-wrap: wrap;
+}
+
+.oppMetaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3125rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  text-transform: capitalize;
+}
+
+.oppRight {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex-shrink: 0;
+}
+
+/* Match score pill */
+.matchScore {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 650;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.matchHigh {
+  background-color: oklch(0.95 0.06 140);
+  color: oklch(0.35 0.15 140);
+  border: 1px solid oklch(0.90 0.08 140);
+}
+
+.matchMid {
+  background-color: oklch(0.95 0.05 80);
+  color: oklch(0.35 0.15 80);
+  border: 1px solid oklch(0.90 0.08 80);
+}
+
+.matchLow {
+  background-color: var(--bg-subtle);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+.arrow {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: transform 0.12s ease, color 0.12s ease;
+}
+
+.oppRow:hover .arrow {
+  transform: translateX(3px);
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .oppRight {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+  }
+
+  .arrow {
+    display: none;
+  }
+}

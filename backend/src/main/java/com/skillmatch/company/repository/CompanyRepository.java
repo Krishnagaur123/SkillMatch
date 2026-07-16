@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,4 +26,6 @@ public interface CompanyRepository extends JpaRepository<Company, UUID> {
         GROUP BY c.id, c.name, c.logoUrl, c.website, c.industry, c.headquarters, c.employeeCount, c.foundedYear, c.description
     """)
     Optional<CompanyDetailResponse> findCompanyDetailById(@Param("id") UUID id);
+
+    List<Company> findAllByOrderByNameAsc();
 }

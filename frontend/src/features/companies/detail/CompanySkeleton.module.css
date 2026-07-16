@@ -1,0 +1,220 @@
+/* Card section title skeletons */
+.cardTitleSk  { height: 1.125rem; width: 9rem;   border-radius: var(--radius-sm); }
+.techTitleSk  { height: 1.125rem; width: 7rem;   border-radius: var(--radius-sm); }
+.oppTitleSk   { height: 1.125rem; width: 11rem;  border-radius: var(--radius-sm); }
+.factsTitleSk { height: 1.125rem; width: 6rem;   border-radius: var(--radius-sm); }
+
+/* CTA card skeleton shapes */
+.ctaTitleSk { height: 1rem;    width: 6rem;  border-radius: var(--radius-sm); }
+.ctaLine1Sk { height: 0.875rem; width: 100%; border-radius: var(--radius-sm); }
+.ctaLine2Sk { height: 0.875rem; width: 85%;  border-radius: var(--radius-sm); }
+.ctaBtn1Sk  { height: 2.25rem;  width: 100%; border-radius: var(--radius-md); margin-top: 0.25rem; }
+.ctaBtn2Sk  { height: 2.25rem;  width: 100%; border-radius: var(--radius-md); }
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* Hero */
+.heroSk {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.identitySk {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.logoSk {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: var(--radius-xl);
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .logoSk {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+}
+
+.metaSk {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding-top: 0.25rem;
+  flex: 1;
+}
+
+.nameSk {
+  height: 2.25rem;
+  width: min(20rem, 100%);
+  border-radius: var(--radius-md);
+}
+
+.badgesSkRow {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.badge1Sk {
+  height: 1.5rem;
+  width: 5rem;
+  border-radius: 99px;
+}
+
+.badge2Sk {
+  height: 1.5rem;
+  width: 6.5rem;
+  border-radius: 99px;
+}
+
+.websiteSk {
+  height: 0.875rem;
+  width: 9rem;
+  border-radius: var(--radius-sm);
+}
+
+.dividerSk {
+  height: 1px;
+  width: 100%;
+  border-radius: 0;
+}
+
+/* Metrics row */
+.metricsSk {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .metricsSk {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.metricCardSk {
+  height: 6rem;
+  border-radius: var(--radius-lg);
+}
+
+/* Main grid */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .mainGrid {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 1.75rem;
+  }
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Card skeleton internals */
+.cardInner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.line100 { height: 0.875rem; width: 100%; border-radius: var(--radius-sm); }
+.line92  { height: 0.875rem; width: 92%;  border-radius: var(--radius-sm); }
+.line97  { height: 0.875rem; width: 97%;  border-radius: var(--radius-sm); }
+.line85  { height: 0.875rem; width: 85%;  border-radius: var(--radius-sm); }
+
+.techBadgesSk {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+/* Natural varied widths via nth-child — deterministic */
+.techBadgeSk {
+  height: 1.75rem;
+  border-radius: var(--radius-md);
+}
+
+.techBadgeSk:nth-child(1)  { width: 4.5rem; }
+.techBadgeSk:nth-child(2)  { width: 5.5rem; }
+.techBadgeSk:nth-child(3)  { width: 3.75rem; }
+.techBadgeSk:nth-child(4)  { width: 6rem; }
+.techBadgeSk:nth-child(5)  { width: 4rem; }
+.techBadgeSk:nth-child(6)  { width: 5rem; }
+.techBadgeSk:nth-child(7)  { width: 3.5rem; }
+.techBadgeSk:nth-child(8)  { width: 4.75rem; }
+
+.oppRowSk {
+  height: 4.25rem;
+  border-radius: var(--radius-lg);
+}
+
+/* Sidebar quick-facts skeleton */
+.sidebarFactsSk {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebarItem {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.sidebarItem:first-child { padding-top: 0; }
+
+.sidebarItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.sidebarIconSk {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.sidebarTextSk {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.sidebarLabelSk {
+  height: 0.6875rem;
+  width: 3.5rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Value widths for sidebar items */
+.sv1 { height: 0.9375rem; width: 7rem;   border-radius: var(--radius-sm); }
+.sv2 { height: 0.9375rem; width: 3rem;   border-radius: var(--radius-sm); }
+.sv3 { height: 0.9375rem; width: 9rem;   border-radius: var(--radius-sm); }
+.sv4 { height: 0.9375rem; width: 5rem;   border-radius: var(--radius-sm); }
+.sv5 { height: 0.9375rem; width: 8.5rem; border-radius: var(--radius-sm); }

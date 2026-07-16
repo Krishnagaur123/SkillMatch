@@ -1,5 +1,5 @@
 import { Building2, MapPin, Briefcase, Clock, ExternalLink } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { MatchScoreBadge } from '../MatchScoreBadge'
 import { Button } from '@/components/common/Button'
 import type { OpportunityDetailResponse } from '@/hooks/useOpportunityDetail'
@@ -10,13 +10,14 @@ interface OpportunityHeroProps {
 }
 
 export function OpportunityHero({ opportunity, matchPercentage }: OpportunityHeroProps) {
+  const routerLocation = useLocation()
   const { title, company, location, employmentType, experienceLevel, applyUrl } = opportunity
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
         <div className="flex items-start gap-4">
-          <Link to={`/companies/${company.id}`} className="shrink-0 group">
+          <Link to={`/companies/${company.id}`} state={{ from: routerLocation.pathname }} className="shrink-0 group">
             {company.logoUrl ? (
               <img 
                 src={company.logoUrl} 
@@ -34,7 +35,8 @@ export function OpportunityHero({ opportunity, matchPercentage }: OpportunityHer
               {title}
             </h1>
             <Link 
-              to={`/companies/${company.id}`} 
+              to={`/companies/${company.id}`}
+              state={{ from: routerLocation.pathname }}
               className="text-lg font-medium text-primary hover:text-primary/80 transition-colors"
             >
               {company.name}

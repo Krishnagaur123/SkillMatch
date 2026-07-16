@@ -1,7 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { Building2, ExternalLink } from 'lucide-react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { ExternalLink } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import { Card, CardHeader, CardContent } from '@/components/common/Card'
+import { CompanyLogo } from '@/components/common/CompanyLogo'
 import type { OpportunityDetailCompanySummary } from '@/hooks/useOpportunityDetail'
 
 interface CompanyPreviewProps {
@@ -10,6 +11,7 @@ interface CompanyPreviewProps {
 
 export function CompanyPreview({ company }: CompanyPreviewProps) {
   const navigate = useNavigate()
+  const location = useLocation()
 
   return (
     <Card className="hover:shadow-md transition-shadow duration-200">
@@ -18,22 +20,18 @@ export function CompanyPreview({ company }: CompanyPreviewProps) {
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <div className="flex items-center gap-4">
-          <Link to={`/companies/${company.id}`} className="shrink-0 group">
-            {company.logoUrl ? (
-              <img 
-                src={company.logoUrl} 
-                alt={`${company.name} logo`} 
-                className="w-14 h-14 rounded-lg object-cover border border-slate-100 group-hover:ring-2 ring-primary/20 transition-all"
-              />
-            ) : (
-              <div className="w-14 h-14 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-200 group-hover:ring-2 ring-primary/20 transition-all">
-                <Building2 className="w-6 h-6 text-slate-400" />
-              </div>
-            )}
+          <Link to={`/companies/${company.id}`} state={{ from: location.pathname }} className="shrink-0 group">
+            <CompanyLogo
+              src={company.logoUrl}
+              name={company.name}
+              className="w-14 h-14 rounded-lg group-hover:ring-2 ring-primary/20 transition-all"
+              iconClassName="w-6 h-6"
+            />
           </Link>
           <div className="flex flex-col">
             <Link 
-              to={`/companies/${company.id}`} 
+              to={`/companies/${company.id}`}
+              state={{ from: location.pathname }}
               className="font-medium text-slate-900 dark:text-white hover:text-primary transition-colors text-base"
             >
               {company.name}
@@ -45,7 +43,7 @@ export function CompanyPreview({ company }: CompanyPreviewProps) {
         <Button 
           variant="secondary" 
           className="w-full mt-2 gap-2"
-          onClick={() => navigate(`/companies/${company.id}`)}
+          onClick={() => navigate(`/companies/${company.id}`, { state: { from: location.pathname } })}
         >
           View Company <ExternalLink className="w-4 h-4" />
         </Button>

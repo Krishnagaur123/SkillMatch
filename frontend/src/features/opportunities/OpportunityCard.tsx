@@ -1,9 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { Building2, MapPin, Briefcase, Clock, ExternalLink, CheckCircle2, AlertTriangle, Info, Circle } from 'lucide-react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { MapPin, Briefcase, Clock, ExternalLink, CheckCircle2, AlertTriangle, Info, Circle } from 'lucide-react'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/common/Card'
 import { Button } from '@/components/common/Button'
 import { MatchScoreBadge } from './MatchScoreBadge'
 import { SkillGroup } from './SkillGroup'
+import { CompanyLogo } from '@/components/common/CompanyLogo'
 import type { OpportunityRecommendation } from '@/hooks/useOpportunities'
 
 interface OpportunityCardProps {
@@ -34,6 +35,7 @@ function deriveInsight(opp: OpportunityRecommendation): string {
 }
 
 export function OpportunityCard({ opportunity }: OpportunityCardProps) {
+  const routerLocation = useLocation()
   const navigate = useNavigate()
   const {
     opportunityId,
@@ -56,18 +58,13 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
     <Card className="flex flex-col h-full hover:shadow-md transition-shadow duration-200">
       <CardHeader className="flex flex-row items-start justify-between gap-4 pb-2">
         <div className="flex items-start gap-4 flex-1">
-          <Link to={`/companies/${company.id}`} className="shrink-0 group">
-            {company.logoUrl ? (
-              <img 
-                src={company.logoUrl} 
-                alt={`${company.name} logo`} 
-                className="w-12 h-12 rounded-md object-cover border border-slate-100 group-hover:ring-2 ring-primary/20 transition-all"
-              />
-            ) : (
-              <div className="w-12 h-12 rounded-md bg-slate-100 flex items-center justify-center border border-slate-200 group-hover:ring-2 ring-primary/20 transition-all">
-                <Building2 className="w-6 h-6 text-slate-400" />
-              </div>
-            )}
+          <Link to={`/companies/${company.id}`} state={{ from: routerLocation.pathname }} className="shrink-0 group">
+            <CompanyLogo
+              src={company.logoUrl}
+              name={company.name}
+              className="w-12 h-12 rounded-md group-hover:ring-2 ring-primary/20 transition-all"
+              iconClassName="w-6 h-6"
+            />
           </Link>
           <div className="flex flex-col">
             <h3 className="font-semibold text-lg text-slate-900 dark:text-white line-clamp-1">
@@ -75,6 +72,7 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
             </h3>
             <Link 
               to={`/companies/${company.id}`} 
+              state={{ from: routerLocation.pathname }}
               className="text-sm font-medium text-slate-600 hover:text-primary transition-colors dark:text-slate-400"
             >
               {company.name}

@@ -23,4 +23,9 @@ public class CompanyController {
         CompanyDetailResponse response = companyService.getCompanyDetail(companyId);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping
+    public ResponseEntity<java.util.List<com.skillmatch.company.dto.CompanySummaryResponse>> listCompanies() {
+        return ResponseEntity.ok(companyService.listCompanies());
+    }
 }
