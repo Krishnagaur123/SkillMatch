@@ -6,6 +6,7 @@ export const ROUTES = {
   OPPORTUNITIES: '/opportunities',
   OPPORTUNITY_DETAIL: '/opportunities/:id',
   APPLICATIONS: '/applications',
+  APPLICATION_DETAIL: '/applications/:id',
   ANALYTICS: '/analytics',
   COMPANIES: '/companies',
   COMPANY_DETAIL: '/companies/:id',

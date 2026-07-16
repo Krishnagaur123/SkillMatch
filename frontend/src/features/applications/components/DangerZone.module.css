@@ -1,0 +1,40 @@
+.dangerZone {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--error);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  line-height: 1.5;
+}
+
+.deleteButton {
+  color: var(--error);
+  border-color: rgba(239, 68, 68, 0.3);
+  width: fit-content;
+}
+
+.deleteButton:hover {
+  background: var(--error);
+  color: white;
+  border-color: var(--error);
+}

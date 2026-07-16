@@ -2,6 +2,8 @@ import { Building2, MapPin, Briefcase, Clock, ExternalLink } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { MatchScoreBadge } from '../MatchScoreBadge'
 import { Button } from '@/components/common/Button'
+import { useApplicationTracking } from '@/hooks/useApplicationTracking'
+import { ApplicationTrackingDialogs } from '@/features/applications/components/ApplicationTrackingDialogs'
 import type { OpportunityDetailResponse } from '@/hooks/useOpportunityDetail'
 
 interface OpportunityHeroProps {
@@ -11,7 +13,17 @@ interface OpportunityHeroProps {
 
 export function OpportunityHero({ opportunity, matchPercentage }: OpportunityHeroProps) {
   const routerLocation = useLocation()
-  const { title, company, location, employmentType, experienceLevel, applyUrl } = opportunity
+  const { id, title, company, location, employmentType, experienceLevel, applyUrl } = opportunity
+
+  const {
+    handleApplyClick,
+    dialogState,
+    handleConfirmContinue,
+    handleConfirmCancel,
+    handleTrackingYes,
+    handleTrackingNo,
+    handleViewExisting
+  } = useApplicationTracking()
 
   return (
     <div className="flex flex-col gap-6">
@@ -52,7 +64,7 @@ export function OpportunityHero({ opportunity, matchPercentage }: OpportunityHer
           {applyUrl && (
             <Button 
               className="gap-2"
-              onClick={() => window.open(applyUrl, '_blank', 'noopener,noreferrer')}
+              onClick={() => handleApplyClick(id, applyUrl)}
             >
               Apply Now <ExternalLink className="w-4 h-4" />
             </Button>
@@ -74,6 +86,15 @@ export function OpportunityHero({ opportunity, matchPercentage }: OpportunityHer
           <span className="capitalize">{experienceLevel?.toLowerCase() || 'Mid level'}</span>
         </div>
       </div>
+
+      <ApplicationTrackingDialogs
+        dialogState={dialogState}
+        onConfirmContinue={handleConfirmContinue}
+        onConfirmCancel={handleConfirmCancel}
+        onTrackingYes={handleTrackingYes}
+        onTrackingNo={handleTrackingNo}
+        onViewExisting={handleViewExisting}
+      />
     </div>
   )
 }

@@ -6,6 +6,8 @@ import { MatchScoreBadge } from './MatchScoreBadge'
 import { SkillGroup } from './SkillGroup'
 import { CompanyLogo } from '@/components/common/CompanyLogo'
 import type { OpportunityRecommendation } from '@/hooks/useOpportunities'
+import { useApplicationTracking } from '@/hooks/useApplicationTracking'
+import { ApplicationTrackingDialogs } from '@/features/applications/components/ApplicationTrackingDialogs'
 
 interface OpportunityCardProps {
   opportunity: OpportunityRecommendation
@@ -51,6 +53,16 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
     missingGoodToHaveSkills,
     applyUrl
   } = opportunity
+
+  const {
+    handleApplyClick,
+    dialogState,
+    handleConfirmContinue,
+    handleConfirmCancel,
+    handleTrackingYes,
+    handleTrackingNo,
+    handleViewExisting
+  } = useApplicationTracking()
 
   const insight = deriveInsight(opportunity)
 
@@ -155,12 +167,26 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
         {applyUrl && (
           <Button 
             className="flex-1 gap-2"
-            onClick={() => window.open(applyUrl, '_blank', 'noopener,noreferrer')}
+            onClick={(e) => {
+              e.preventDefault()
+              handleApplyClick(opportunityId, applyUrl)
+            }}
           >
             Apply Now <ExternalLink className="w-4 h-4" />
           </Button>
         )}
       </CardFooter>
+      
+      <div onClick={(e) => e.preventDefault()}>
+        <ApplicationTrackingDialogs
+          dialogState={dialogState}
+          onConfirmContinue={handleConfirmContinue}
+          onConfirmCancel={handleConfirmCancel}
+          onTrackingYes={handleTrackingYes}
+          onTrackingNo={handleTrackingNo}
+          onViewExisting={handleViewExisting}
+        />
+      </div>
     </Card>
   )
 }

@@ -23,6 +23,16 @@ export function CompanyLogo({ src, name, className = '', iconClassName = '' }: C
       .toUpperCase()
   }
 
+  // Generate a consistent color based on company name
+  const getColor = (name: string) => {
+    let hash = 0
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash)
+    }
+    const h = hash % 360
+    return `hsl(${h}, 70%, 40%)` // darkish color
+  }
+
   const combinedClasses = clsx(styles.root, className)
 
   if (src && !hasError) {
@@ -41,7 +51,10 @@ export function CompanyLogo({ src, name, className = '', iconClassName = '' }: C
   // Fallback to initials if name is provided, else generic building icon
   if (name) {
     return (
-      <div className={clsx(combinedClasses, styles.initials)}>
+      <div 
+        className={clsx(combinedClasses, styles.initials)}
+        style={{ backgroundColor: getColor(name), color: 'white' }}
+      >
         {getInitials(name)}
       </div>
     )

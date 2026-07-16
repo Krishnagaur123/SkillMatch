@@ -2,6 +2,7 @@ import { forwardRef } from 'react'
 import type { HTMLAttributes } from 'react'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
+import type { ApplicationStatus } from '@/types/application'
 import styles from './Badge.module.css'
 
 const badgeVariants = cva(styles.badge, {
@@ -41,13 +42,12 @@ export interface StatusBadgeProps extends HTMLAttributes<HTMLSpanElement> {
 export const StatusBadge = forwardRef<HTMLSpanElement, StatusBadgeProps>(
   ({ className, status, children, ...props }, ref) => {
     const statusClass =
-      status === 'active' || status === 'success'
-        ? styles.statusSuccess
-        : status === 'pending' || status === 'warning'
-        ? styles.statusWarning
-        : status === 'error' || status === 'danger' || status === 'rejected'
-        ? styles.statusError
-        : styles.statusNeutral
+      status === 'active' || status === 'success' ? styles.statusSuccess
+      : status === 'pending' || status === 'warning' ? styles.statusWarning
+      : status === 'error' || status === 'danger' || status === 'rejected' ? styles.statusError
+      : status === 'primary' ? styles.statusPrimary
+      : status === 'muted' ? styles.statusMuted
+      : styles.statusNeutral
 
     return (
       <span
@@ -64,6 +64,34 @@ export const StatusBadge = forwardRef<HTMLSpanElement, StatusBadgeProps>(
   }
 )
 StatusBadge.displayName = 'StatusBadge'
+
+export const getApplicationStatusConfig = (status: ApplicationStatus | string) => {
+  switch (status) {
+    case 'APPLIED': return { label: 'Applied', state: 'neutral' }
+    case 'ONLINE_ASSESSMENT': return { label: 'Online Assessment', state: 'warning' }
+    case 'INTERVIEW': return { label: 'Interview', state: 'primary' }
+    case 'OFFER': return { label: 'Offer', state: 'success' }
+    case 'REJECTED': return { label: 'Rejected', state: 'danger' }
+    case 'WITHDRAWN': return { label: 'Withdrawn', state: 'muted' }
+    default: return { label: status, state: 'neutral' }
+  }
+}
+
+export interface ApplicationStatusBadgeProps extends HTMLAttributes<HTMLSpanElement> {
+  status: ApplicationStatus | string
+}
+
+export const ApplicationStatusBadge = forwardRef<HTMLSpanElement, ApplicationStatusBadgeProps>(
+  ({ status, ...props }, ref) => {
+    const config = getApplicationStatusConfig(status)
+    return (
+      <StatusBadge ref={ref} status={config.state} {...props}>
+        {config.label}
+      </StatusBadge>
+    )
+  }
+)
+ApplicationStatusBadge.displayName = 'ApplicationStatusBadge'
 
 export interface SkillBadgeProps extends HTMLAttributes<HTMLSpanElement> {
   name: string
