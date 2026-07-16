@@ -1,0 +1,131 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+:global(body) {
+  background-color: var(--slate-50);
+}
+
+:global(.dark body) {
+  background-color: var(--background);
+}
+
+.topSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .topSection {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  
+  .topSection > *:first-child {
+    flex: 3;
+  }
+  
+  .topSection > *:last-child {
+    flex: 2;
+  }
+}
+
+
+
+.sectionCard {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+:global(.dark) .sectionCard {
+  background: var(--card);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: -0.025em;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sectionIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--primary);
+  opacity: 0.9;
+}
+
+.sectionDescription {
+  font-size: 1.0625rem;
+  color: var(--muted-foreground);
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 2rem;
+  text-align: center;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+:global(.dark) .emptyState {
+  background: var(--card);
+}
+
+.emptyTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.emptyDescription {
+  font-size: 1.125rem;
+  color: var(--muted-foreground);
+  max-width: 500px;
+}
+
+.emptyAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  margin-top: 1rem;
+  transition: opacity 0.2s;
+}
+
+.emptyAction:hover {
+  opacity: 0.9;
+}

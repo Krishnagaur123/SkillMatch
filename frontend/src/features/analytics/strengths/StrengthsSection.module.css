@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.explanation {
+  font-size: 1.0625rem;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.badge {
+  font-size: 0.875rem;
+  padding: 0.375rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}

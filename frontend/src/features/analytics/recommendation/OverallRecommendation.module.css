@@ -1,0 +1,92 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2.5rem;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  align-items: center;
+}
+
+.container[data-recommendation="Ready to Apply"] {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+:global(.dark) .container[data-recommendation="Ready to Apply"] {
+  background: rgba(16, 185, 129, 0.05);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.container[data-recommendation="Resume Update Recommended"] {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+:global(.dark) .container[data-recommendation="Resume Update Recommended"] {
+  background: rgba(245, 158, 11, 0.05);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.container[data-recommendation="Continue Learning"] {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+:global(.dark) .container[data-recommendation="Continue Learning"] {
+  background: rgba(59, 130, 246, 0.05);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.icon[data-recommendation="Ready to Apply"] {
+  background: #f0fdf4;
+  color: #10b981;
+}
+
+:global(.dark) .icon[data-recommendation="Ready to Apply"] {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.icon[data-recommendation="Resume Update Recommended"] {
+  background: #fffbeb;
+  color: #f59e0b;
+}
+
+:global(.dark) .icon[data-recommendation="Resume Update Recommended"] {
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.icon[data-recommendation="Continue Learning"] {
+  background: #eff6ff;
+  color: #3b82f6;
+}
+
+:global(.dark) .icon[data-recommendation="Continue Learning"] {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.explanation {
+  font-size: 1.125rem;
+  color: var(--muted-foreground);
+  max-width: 600px;
+  line-height: 1.6;
+}

@@ -1,0 +1,179 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 3rem;
+  border-radius: var(--radius-xl);
+  background: white;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+:global(.dark) .hero {
+  background: var(--card);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--muted-foreground);
+  max-width: 600px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.progressContainer {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  flex-shrink: 0;
+}
+
+.progressSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progressBackground {
+  fill: none;
+  stroke: var(--slate-100);
+  stroke-width: 10;
+}
+
+:global(.dark) .progressBackground {
+  stroke: var(--slate-800);
+}
+
+.progressValue {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.progressText {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.percentage {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--foreground);
+  line-height: 1;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.category {
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.category[data-category="Excellent"] { color: #10b981; }
+.category[data-category="Strong"] { color: #3b82f6; }
+.category[data-category="Good Progress"] { color: #f59e0b; }
+.category[data-category="Needs Improvement"] { color: #ef4444; }
+
+.explanation {
+  font-size: 1.125rem;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.assessment {
+  margin-top: 1rem;
+  padding: 1rem 1.5rem;
+  background: var(--slate-50);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+:global(.dark) .assessment {
+  background: var(--slate-800);
+}
+
+.summary {
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--foreground);
+}
+
+.nextBestAction {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+:global(.dark) .nextBestAction {
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.nbaIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d97706;
+}
+
+:global(.dark) .nbaIcon {
+  color: #fbbf24;
+}
+
+.nbaText {
+  font-size: 1rem;
+  color: var(--foreground);
+  line-height: 1.5;
+}
