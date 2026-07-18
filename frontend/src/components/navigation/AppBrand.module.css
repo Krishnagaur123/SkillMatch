@@ -5,6 +5,7 @@
   user-select: none;
 }
 
+/* Premium logomark: solid brand color */
 .logoMark {
   display: flex;
   align-items: center;
@@ -12,17 +13,21 @@
   width: 2rem;
   height: 2rem;
   border-radius: var(--radius-md);
-  background-color: var(--accent);
-  color: var(--accent-foreground);
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  background-color: var(--color-brand);
+  color: #FFFFFF;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
   flex-shrink: 0;
 }
 
 .name {
   font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--sidebar-text-primary);
-  letter-spacing: -0.01em;
+  font-weight: 750;
+  color: var(--text-heading);
+  letter-spacing: -0.03em;
+}
+
+.nameHighlight {
+  color: var(--color-brand);
 }

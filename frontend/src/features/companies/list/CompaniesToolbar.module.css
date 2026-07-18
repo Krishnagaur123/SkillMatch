@@ -24,7 +24,7 @@
   left: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-muted);
+  color: var(--text-secondary);
   pointer-events: none;
 }
 
@@ -33,7 +33,7 @@
   padding: 0.5rem 1rem 0.5rem 2.25rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
-  background-color: var(--bg-card);
+  background-color: var(--surface-primary);
   color: var(--text-primary);
   font-size: 0.875rem;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -56,7 +56,7 @@
   padding: 0.5rem 2rem 0.5rem 0.75rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
-  background-color: var(--bg-card);
+  background-color: var(--surface-primary);
   color: var(--text-primary);
   font-size: 0.875rem;
   appearance: none;

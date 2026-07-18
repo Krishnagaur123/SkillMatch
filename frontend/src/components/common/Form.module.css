@@ -22,7 +22,7 @@
 }
 
 .required {
-  color: oklch(0.55 0.18 20);
+  color: var(--color-error);
   font-weight: 700;
 }
 
@@ -34,7 +34,7 @@
   margin: 0;
   font-size: 0.75rem;
   font-weight: 500;
-  color: oklch(0.55 0.18 20);
+  color: var(--color-error);
   margin-top: 0.125rem;
 }
 
@@ -65,7 +65,7 @@
 .sectionDesc {
   margin: 0;
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-top: 0.125rem;
 }
 
@@ -84,7 +84,7 @@
 .submitSpinner {
   width: 0.875rem;
   height: 0.875rem;
-  border: 1.5px solid oklch(1 0 0 / 0.3);
+  border: 1.5px solid color-mix(in srgb, var(--surface-primary) 30%, transparent);
   border-top-color: currentColor;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;

@@ -9,8 +9,9 @@ const buttonVariants = cva(styles.button, {
     variant: {
       primary: styles.primary,
       secondary: styles.secondary,
+      outline: styles.outline,
       ghost: styles.ghost,
-      icon: styles.icon,
+      destructive: styles.destructive,
     },
     size: {
       sm: styles.sizeSm,
@@ -32,21 +33,28 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   leftIcon?: ReactNode
   rightIcon?: ReactNode
+  isLoading?: boolean
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, fullWidth, leftIcon, rightIcon, children, ...props }, ref) => {
+  ({ className, variant, size, fullWidth, leftIcon, rightIcon, isLoading, disabled, children, ...props }, ref) => {
     return (
       <button
         ref={ref}
-        className={[buttonVariants({ variant, size, fullWidth }), className]
+        className={[
+          buttonVariants({ variant, size, fullWidth }), 
+          isLoading ? styles.loading : '',
+          className
+        ]
           .filter(Boolean)
           .join(' ')}
+        disabled={disabled || isLoading}
         {...props}
       >
-        {leftIcon && <span className={styles.leftIcon} aria-hidden="true">{leftIcon}</span>}
+        {isLoading && <span className={styles.spinner} aria-hidden="true" />}
+        {!isLoading && leftIcon && <span className={styles.leftIcon} aria-hidden="true">{leftIcon}</span>}
         {children}
-        {rightIcon && <span className={styles.rightIcon} aria-hidden="true">{rightIcon}</span>}
+        {!isLoading && rightIcon && <span className={styles.rightIcon} aria-hidden="true">{rightIcon}</span>}
       </button>
     )
   }
@@ -70,7 +78,12 @@ export const GhostButton = forwardRef<HTMLButtonElement, ButtonWrapperProps>(
 )
 GhostButton.displayName = 'GhostButton'
 
-export const IconButton = forwardRef<HTMLButtonElement, ButtonWrapperProps>(
-  (props, ref) => <Button ref={ref} variant="icon" {...props} />
+export const OutlineButton = forwardRef<HTMLButtonElement, ButtonWrapperProps>(
+  (props, ref) => <Button ref={ref} variant="outline" {...props} />
 )
-IconButton.displayName = 'IconButton'
+OutlineButton.displayName = 'OutlineButton'
+
+export const DestructiveButton = forwardRef<HTMLButtonElement, ButtonWrapperProps>(
+  (props, ref) => <Button ref={ref} variant="destructive" {...props} />
+)
+DestructiveButton.displayName = 'DestructiveButton'

@@ -13,7 +13,7 @@
   padding: 2.5rem 1.5rem;
   border: 1px dashed var(--border-default);
   border-radius: var(--radius-lg);
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
   text-align: center;
 }
 
@@ -27,7 +27,7 @@
 .emptyDesc {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   line-height: 1.45;
 }
 
@@ -40,8 +40,8 @@
   padding: 1rem 1.25rem;
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
-  background-color: var(--bg-card);
-  box-shadow: 0 1px 3px oklch(0 0 0 / 0.02);
+  background-color: var(--surface-primary);
+  box-shadow: var(--shadow-sm);
   text-decoration: none;
   color: inherit;
   outline: none;
@@ -49,8 +49,8 @@
 }
 
 .oppRow:hover {
-  border-color: var(--border-strong);
-  box-shadow: 0 4px 16px oklch(0 0 0 / 0.05);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
 
@@ -114,25 +114,25 @@
 }
 
 .matchHigh {
-  background-color: oklch(0.95 0.06 140);
-  color: oklch(0.35 0.15 140);
-  border: 1px solid oklch(0.90 0.08 140);
+  background-color: color-mix(in srgb, var(--color-success) 15%, transparent);
+  color: var(--color-success);
+  border: 1px solid color-mix(in srgb, var(--color-success) 30%, transparent);
 }
 
 .matchMid {
-  background-color: oklch(0.95 0.05 80);
-  color: oklch(0.35 0.15 80);
-  border: 1px solid oklch(0.90 0.08 80);
+  background-color: color-mix(in srgb, var(--color-warning) 15%, transparent);
+  color: var(--color-warning);
+  border: 1px solid color-mix(in srgb, var(--color-warning) 30%, transparent);
 }
 
 .matchLow {
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
   color: var(--text-secondary);
   border: 1px solid var(--border-default);
 }
 
 .arrow {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   flex-shrink: 0;
   transition: transform 0.12s ease, color 0.12s ease;
 }

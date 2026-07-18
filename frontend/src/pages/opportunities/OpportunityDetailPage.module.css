@@ -1,0 +1,23 @@
+.backButton {
+  color: var(--text-secondary);
+}
+
+.backButton:hover {
+  color: var(--text-heading);
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-heading);
+}
+
+.mobileCompanyPreview {
+  border-top: 1px solid var(--border-default);
+}
+
+/* Icon Colors for Skills Breakdown */
+.iconSuccess { color: var(--color-success); }
+.iconWarning { color: var(--color-warning); }
+.iconBrand { color: var(--color-brand); }
+.iconNeutral { color: var(--text-secondary); }

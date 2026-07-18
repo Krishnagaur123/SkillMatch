@@ -12,8 +12,8 @@
 }
 
 :global(.dark) .container {
-  background: rgba(59, 130, 246, 0.1); /* Soft primary tint */
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--color-brand) 10%, transparent); /* Soft primary tint */
+  border: 1px solid color-mix(in srgb, var(--color-brand) 20%, transparent);
   color: var(--foreground);
 }
 

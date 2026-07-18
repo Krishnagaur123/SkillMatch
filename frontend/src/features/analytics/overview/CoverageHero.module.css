@@ -115,10 +115,10 @@
   margin-bottom: 0.25rem;
 }
 
-.category[data-category="Excellent"] { color: #10b981; }
-.category[data-category="Strong"] { color: #3b82f6; }
-.category[data-category="Good Progress"] { color: #f59e0b; }
-.category[data-category="Needs Improvement"] { color: #ef4444; }
+.category[data-category="Excellent"] { color: var(--color-success); }
+.category[data-category="Strong"] { color: var(--color-brand); }
+.category[data-category="Good Progress"] { color: var(--color-warning); }
+.category[data-category="Needs Improvement"] { color: var(--color-error); }
 
 .explanation {
   font-size: 1.125rem;
@@ -152,24 +152,24 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: #fffbeb;
-  border-left: 4px solid #f59e0b;
+  background: color-mix(in srgb, var(--color-warning) 10%, transparent);
+  border-left: 4px solid var(--color-warning);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
 :global(.dark) .nextBestAction {
-  background: rgba(245, 158, 11, 0.05);
+  background: color-mix(in srgb, var(--color-warning) 15%, transparent);
 }
 
 .nbaIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #d97706;
+  color: var(--color-warning);
 }
 
 :global(.dark) .nbaIcon {
-  color: #fbbf24;
+  color: var(--color-warning);
 }
 
 .nbaText {

@@ -1,4 +1,4 @@
-import { Globe, ExternalLink, Briefcase } from 'lucide-react'
+import { Globe, ExternalLink, Briefcase, Users } from 'lucide-react'
 import { Badge } from '@/components/common/Badge'
 import { Button } from '@/components/common/Button'
 import { CompanyLogo } from '@/components/common/CompanyLogo'
@@ -11,7 +11,7 @@ interface CompanyHeroProps {
 }
 
 export function CompanyHero({ company, onViewOpportunities }: CompanyHeroProps) {
-  const { name, logoUrl, website, industry, openOpportunities } = company
+  const { name, logoUrl, website, industry, openOpportunities, employeeCount } = company
   const count = openOpportunities ?? 0
 
   return (
@@ -29,8 +29,12 @@ export function CompanyHero({ company, onViewOpportunities }: CompanyHeroProps) 
             <h1 className={styles.name}>{name}</h1>
 
             <div className={styles.badgeRow}>
-              {industry && <Badge variant="secondary">{industry}</Badge>}
-              <Badge variant="secondary">
+              {industry && <Badge variant="neutral">{industry}</Badge>}
+              <Badge variant="neutral">
+                <Users size={12} className="mr-1" />
+                {employeeCount}
+              </Badge>
+              <Badge variant="neutral">
                 <span className={styles.rolesBadgeInner}>
                   <Briefcase size={12} aria-hidden="true" />
                   {count} Open {count === 1 ? 'Role' : 'Roles'}

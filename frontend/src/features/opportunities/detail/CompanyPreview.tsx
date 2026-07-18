@@ -4,6 +4,7 @@ import { Button } from '@/components/common/Button'
 import { Card, CardHeader, CardContent } from '@/components/common/Card'
 import { CompanyLogo } from '@/components/common/CompanyLogo'
 import type { OpportunityDetailCompanySummary } from '@/hooks/useOpportunityDetail'
+import styles from './CompanyPreview.module.css'
 
 interface CompanyPreviewProps {
   company: OpportunityDetailCompanySummary
@@ -14,9 +15,9 @@ export function CompanyPreview({ company }: CompanyPreviewProps) {
   const location = useLocation()
 
   return (
-    <Card className="hover:shadow-md transition-shadow duration-200">
+    <Card variant="interactive">
       <CardHeader className="pb-4">
-        <h3 className="font-semibold text-lg text-slate-900 dark:text-white">About the Company</h3>
+        <h3 className={styles.title}>About the Company</h3>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <div className="flex items-center gap-4">
@@ -32,11 +33,11 @@ export function CompanyPreview({ company }: CompanyPreviewProps) {
             <Link 
               to={`/companies/${company.id}`}
               state={{ from: location.pathname }}
-              className="font-medium text-slate-900 dark:text-white hover:text-primary transition-colors text-base"
+              className={styles.companyName}
             >
               {company.name}
             </Link>
-            <span className="text-sm text-slate-500">View full profile to see more details and open roles</span>
+            <span className={styles.description}>View full profile to see more details and open roles</span>
           </div>
         </div>
 

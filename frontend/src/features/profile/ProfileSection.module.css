@@ -25,7 +25,7 @@
 .searchIcon {
   position: absolute;
   left: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   pointer-events: none;
   flex-shrink: 0;
 }
@@ -36,7 +36,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   font-size: 0.875rem;
-  background-color: var(--bg-card);
+  background-color: var(--surface-primary);
   color: var(--text-primary);
   font-family: inherit;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -44,25 +44,25 @@
 }
 
 .input::placeholder {
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px oklch(from var(--accent) l c h / 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand) 12%, transparent);
 }
 
 .input:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
 }
 
 .spinner {
   position: absolute;
   right: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   animation: spin 0.8s linear infinite;
 }
 
@@ -76,7 +76,7 @@
   height: 22px;
   background: transparent;
   border: none;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   cursor: pointer;
   border-radius: var(--radius-sm);
   padding: 0;
@@ -85,7 +85,7 @@
 
 .clearBtn:hover {
   color: var(--text-primary);
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
 }
 
 .clearBtn:focus-visible {
@@ -96,12 +96,10 @@
 /* ─── Portal dropdown ──────────────────────────────────────── */
 
 .dropdown {
-  background-color: var(--bg-card);
+  background-color: var(--surface-primary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
-  box-shadow:
-    0 4px 6px -1px oklch(0 0 0 / 0.07),
-    0 10px 20px -4px oklch(0 0 0 / 0.08);
+  box-shadow: var(--shadow-md);
   max-height: 224px;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -136,14 +134,14 @@
 }
 
 .dropdownItemActive {
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
   color: var(--accent);
 }
 
 .dropdownEmpty {
   padding: 0.875rem 1rem;
   font-size: 0.8125rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   text-align: center;
   font-style: italic;
 }
@@ -154,7 +152,7 @@
   gap: 0.5rem;
   padding: 0.875rem 1rem;
   font-size: 0.8125rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .dropdownSpinner {
@@ -191,9 +189,9 @@
 
 .viewBadgeResume {
   composes: viewBadge;
-  background-color: oklch(0.97 0.02 140);
-  color: oklch(0.40 0.12 140);
-  border: 1px solid oklch(0.90 0.05 140);
+  background-color: color-mix(in srgb, var(--color-success) 10%, transparent);
+  color: var(--color-success);
+  border: 1px solid color-mix(in srgb, var(--color-success) 30%, transparent);
 }
 
 .viewBadgeManual {
@@ -209,7 +207,7 @@
   display: flex;
   gap: 1.5rem;
   padding: 0.75rem 1rem;
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
   margin-bottom: 0.5rem;
@@ -225,7 +223,7 @@
 .statLabel {
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -247,7 +245,7 @@
 
 .emptyText {
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin: 0;
   line-height: 1.5;
 }
@@ -260,7 +258,7 @@
 }
 
 .emptyStateIcon {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   flex-shrink: 0;
   margin-top: 0.0625rem;
 }
@@ -280,7 +278,7 @@
 
 .emptyStateDesc {
   font-size: 0.8125rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   line-height: 1.5;
   max-width: 42ch;
 }

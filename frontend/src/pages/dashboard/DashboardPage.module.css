@@ -14,36 +14,42 @@
 
 /* Welcome Banner */
 .welcomeBanner {
-  background-color: var(--bg-card);
+  position: relative;
+  overflow: hidden;
+  background-color: var(--surface-primary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-xl);
-  padding: 2rem;
-  box-shadow: 0 1px 3px oklch(0 0 0 / 0.02);
+  padding: 2rem 2.25rem;
+  box-shadow: var(--shadow-md);
 }
 
 .greeting {
+  position: relative;
   margin: 0;
-  font-size: 1.75rem;
-  font-weight: 750;
-  letter-spacing: -0.035em;
-  color: var(--text-primary);
-  line-height: 1.2;
+  font-size: 1.875rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text-heading);
+  line-height: 1.15;
 }
 
 .targetRoles {
+  position: relative;
   margin: 0;
   font-size: 0.9375rem;
-  font-weight: 550;
-  color: var(--accent);
-  margin-top: 0.375rem;
+  font-weight: 600;
+  color: var(--color-brand);
+  margin-top: 0.5rem;
+  letter-spacing: -0.01em;
 }
 
 .motivational {
+  position: relative;
   margin: 0;
   font-size: 0.875rem;
   color: var(--text-secondary);
-  margin-top: 0.5rem;
-  line-height: 1.4;
+  margin-top: 0.375rem;
+  line-height: 1.5;
 }
 
 /* Welcome Skeleton */
@@ -106,24 +112,24 @@
 /* Chart Card & Tooltip styling */
 .chartTooltip {
   background-color: var(--color-surface-900);
-  border: 1px solid oklch(0.22 0 0);
+  border: 1px solid var(--border-hover);
   border-radius: var(--radius-md);
   padding: 0.625rem 0.875rem;
-  box-shadow: 0 10px 25px oklch(0 0 0 / 0.15);
+  box-shadow: var(--shadow-lg);
 }
 
 .tooltipTitle {
   margin: 0;
   font-size: 0.75rem;
   font-weight: 600;
-  color: oklch(0.95 0 0);
+  color: var(--text-primary);
   margin-bottom: 0.25rem;
 }
 
 .tooltipVal {
   margin: 0;
   font-size: 0.6875rem;
-  color: oklch(0.65 0 0);
+  color: var(--text-secondary);
 }
 
 /* Learning Priority Roadmap section */
@@ -182,7 +188,7 @@
 
 .resumeFileText {
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -191,7 +197,7 @@
 .skillsMetaRow {
   display: flex;
   gap: 1.5rem;
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
   padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
@@ -211,7 +217,7 @@
 
 .metaLabel {
   font-size: 0.6875rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-top: 0.25rem;
 }
 
@@ -226,7 +232,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .skillsList {
@@ -237,7 +243,7 @@
 
 .emptyStrengths {
   font-size: 0.8125rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-style: italic;
 }
 
@@ -293,11 +299,11 @@
 }
 
 .quickActionItem:hover {
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
 }
 
 .quickActionLink:focus-visible .quickActionItem {
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
   outline: var(--focus-ring);
   outline-offset: -1px;
 }
@@ -322,11 +328,11 @@
 
 .quickActionDesc {
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .quickActionArrow {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   flex-shrink: 0;
   transition: transform 0.15s ease, color 0.15s ease;
 }

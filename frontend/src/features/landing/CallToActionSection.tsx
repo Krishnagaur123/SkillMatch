@@ -1,5 +1,7 @@
-import { OAUTH2_GOOGLE_URL } from '@/config/constants'
+import { Link } from 'react-router-dom'
+import { ROUTES } from '@/constants/routes'
 import { motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 import styles from './CallToActionSection.module.css'
 
 export default function CallToActionSection() {
@@ -21,14 +23,13 @@ export default function CallToActionSection() {
             tracking your applications — all in one place.
           </p>
           <div className={styles.actions}>
-            <motion.a
-              href={OAUTH2_GOOGLE_URL}
+            <Link
+              to={`${ROUTES.AUTH}?mode=signup`}
               className={styles.primaryBtn}
-              whileHover={{ y: -1 }}
-              transition={{ duration: 0.15 }}
             >
-              Get Started Free
-            </motion.a>
+              Sign Up
+              <ArrowRight size={20} className={styles.btnIcon} />
+            </Link>
             <motion.a
               href="#features"
               className={styles.secondaryBtn}

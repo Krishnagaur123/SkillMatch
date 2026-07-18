@@ -12,6 +12,7 @@ import {
   CompanyPreview, 
   StickyActionCard 
 } from '@/features/opportunities/detail'
+import styles from './OpportunityDetailPage.module.css'
 
 export default function OpportunityDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -45,7 +46,7 @@ export default function OpportunityDetailPage() {
           variant="ghost" 
           size="sm" 
           onClick={() => navigate('/opportunities')}
-          className="gap-2 text-slate-500 hover:text-slate-900 dark:hover:text-white"
+          className={`gap-2 ${styles.backButton}`}
         >
           <ArrowLeft className="w-4 h-4" /> Back to Opportunities
         </Button>
@@ -60,31 +61,31 @@ export default function OpportunityDetailPage() {
         <div className="lg:col-span-2 flex flex-col gap-10">
           
           <section className="flex flex-col gap-4">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Match Analysis</h2>
+            <h2 className={styles.sectionTitle}>Match Analysis</h2>
             <MatchSummary match={match} />
           </section>
 
           <section className="flex flex-col gap-4">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Skills Breakdown</h2>
+            <h2 className={styles.sectionTitle}>Skills Breakdown</h2>
             <div className="flex flex-col gap-4">
               {match ? (
                 <>
                   <SkillGroup 
-                    title={<><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Skills You Have</>} 
+                    title={<><CheckCircle2 className={`w-4 h-4 ${styles.iconSuccess}`} /> Skills You Have</>} 
                     skills={match.matchedSkills} 
                   />
                   <SkillGroup 
-                    title={<><AlertTriangle className="w-4 h-4 text-amber-500" /> Missing Required</>} 
+                    title={<><AlertTriangle className={`w-4 h-4 ${styles.iconWarning}`} /> Missing Required</>} 
                     skills={match.missingRequiredSkills} 
                     isMissing 
                   />
                   <SkillGroup 
-                    title={<><Info className="w-4 h-4 text-blue-500" /> Missing Preferred</>} 
+                    title={<><Info className={`w-4 h-4 ${styles.iconBrand}`} /> Missing Preferred</>} 
                     skills={match.missingPreferredSkills} 
                     isMissing 
                   />
                   <SkillGroup 
-                    title={<><Circle className="w-4 h-4 text-slate-400" /> Good To Have</>} 
+                    title={<><Circle className={`w-4 h-4 ${styles.iconNeutral}`} /> Good To Have</>} 
                     skills={match.missingGoodToHaveSkills} 
                     isMissing 
                   />
@@ -92,15 +93,15 @@ export default function OpportunityDetailPage() {
               ) : (
                 <>
                   <SkillGroup 
-                    title={<><AlertTriangle className="w-4 h-4 text-slate-500" /> Required Skills</>} 
+                    title={<><AlertTriangle className={`w-4 h-4 ${styles.iconNeutral}`} /> Required Skills</>} 
                     skills={opportunity.requiredSkills} 
                   />
                   <SkillGroup 
-                    title={<><Info className="w-4 h-4 text-slate-500" /> Preferred Skills</>} 
+                    title={<><Info className={`w-4 h-4 ${styles.iconNeutral}`} /> Preferred Skills</>} 
                     skills={opportunity.preferredSkills} 
                   />
                   <SkillGroup 
-                    title={<><Circle className="w-4 h-4 text-slate-500" /> Good To Have</>} 
+                    title={<><Circle className={`w-4 h-4 ${styles.iconNeutral}`} /> Good To Have</>} 
                     skills={opportunity.goodToHaveSkills} 
                   />
                 </>
@@ -109,11 +110,11 @@ export default function OpportunityDetailPage() {
           </section>
 
           <section className="flex flex-col gap-4">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">About the Role</h2>
+            <h2 className={styles.sectionTitle}>About the Role</h2>
             <OpportunityDescription description={opportunity.description} />
           </section>
 
-          <section className="flex flex-col gap-4 pt-4 border-t border-slate-100 dark:border-slate-800 lg:hidden">
+          <section className={`flex flex-col gap-4 pt-4 lg:hidden ${styles.mobileCompanyPreview}`}>
             <CompanyPreview company={opportunity.company} />
           </section>
 

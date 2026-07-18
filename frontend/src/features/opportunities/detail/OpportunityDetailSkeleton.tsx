@@ -1,5 +1,6 @@
 import { Skeleton } from '@/components/feedback/Skeleton'
 import { Card, CardContent, CardHeader } from '@/components/common/Card'
+import styles from './OpportunityDetailSkeleton.module.css'
 
 export function OpportunityDetailSkeleton() {
   return (
@@ -15,7 +16,7 @@ export function OpportunityDetailSkeleton() {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-4 pb-6 border-b border-slate-100 dark:border-slate-800">
+        <div className={`flex items-center gap-4 pb-6 ${styles.headerSection}`}>
           <Skeleton className="h-8 w-24 rounded-full" />
           <Skeleton className="h-8 w-24 rounded-full" />
           <Skeleton className="h-8 w-24 rounded-full" />
@@ -73,7 +74,7 @@ export function OpportunityDetailSkeleton() {
         <div className="hidden lg:block lg:col-span-1">
           <Card className="sticky top-6">
             <CardContent className="p-6 flex flex-col gap-6">
-              <div className="flex flex-col gap-3 pb-6 border-b border-slate-100 dark:border-slate-800">
+              <div className={`flex flex-col gap-3 pb-6 ${styles.matchSection}`}>
                 <Skeleton className="h-5 w-24 rounded-md" />
                 <Skeleton className="h-10 w-full rounded-full" />
               </div>

@@ -1,6 +1,6 @@
 .root {
   width: 100%;
-  background-color: oklch(1 0 0 / 0.85);
+  background-color: color-mix(in srgb, var(--surface-primary) 85%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-default);
@@ -8,9 +8,9 @@
 }
 
 .scrolled {
-  background-color: oklch(1 0 0 / 0.92);
-  border-color: var(--border-strong);
-  box-shadow: 0 4px 20px oklch(0 0 0 / 0.03);
+  background-color: color-mix(in srgb, var(--surface-primary) 92%, transparent);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
 }
 
 .inner {
@@ -64,7 +64,7 @@
 
 .link:hover {
   color: var(--text-primary);
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
 }
 
 .link:focus-visible {
@@ -125,7 +125,7 @@
 }
 
 .mobileToggle:hover {
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
   color: var(--text-primary);
 }
 
@@ -140,8 +140,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  background-color: var(--bg-card);
-  box-shadow: 0 8px 30px oklch(0 0 0 / 0.05);
+  background-color: var(--surface-primary);
+  box-shadow: var(--shadow-md);
 }
 
 .mobileLinks {
@@ -165,7 +165,7 @@
 }
 
 .mobileLink:hover {
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
   color: var(--text-primary);
 }
 

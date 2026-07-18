@@ -1,0 +1,15 @@
+.stickyCard {
+  position: sticky;
+  top: 1.5rem;
+  border-color: var(--border-default);
+}
+
+.matchSection {
+  border-bottom: 1px solid var(--border-default);
+}
+
+.title {
+  font-weight: 600;
+  color: var(--text-heading);
+  font-size: 1rem;
+}

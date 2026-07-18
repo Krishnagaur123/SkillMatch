@@ -12,33 +12,33 @@
 }
 
 .container[data-recommendation="Ready to Apply"] {
-  background: #f0fdf4;
-  border-color: #bbf7d0;
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-success) 20%, transparent);
 }
 
 :global(.dark) .container[data-recommendation="Ready to Apply"] {
-  background: rgba(16, 185, 129, 0.05);
-  border-color: rgba(16, 185, 129, 0.2);
+  background: color-mix(in srgb, var(--color-success) 15%, transparent);
+  border-color: color-mix(in srgb, var(--color-success) 15%, transparent);
 }
 
 .container[data-recommendation="Resume Update Recommended"] {
-  background: #fffbeb;
-  border-color: #fde68a;
+  background: color-mix(in srgb, var(--color-warning) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-warning) 20%, transparent);
 }
 
 :global(.dark) .container[data-recommendation="Resume Update Recommended"] {
-  background: rgba(245, 158, 11, 0.05);
-  border-color: rgba(245, 158, 11, 0.2);
+  background: color-mix(in srgb, var(--color-warning) 15%, transparent);
+  border-color: color-mix(in srgb, var(--color-warning) 15%, transparent);
 }
 
 .container[data-recommendation="Continue Learning"] {
-  background: #eff6ff;
-  border-color: #bfdbfe;
+  background: color-mix(in srgb, var(--color-brand) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-brand) 20%, transparent);
 }
 
 :global(.dark) .container[data-recommendation="Continue Learning"] {
-  background: rgba(59, 130, 246, 0.05);
-  border-color: rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--color-brand) 5%, transparent);
+  border-color: color-mix(in srgb, var(--color-brand) 20%, transparent);
 }
 
 .icon {
@@ -52,30 +52,30 @@
 }
 
 .icon[data-recommendation="Ready to Apply"] {
-  background: #f0fdf4;
-  color: #10b981;
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
+  color: var(--color-success);
 }
 
 :global(.dark) .icon[data-recommendation="Ready to Apply"] {
-  background: rgba(16, 185, 129, 0.1);
+  background: color-mix(in srgb, var(--color-success) 15%, transparent);
 }
 
 .icon[data-recommendation="Resume Update Recommended"] {
-  background: #fffbeb;
-  color: #f59e0b;
+  background: color-mix(in srgb, var(--color-warning) 10%, transparent);
+  color: var(--color-warning);
 }
 
 :global(.dark) .icon[data-recommendation="Resume Update Recommended"] {
-  background: rgba(245, 158, 11, 0.1);
+  background: color-mix(in srgb, var(--color-warning) 15%, transparent);
 }
 
 .icon[data-recommendation="Continue Learning"] {
-  background: #eff6ff;
-  color: #3b82f6;
+  background: color-mix(in srgb, var(--color-brand) 10%, transparent);
+  color: var(--color-brand);
 }
 
 :global(.dark) .icon[data-recommendation="Continue Learning"] {
-  background: rgba(59, 130, 246, 0.1);
+  background: color-mix(in srgb, var(--color-brand) 10%, transparent);
 }
 
 .title {

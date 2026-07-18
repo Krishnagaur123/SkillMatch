@@ -1,4 +1,5 @@
 import { SkillBadge } from '@/components/common/Badge'
+import styles from './SkillGroup.module.css'
 
 interface SkillGroupProps {
   title: React.ReactNode
@@ -13,7 +14,7 @@ export function SkillGroup({ title, skills, isMissing = false }: SkillGroupProps
 
   return (
     <div className="flex flex-col gap-2">
-      <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+      <h4 className={`flex items-center gap-1.5 ${styles.title}`}>
         {title}
       </h4>
       <div className="flex flex-wrap gap-2">

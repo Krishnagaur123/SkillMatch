@@ -90,7 +90,7 @@
 }
 
 .barFill[data-type="importance"] {
-  background: #f59e0b;
+  background: var(--color-warning);
 }
 
 .legend {
@@ -125,5 +125,5 @@
 }
 
 .legendColor[data-type="importance"] {
-  background: #f59e0b;
+  background: var(--color-warning);
 }

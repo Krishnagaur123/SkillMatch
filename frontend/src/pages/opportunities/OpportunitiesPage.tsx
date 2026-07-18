@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageContainer, PageContent, PageHeader } from '@/components/layout'
-import { EmptyState } from '@/components/feedback'
-import { Button } from '@/components/common/Button'
+import { EmptyState, ApiErrorState } from '@/components/feedback'
 import { ROUTES } from '@/constants/routes'
-import { FileSearch, Target, RefreshCw, AlertTriangle } from 'lucide-react'
+import { FileSearch, Target } from 'lucide-react'
 
 import { useUserProfile } from '@/hooks/useUserProfile'
 import { useRecommendedOpportunities } from '@/hooks/useOpportunities'
@@ -12,6 +11,7 @@ import { useDebounce } from '@/hooks/useDebounce'
 import { OpportunityFilters } from '@/features/opportunities/OpportunityFilters'
 import { OpportunityCard } from '@/features/opportunities/OpportunityCard'
 import { OpportunitySkeleton } from '@/features/opportunities/OpportunitySkeleton'
+import styles from './OpportunitiesPage.module.css'
 
 export default function OpportunitiesPage() {
   const navigate = useNavigate()
@@ -78,7 +78,7 @@ export default function OpportunitiesPage() {
             />
 
             {!isFetchingData && !isOppError && (
-              <div className="text-sm text-slate-500 font-medium px-1">
+              <div className={styles.count}>
                 Showing {totalElements} matching opportunit{totalElements === 1 ? 'y' : 'ies'}
               </div>
             )}
@@ -90,16 +90,10 @@ export default function OpportunitiesPage() {
                 ))}
               </div>
             ) : isOppError ? (
-              <div className="flex flex-col items-center justify-center py-16 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm text-center px-4">
-                <AlertTriangle className="w-12 h-12 text-amber-500 mb-4" />
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Unable to load opportunities</h3>
-                <p className="text-slate-500 dark:text-slate-400 max-w-md mb-6">
-                  There was a problem communicating with our servers. Please try again.
-                </p>
-                <Button onClick={handleRetry} className="gap-2">
-                  <RefreshCw className="w-4 h-4" /> Retry
-                </Button>
-              </div>
+              <ApiErrorState 
+                error={new Error('Unable to load opportunities')} 
+                onRetry={handleRetry} 
+              />
             ) : oppData?.content.length === 0 ? (
               <EmptyState
                 icon={<FileSearch size={36} />}

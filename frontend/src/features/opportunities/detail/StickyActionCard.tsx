@@ -6,6 +6,7 @@ import { useApplicationTracking } from '@/hooks/useApplicationTracking'
 import { ApplicationTrackingDialogs } from '@/features/applications/components/ApplicationTrackingDialogs'
 import type { OpportunityDetailResponse } from '@/hooks/useOpportunityDetail'
 import type { OpportunityRecommendation } from '@/hooks/useOpportunities'
+import styles from './StickyActionCard.module.css'
 
 interface StickyActionCardProps {
   opportunity: OpportunityDetailResponse
@@ -24,11 +25,11 @@ export function StickyActionCard({ opportunity, match }: StickyActionCardProps) 
   } = useApplicationTracking()
 
   return (
-    <Card className="sticky top-6 border-slate-200 shadow-sm dark:border-slate-800">
+    <Card className={styles.stickyCard}>
       <CardContent className="p-6 flex flex-col gap-6">
         {match && (
-          <div className="flex flex-col gap-3 pb-6 border-b border-slate-100 dark:border-slate-800">
-            <h3 className="font-semibold text-slate-900 dark:text-white text-base">Match Score</h3>
+          <div className={`flex flex-col gap-3 pb-6 ${styles.matchSection}`}>
+            <h3 className={styles.title}>Match Score</h3>
             <MatchScoreBadge score={match.matchPercentage} />
           </div>
         )}

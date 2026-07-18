@@ -55,11 +55,18 @@
 
 .icon {
   flex-shrink: 0;
-  opacity: 0.85;
+  opacity: 0.75;
+  transition: opacity 0.12s ease, color 0.12s ease;
 }
 
+.item:hover .icon {
+  opacity: 1;
+}
+
+/* Active: full opacity + brand color on icon */
 .active .icon {
   opacity: 1;
+  color: var(--color-brand);
 }
 
 .label {

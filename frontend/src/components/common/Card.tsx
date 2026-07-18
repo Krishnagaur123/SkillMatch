@@ -8,7 +8,9 @@ const cardVariants = cva(styles.card, {
   variants: {
     variant: {
       default: styles.variantDefault,
-      subtle: styles.variantSubtle,
+      elevated: styles.variantElevated,
+      outlined: styles.variantOutlined,
+      muted: styles.variantMuted,
       interactive: styles.variantInteractive,
     },
     padding: {

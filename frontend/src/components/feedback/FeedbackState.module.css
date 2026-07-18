@@ -5,11 +5,6 @@
   justify-content: center;
   text-align: center;
   padding: 3rem 1.5rem;
-  border-radius: var(--radius-xl);
-  border: 1px dashed var(--border-default);
-  background-color: var(--bg-card);
-  max-width: 32rem;
-  margin-inline: auto;
   width: 100%;
 }
 
@@ -17,17 +12,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   border-radius: 50%;
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
   color: var(--text-secondary);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .title {
   margin: 0;
-  font-size: 1.125rem;
+  font-size: var(--font-size-h3);
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.01em;
@@ -35,11 +31,18 @@
 
 .description {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: var(--font-size-body);
   color: var(--text-secondary);
   line-height: 1.5;
-  margin-top: 0.5rem;
-  max-width: 24rem;
+  margin-top: 0.25rem;
+  max-width: 28rem;
+}
+
+.actionsRow {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.25rem;
 }
 
 .actionBtn {
@@ -48,16 +51,20 @@
 
 /* Error variations */
 .errorContainer {
-  border: 1px solid oklch(0.90 0.08 25);
-  background-color: oklch(0.99 0.01 25);
+  border: 1px solid color-mix(in srgb, var(--color-error) 25%, transparent);
+  background-color: color-mix(in srgb, var(--color-error) 5%, transparent);
+  border-radius: var(--radius-xl);
+  max-width: 32rem;
+  margin-inline: auto;
 }
 
 .errorIconWrapper {
-  background-color: oklch(0.95 0.05 25);
-  color: oklch(0.40 0.15 25);
+  background-color: color-mix(in srgb, var(--color-error) 15%, transparent);
+  color: var(--color-error);
+  border: none;
 }
 
 .errorMessage {
-  color: oklch(0.40 0.15 25);
+  color: var(--color-error);
   font-family: var(--font-sans);
 }

@@ -1,0 +1,11 @@
+{
+  "tailwind": [],
+  "hardcoded": [
+    {
+      "file": "src\\components\\common\\CompanyLogo.tsx",
+      "line": 33,
+      "text": "return `hsl(${h}, 70%, 40%)` // darkish color"
+    }
+  ],
+  "deprecated": []
+}

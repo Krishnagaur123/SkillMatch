@@ -39,8 +39,8 @@ export function CompanyCard({ item }: CompanyCardProps) {
         <div className={styles.meta}>
           <h3 className={styles.name}>{name}</h3>
           <div className={styles.badgeRow}>
-            {industry && <Badge variant="secondary">{industry}</Badge>}
-            <Badge variant={hiringStatus === 'Active' ? 'default' : 'secondary'}>
+            {industry && <Badge variant="neutral">{industry}</Badge>}
+            <Badge variant={hiringStatus === 'Active' ? 'success' : 'neutral'}>
               {hiringStatus}
             </Badge>
           </div>
@@ -55,7 +55,7 @@ export function CompanyCard({ item }: CompanyCardProps) {
         <div className={styles.stat}>
           <span className={styles.statLabel}>Open Roles</span>
           <span className={styles.statValue}>
-            <Briefcase size={14} aria-hidden="true" className="text-slate-400" />
+            <Briefcase size={14} aria-hidden="true" />
             {openRolesCount}
           </span>
         </div>
@@ -68,7 +68,7 @@ export function CompanyCard({ item }: CompanyCardProps) {
         <div className={styles.stat}>
           <span className={styles.statLabel}>Location</span>
           <span className={styles.statValue}>
-            <MapPin size={14} aria-hidden="true" className="text-slate-400" />
+            <MapPin size={14} aria-hidden="true" />
             {headquarters || 'Remote'}
           </span>
         </div>

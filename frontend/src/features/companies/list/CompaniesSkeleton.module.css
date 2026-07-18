@@ -64,7 +64,7 @@
   padding: 1.25rem;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-default);
-  background-color: var(--bg-card);
+  background-color: var(--surface-primary);
   height: 24rem;
 }
 

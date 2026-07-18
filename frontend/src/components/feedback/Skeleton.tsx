@@ -3,16 +3,37 @@ import type { HTMLAttributes } from 'react'
 import styles from './Skeleton.module.css'
 
 export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: 'text' | 'circular' | 'rectangular'
+  variant?: 'text' | 'avatar' | 'rectangular' | 'card' | 'table' | 'list'
+  rows?: number
+  columns?: number
 }
 
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
-  ({ className, variant = 'rectangular', ...props }, ref) => {
+  ({ className, variant = 'rectangular', rows, columns, ...props }, ref) => {
+    if (variant === 'card') return <CardSkeleton className={className} {...props} ref={ref} />
+    if (variant === 'table') return <TableSkeleton className={className} rows={rows} columns={columns} {...props} ref={ref} />
+    if (variant === 'list') {
+      const listRows = rows || 3
+      return (
+        <div ref={ref} className={[styles.listSkeleton, className].filter(Boolean).join(' ')} {...props}>
+          {Array.from({ length: listRows }).map((_, i) => (
+            <div key={i} className={styles.listItemMock}>
+              <div className={[styles.skeleton, styles.avatar].filter(Boolean).join(' ')} />
+              <div className={styles.listTextMock}>
+                <div className={[styles.skeleton, styles.text].filter(Boolean).join(' ')} style={{ width: '60%' }} />
+                <div className={[styles.skeleton, styles.text].filter(Boolean).join(' ')} style={{ width: '40%' }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    }
+
     const variantClass =
       variant === 'text'
         ? styles.text
-        : variant === 'circular'
-        ? styles.circular
+        : variant === 'avatar'
+        ? styles.avatar
         : styles.rectangular
 
     return (
@@ -33,7 +54,7 @@ export const CardSkeleton = forwardRef<HTMLDivElement, CardSkeletonProps>(
     return (
       <div ref={ref} className={[styles.cardSkeleton, className].filter(Boolean).join(' ')} {...props}>
         <div className={styles.cardHeaderSkeleton}>
-          <Skeleton variant="circular" className={styles.avatarMock} />
+          <div className={[styles.skeleton, styles.avatar].filter(Boolean).join(' ')} />
           <div className={styles.headerTextMock}>
             <Skeleton variant="text" className={styles.titleMock} />
             <Skeleton variant="text" className={styles.subtitleMock} />

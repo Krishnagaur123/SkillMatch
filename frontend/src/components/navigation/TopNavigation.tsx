@@ -1,11 +1,37 @@
-import { Bell, Sun, PanelLeft, Menu } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Bell, Sun, PanelLeft, Menu, ChevronDown, User, Settings, LogOut } from 'lucide-react'
 import Breadcrumb from './Breadcrumb'
 import Avatar from './Avatar'
 import { useSidebar } from '@/app/providers/SidebarContext'
+import { useTheme } from '@/app/providers/ThemeContext'
+import { useAuth } from '@/features/auth/hooks/useAuth'
 import styles from './TopNavigation.module.css'
 
 export default function TopNavigation() {
   const { toggleCollapsed, openDrawer } = useSidebar()
+  const { toggleTheme } = useTheme()
+  const { logout, isLoggingOut } = useAuth()
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const handleLogout = () => {
+    logout()
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false)
+      }
+    }
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isDropdownOpen])
 
   return (
     <header className={styles.root} role="banner">
@@ -33,11 +59,60 @@ export default function TopNavigation() {
         <button type="button" className={styles.iconBtn} aria-label="Notifications">
           <Bell size={18} />
         </button>
-        <button type="button" className={styles.iconBtn} aria-label="Toggle theme">
+        <button type="button" className={styles.iconBtn} onClick={toggleTheme} aria-label="Toggle theme">
           <Sun size={18} />
         </button>
-        <div className={styles.avatarWrapper} aria-label="User menu">
-          <Avatar initials="SM" size="sm" />
+        
+        <div className={styles.avatarDropdownWrapper} ref={dropdownRef}>
+          <button
+            type="button"
+            className={styles.avatarTrigger}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            aria-expanded={isDropdownOpen}
+            aria-haspopup="true"
+            aria-label="User menu"
+          >
+            <Avatar initials="KG" size="sm" />
+            <ChevronDown size={14} className={styles.avatarChevron} />
+          </button>
+
+          {isDropdownOpen && (
+            <div className={styles.dropdownMenu}>
+              <div className={styles.dropdownHeader}>
+                <p className={styles.dropdownName}>Krishna Gaur</p>
+                <p className={styles.dropdownEmail}>member@skillmatch.com</p>
+              </div>
+              <div className={styles.dropdownDivider} />
+              
+              <Link
+                to="/profile"
+                className={styles.dropdownItem}
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                <User size={14} className={styles.dropdownIcon} />
+                Profile
+              </Link>
+              <Link
+                to="/settings"
+                className={styles.dropdownItem}
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                <Settings size={14} className={styles.dropdownIcon} />
+                Settings
+              </Link>
+              
+              <div className={styles.dropdownDivider} />
+              <button
+                type="button"
+                className={styles.dropdownItem}
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+              >
+                <LogOut size={14} className={styles.dropdownIcon} />
+                {isLoggingOut ? 'Logging out...' : 'Logout'}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

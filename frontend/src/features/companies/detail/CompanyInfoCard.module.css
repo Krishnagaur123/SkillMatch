@@ -1,0 +1,12 @@
+.iconWrapper {
+  background-color: var(--surface-background);
+  color: var(--text-secondary);
+}
+
+.title {
+  color: var(--text-secondary);
+}
+
+.value {
+  color: var(--text-heading);
+}

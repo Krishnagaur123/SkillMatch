@@ -49,21 +49,21 @@
 }
 
 .iconWrapper[data-type="positive"] {
-  background: #f0fdf4;
-  color: #10b981;
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
+  color: var(--color-success);
 }
 
 :global(.dark) .iconWrapper[data-type="positive"] {
-  background: rgba(16, 185, 129, 0.1);
+  background: color-mix(in srgb, var(--color-success) 15%, transparent);
 }
 
 .iconWrapper[data-type="action"] {
-  background: #eff6ff;
-  color: #3b82f6;
+  background: color-mix(in srgb, var(--color-brand) 10%, transparent);
+  color: var(--color-brand);
 }
 
 :global(.dark) .iconWrapper[data-type="action"] {
-  background: rgba(59, 130, 246, 0.1);
+  background: color-mix(in srgb, var(--color-brand) 10%, transparent);
 }
 
 .text {

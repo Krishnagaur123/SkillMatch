@@ -8,6 +8,7 @@ import { CompanyLogo } from '@/components/common/CompanyLogo'
 import type { OpportunityRecommendation } from '@/hooks/useOpportunities'
 import { useApplicationTracking } from '@/hooks/useApplicationTracking'
 import { ApplicationTrackingDialogs } from '@/features/applications/components/ApplicationTrackingDialogs'
+import styles from './OpportunityCard.module.css'
 
 interface OpportunityCardProps {
   opportunity: OpportunityRecommendation
@@ -67,7 +68,7 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
   const insight = deriveInsight(opportunity)
 
   return (
-    <Card className="flex flex-col h-full hover:shadow-md transition-shadow duration-200">
+    <Card variant="interactive" className="flex flex-col h-full">
       <CardHeader className="flex flex-row items-start justify-between gap-4 pb-2">
         <div className="flex items-start gap-4 flex-1">
           <Link to={`/companies/${company.id}`} state={{ from: routerLocation.pathname }} className="shrink-0 group">
@@ -79,13 +80,13 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
             />
           </Link>
           <div className="flex flex-col">
-            <h3 className="font-semibold text-lg text-slate-900 dark:text-white line-clamp-1">
+            <h3 className={`line-clamp-1 ${styles.title}`}>
               {title}
             </h3>
             <Link 
               to={`/companies/${company.id}`} 
               state={{ from: routerLocation.pathname }}
-              className="text-sm font-medium text-slate-600 hover:text-primary transition-colors dark:text-slate-400"
+              className={styles.companyName}
             >
               {company.name}
             </Link>
@@ -98,7 +99,7 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
       </CardHeader>
 
       <CardContent className="flex-1 flex flex-col gap-5">
-        <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400 flex-wrap">
+        <div className={`flex items-center gap-4 text-sm flex-wrap ${styles.metaInfo}`}>
           <div className="flex items-center gap-1.5">
             <MapPin className="w-4 h-4" />
             <span>{location || 'Remote / Unknown'}</span>
@@ -114,13 +115,13 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
         </div>
 
         {/* Mobile match score */}
-        <div className="sm:hidden flex items-center gap-4 py-2 border-y border-slate-100 dark:border-slate-800">
-           <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Match Score</span>
+        <div className={`sm:hidden flex items-center gap-4 py-2 ${styles.mobileMatch}`}>
+           <span className="text-sm font-semibold">Match Score</span>
            <MatchScoreBadge score={matchPercentage} className="scale-75 origin-left" />
         </div>
 
-        <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700/50">
-          <p className="text-sm text-slate-700 dark:text-slate-300 font-medium">
+        <div className={styles.insightCard}>
+          <p className={styles.insightText}>
             💡 {insight}
           </p>
         </div>
@@ -128,27 +129,27 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
         <div className="flex flex-col gap-4">
           <SkillGroup 
             title={
-              <><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Skills You Have</>
+              <><CheckCircle2 className={`w-4 h-4 ${styles.iconSuccess}`} /> Skills You Have</>
             } 
             skills={matchedSkills} 
           />
           <SkillGroup 
             title={
-              <><AlertTriangle className="w-4 h-4 text-amber-500" /> Missing Required</>
+              <><AlertTriangle className={`w-4 h-4 ${styles.iconWarning}`} /> Missing Required</>
             } 
             skills={missingRequiredSkills} 
             isMissing 
           />
           <SkillGroup 
             title={
-              <><Info className="w-4 h-4 text-blue-500" /> Missing Preferred</>
+              <><Info className={`w-4 h-4 ${styles.iconInfo}`} /> Missing Preferred</>
             } 
             skills={missingPreferredSkills} 
             isMissing 
           />
           <SkillGroup 
             title={
-              <><Circle className="w-4 h-4 text-slate-400" /> Good To Have</>
+              <><Circle className={`w-4 h-4 ${styles.iconNeutral}`} /> Good To Have</>
             } 
             skills={missingGoodToHaveSkills} 
             isMissing 
@@ -156,7 +157,7 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
+      <CardFooter className={`pt-4 flex items-center gap-3 ${styles.footer}`}>
         <Button 
           variant="secondary" 
           className="flex-1"

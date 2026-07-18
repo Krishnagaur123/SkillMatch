@@ -67,7 +67,7 @@ export const PermissionDeniedState = forwardRef<HTMLDivElement, PermissionDenied
     return (
       <EmptyState
         ref={ref}
-        icon={<Lock size={36} style={{ color: 'var(--text-muted)' }} />}
+        icon={<Lock size={36} style={{ color: 'var(--text-secondary)' }} />}
         title={title}
         description={description}
         actionLabel={actionLabel}
@@ -100,7 +100,7 @@ export const ResourceNotFoundState = forwardRef<HTMLDivElement, ResourceNotFound
     return (
       <EmptyState
         ref={ref}
-        icon={<FileSearch size={36} style={{ color: 'var(--text-muted)' }} />}
+        icon={<FileSearch size={36} style={{ color: 'var(--text-secondary)' }} />}
         title={title}
         description={description}
         actionLabel={actionLabel}

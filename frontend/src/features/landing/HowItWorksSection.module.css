@@ -1,6 +1,6 @@
 .root {
   padding-block: 6rem;
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
 }
 
 .container {
@@ -86,7 +86,7 @@
   font-weight: 700;
   letter-spacing: 0.02em;
   flex-shrink: 0;
-  box-shadow: 0 4px 10px oklch(0.55 0.22 265 / 0.15);
+  box-shadow: var(--shadow-md);
 }
 
 .stepConnector {

@@ -10,7 +10,11 @@ export default function AppBrand({ collapsed = false }: AppBrandProps) {
       <span className={styles.logoMark} aria-hidden="true">
         S
       </span>
-      {!collapsed && <span className={styles.name}>SkillMatch</span>}
+      {!collapsed && (
+        <span className={styles.name}>
+          Skill<span className={styles.nameHighlight}>Match</span>
+        </span>
+      )}
     </div>
   )
 }

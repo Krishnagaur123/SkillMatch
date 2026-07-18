@@ -1,4 +1,5 @@
-import { OAUTH2_GOOGLE_URL } from '@/config/constants'
+import { Link } from 'react-router-dom'
+import { ROUTES } from '@/constants/routes'
 import { motion } from 'framer-motion'
 import styles from './HeroSection.module.css'
 
@@ -30,7 +31,7 @@ function DashboardPreview() {
           <div className={styles.previewStatsRow}>
             {[
               { label: 'Avg Match Score', value: '87%', progress: 87, color: 'var(--accent)' },
-              { label: 'Role Coverage', value: '92%', progress: 92, color: '#10b981' },
+              { label: 'Role Coverage', value: '92%', progress: 92, color: 'var(--color-success)' },
               { label: 'Applied', value: '24', sub: '+3 this week' },
             ].map((stat) => (
               <div key={stat.label} className={styles.previewStat}>
@@ -188,9 +189,9 @@ export default function HeroSection() {
             ))}
           </motion.ul>
           <motion.div className={styles.actions} variants={itemVariants}>
-            <a href={OAUTH2_GOOGLE_URL} className={styles.primaryBtn}>
-              Start for Free
-            </a>
+            <Link to={`${ROUTES.AUTH}?mode=signup`} className={styles.primaryBtn}>
+              Sign Up
+            </Link>
             <a href="#how-it-works" className={styles.secondaryBtn}>
               See how it works
             </a>

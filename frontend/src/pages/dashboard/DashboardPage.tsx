@@ -244,9 +244,9 @@ export default function DashboardPage() {
                       tickLine={false}
                       domain={[0, 100]}
                     />
-                    <Tooltip content={customTooltip} cursor={{ fill: 'var(--bg-subtle)' }} />
+                    <Tooltip content={customTooltip} cursor={{ fill: 'var(--surface-hover)' }} />
                     <Bar dataKey="Demand" fill="var(--accent)" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="Importance" fill="oklch(0.62 0.17 145)" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="Importance" fill="var(--color-brand)" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </ChartCard>

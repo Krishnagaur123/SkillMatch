@@ -1,0 +1,47 @@
+.title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--text-heading);
+}
+
+.companyName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: var(--transition-base);
+}
+
+.companyName:hover {
+  color: var(--color-brand);
+}
+
+.metaInfo {
+  color: var(--text-secondary);
+}
+
+.mobileMatch {
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.insightCard {
+  background-color: var(--surface-hover);
+  padding: 0.75rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-default);
+}
+
+.insightText {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.footer {
+  border-top: 1px solid var(--border-default);
+}
+
+.iconInfo { color: var(--color-brand); }
+.iconSuccess { color: var(--color-success); }
+.iconWarning { color: var(--color-warning); }
+.iconNeutral { color: var(--text-secondary); }

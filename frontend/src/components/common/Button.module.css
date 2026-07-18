@@ -11,7 +11,7 @@
   cursor: pointer;
   border: 1px solid transparent;
   outline: none;
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  transition: var(--transition-base);
   user-select: none;
 }
 
@@ -22,30 +22,41 @@
 }
 
 .button:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: var(--focus-ring-offset);
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
 }
 
 .primary {
-  background-color: var(--accent);
+  background-color: var(--color-brand);
   color: var(--accent-foreground);
-  box-shadow: 0 1px 2px oklch(0 0 0 / 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .primary:hover {
-  background-color: var(--accent-hover);
+  background-color: color-mix(in srgb, var(--color-brand) 85%, black);
 }
 
 .secondary {
-  background-color: var(--bg-card);
+  background-color: var(--surface-primary);
   border-color: var(--border-default);
   color: var(--text-primary);
-  box-shadow: 0 1px 2px oklch(0 0 0 / 0.02);
+  box-shadow: var(--shadow-sm);
 }
 
 .secondary:hover {
-  border-color: var(--border-strong);
-  background-color: var(--bg-subtle);
+  border-color: var(--border-hover);
+  background-color: var(--surface-hover);
+}
+
+.outline {
+  background-color: transparent;
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+
+.outline:hover {
+  border-color: var(--border-hover);
+  background-color: var(--surface-hover);
 }
 
 .ghost {
@@ -54,20 +65,24 @@
 }
 
 .ghost:hover {
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-hover);
   color: var(--text-primary);
 }
 
-.icon {
-  background-color: transparent;
-  color: var(--text-secondary);
-  padding: 0.5rem !important;
-  border-radius: var(--radius-md);
+.destructive {
+  background-color: var(--color-error);
+  color: var(--accent-foreground);
+  box-shadow: var(--shadow-sm);
 }
 
-.icon:hover {
-  background-color: var(--bg-subtle);
-  color: var(--text-primary);
+.destructive:hover {
+  background-color: color-mix(in srgb, var(--color-error) 85%, black);
+}
+
+.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .sizeSm {

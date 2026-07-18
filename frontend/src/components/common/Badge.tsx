@@ -8,13 +8,15 @@ import styles from './Badge.module.css'
 const badgeVariants = cva(styles.badge, {
   variants: {
     variant: {
-      default: styles.variantDefault,
-      secondary: styles.variantSecondary,
-      outline: styles.variantOutline,
+      brand: styles.variantBrand,
+      success: styles.variantSuccess,
+      warning: styles.variantWarning,
+      error: styles.variantError,
+      neutral: styles.variantNeutral,
     },
   },
   defaultVariants: {
-    variant: 'default',
+    variant: 'neutral',
   },
 })
 
@@ -41,25 +43,17 @@ export interface StatusBadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 export const StatusBadge = forwardRef<HTMLSpanElement, StatusBadgeProps>(
   ({ className, status, children, ...props }, ref) => {
-    const statusClass =
-      status === 'active' || status === 'success' ? styles.statusSuccess
-      : status === 'pending' || status === 'warning' ? styles.statusWarning
-      : status === 'error' || status === 'danger' || status === 'rejected' ? styles.statusError
-      : status === 'primary' ? styles.statusPrimary
-      : status === 'muted' ? styles.statusMuted
-      : styles.statusNeutral
-
+    let variant: 'success' | 'warning' | 'error' | 'brand' | 'neutral' = 'neutral'
+    
+    if (status === 'active' || status === 'success') variant = 'success'
+    else if (status === 'pending' || status === 'warning') variant = 'warning'
+    else if (status === 'error' || status === 'danger' || status === 'rejected') variant = 'error'
+    else if (status === 'primary') variant = 'brand'
+    
     return (
-      <span
-        ref={ref}
-        className={[styles.badge, styles.statusBadge, statusClass, className]
-          .filter(Boolean)
-          .join(' ')}
-        {...props}
-      >
-        <span className={styles.statusDot} aria-hidden="true" />
+      <Badge ref={ref} variant={variant} className={className} {...props}>
         {children || status.charAt(0).toUpperCase() + status.slice(1)}
-      </span>
+      </Badge>
     )
   }
 )
@@ -101,26 +95,13 @@ export interface SkillBadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 export const SkillBadge = forwardRef<HTMLSpanElement, SkillBadgeProps>(
   ({ className, name, isMissing = false, variant = 'manual', children, ...props }, ref) => {
-    const variantClass = variant === 'resume' ? styles.skillResume : styles.skillManual
+    const badgeVariant = isMissing ? 'neutral' : (variant === 'resume' ? 'success' : 'brand')
     return (
-      <span
-        ref={ref}
-        className={[
-          styles.badge,
-          styles.skillBadge,
-          isMissing ? styles.skillMissing : variantClass,
-          className,
-        ]
-          .filter(Boolean)
-          .join(' ')}
-        role="button"
-        tabIndex={0}
-        {...props}
-      >
+      <Badge ref={ref} variant={badgeVariant} className={className} {...props}>
         {name}
-        {isMissing && <span className={styles.skillMissingText}>Missing</span>}
+        {isMissing && <span style={{ fontSize: '0.625rem', marginLeft: '4px', textTransform: 'uppercase', fontWeight: 600 }}>Missing</span>}
         {children}
-      </span>
+      </Badge>
     )
   }
 )
@@ -132,19 +113,12 @@ export interface MatchBadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 export const MatchBadge = forwardRef<HTMLSpanElement, MatchBadgeProps>(
   ({ className, score, ...props }, ref) => {
-    const ratingClass =
-      score >= 85 ? styles.matchHigh : score >= 60 ? styles.matchMid : styles.matchLow
+    const variant = score >= 85 ? 'success' : score >= 60 ? 'warning' : 'error'
 
     return (
-      <span
-        ref={ref}
-        className={[styles.badge, styles.matchBadge, ratingClass, className]
-          .filter(Boolean)
-          .join(' ')}
-        {...props}
-      >
+      <Badge ref={ref} variant={variant} className={className} {...props}>
         {score}% Match
-      </span>
+      </Badge>
     )
   }
 )

@@ -1,6 +1,6 @@
 import { Building2, SearchX, FilterX } from 'lucide-react'
 import { Button } from '@/components/common/Button'
-import styles from './CompanyEmptyState.module.css'
+import { EmptyState } from '@/components/common/EmptyState'
 
 export type EmptyStateType = 'no-companies' | 'no-search-results' | 'no-filter-results'
 
@@ -24,22 +24,18 @@ export function CompanyEmptyState({ type, onClearFilters }: CompanyEmptyStatePro
     description = "We couldn't find any companies matching your current filters. Try removing some filters."
   }
 
+  const action = (type === 'no-search-results' || type === 'no-filter-results') && onClearFilters ? (
+    <Button variant="secondary" onClick={onClearFilters}>
+      Clear Filters
+    </Button>
+  ) : undefined
+
   return (
-    <div className={styles.root} role="status">
-      <div className={styles.iconWrap} aria-hidden="true">
-        <Icon size={28} />
-      </div>
-      <div className={styles.textGroup}>
-        <h3 className={styles.title}>{title}</h3>
-        <p className={styles.description}>{description}</p>
-      </div>
-      {(type === 'no-search-results' || type === 'no-filter-results') && onClearFilters && (
-        <div className={styles.actionWrap}>
-          <Button variant="secondary" onClick={onClearFilters}>
-            Clear Filters
-          </Button>
-        </div>
-      )}
-    </div>
+    <EmptyState
+      icon={<Icon />}
+      title={title}
+      description={description}
+      action={action}
+    />
   )
 }

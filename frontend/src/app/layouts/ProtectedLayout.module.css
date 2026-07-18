@@ -30,7 +30,7 @@
 .main {
   flex: 1;
   overflow-y: auto;
-  background-color: var(--bg-page);
+  background-color: var(--surface-background);
 }
 
 @media (min-width: 768px) {

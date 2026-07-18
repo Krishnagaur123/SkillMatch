@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { AppBrand } from '@/components/navigation'
 import { ROUTES } from '@/constants/routes'
-import { OAUTH2_GOOGLE_URL } from '@/config/constants'
 import styles from './LandingNavbar.module.css'
 
 const NAV_LINKS = [
@@ -116,13 +115,13 @@ export default function LandingNavbar() {
         </ul>
 
         <div className={styles.actions}>
-          <a
-            href={OAUTH2_GOOGLE_URL}
+          <Link
+            to={`${ROUTES.AUTH}?mode=signin`}
             className={styles.ctaBtn}
-            aria-label="Sign in with Google"
+            aria-label="Login"
           >
-            Get Started
-          </a>
+            Login
+          </Link>
         </div>
 
         <button
@@ -155,9 +154,9 @@ export default function LandingNavbar() {
               </li>
             ))}
           </ul>
-          <a href={OAUTH2_GOOGLE_URL} className={styles.mobileCta}>
-            Get Started
-          </a>
+          <Link to={`${ROUTES.AUTH}?mode=signin`} className={styles.mobileCta}>
+            Login
+          </Link>
         </div>
       )}
     </nav>

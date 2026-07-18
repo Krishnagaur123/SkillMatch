@@ -49,8 +49,8 @@
   right: 0;
   width: 0.5rem;
   height: 0.5rem;
-  background-color: oklch(0.62 0.17 145);
-  border: 1.5px solid var(--bg-card);
+  background-color: var(--color-brand);
+  border: 1.5px solid var(--surface-primary);
   border-radius: 50%;
 }
 

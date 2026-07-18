@@ -3,9 +3,10 @@ import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import type { KeyboardEvent, CSSProperties } from 'react'
 import { SectionCard } from '@/components/layout'
-import { RemovableSkillBadge, SkillBadge } from '@/components/common'
+import { RemovableSkillBadge, SkillBadge, Button } from '@/components/common'
 import { Search, Loader2, X, Zap, AlertCircle } from 'lucide-react'
-import { useSkillsCatalog } from '@/hooks'
+import { EmptyState } from '@/components/feedback'
+import { useSkillsCatalog, useAddUserSkill, useRemoveUserSkill } from '@/hooks'
 import { useDebounce } from '@/hooks/useDebounce'
 import styles from './ProfileSection.module.css'
 
@@ -15,26 +16,28 @@ interface SkillEntry {
 }
 
 interface ManualSkillsSectionProps {
-  isEditing: boolean
   skills: SkillEntry[]
-  onSkillsChange: (skills: SkillEntry[]) => void
   resumeSkills?: string[]
   hasActiveResume?: boolean
   resumeCount?: number
-  manualCount?: number
-  onEditClick?: () => void
 }
 
+const INITIAL_VISIBLE_COUNT = 15
+
 export function ManualSkillsSection({
-  isEditing,
   skills,
-  onSkillsChange,
   resumeSkills = [],
   hasActiveResume = false,
   resumeCount = 0,
-  manualCount = 0,
-  onEditClick,
 }: ManualSkillsSectionProps) {
+  const [isEditing, setIsEditing] = useState(false)
+  const [localSkills, setLocalSkills] = useState<SkillEntry[]>([])
+  const [isSaving, setIsSaving] = useState(false)
+  const [showAll, setShowAll] = useState(false)
+
+  const { mutateAsync: addSkillAsync } = useAddUserSkill()
+  const { mutateAsync: removeSkillAsync } = useRemoveUserSkill()
+
   const [inputValue, setInputValue] = useState('')
   const debouncedSearch = useDebounce(inputValue, 300)
 
@@ -48,8 +51,49 @@ export function ManualSkillsSection({
   const inputWrapperRef = useRef<HTMLDivElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
+  const handleEdit = () => {
+    setLocalSkills([...skills])
+    setIsEditing(true)
+    setShowAll(true) // Always show all when editing
+  }
+
+  const handleCancel = () => {
+    setIsEditing(false)
+    setInputValue('')
+    setIsOpen(false)
+    setShowAll(false)
+  }
+
+  const handleSave = async () => {
+    setIsSaving(true)
+    try {
+      const originalSkillIds = new Set(skills.map(s => s.skillId))
+      const currentSkillIds = new Set(localSkills.map(s => s.skillId))
+      const toAdd = [...currentSkillIds].filter(id => !originalSkillIds.has(id))
+      const toRemove = [...originalSkillIds].filter(id => !currentSkillIds.has(id))
+      
+      const promises: Promise<unknown>[] = []
+      toAdd.forEach(id => promises.push(addSkillAsync({ skillId: id })))
+      toRemove.forEach(id => promises.push(removeSkillAsync(id)))
+      
+      const results = await Promise.allSettled(promises)
+      const failed = results.filter((r): r is PromiseRejectedResult => r.status === 'rejected')
+      
+      if (failed.length > 0) {
+        console.error('Failed to save some skills:', failed)
+        alert('Some changes could not be saved. Please try again.')
+      } else {
+        setIsEditing(false)
+      }
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const activeSkills = isEditing ? localSkills : skills
+
   const availableSkills = catalog.filter(
-    skill => !skills.some(us => us.skillId === skill.id)
+    skill => !activeSkills.some(us => us.skillId === skill.id)
   )
 
   const shouldShowDropdown = isOpen && inputValue.trim().length > 0
@@ -88,8 +132,8 @@ export function ManualSkillsSection({
   }, [isOpen])
 
   const handleSelectSkill = (skill: { id: string; name: string }) => {
-    if (skills.some(us => us.skillId === skill.id)) return
-    onSkillsChange([...skills, { skillId: skill.id, skillName: skill.name }])
+    if (activeSkills.some(us => us.skillId === skill.id)) return
+    setLocalSkills([...localSkills, { skillId: skill.id, skillName: skill.name }])
     setInputValue('')
     setIsOpen(false)
     setHighlightedIndex(-1)
@@ -97,7 +141,7 @@ export function ManualSkillsSection({
   }
 
   const handleRemoveSkill = (skillId: string) => {
-    onSkillsChange(skills.filter(us => us.skillId !== skillId))
+    setLocalSkills(localSkills.filter(us => us.skillId !== skillId))
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -127,38 +171,55 @@ export function ManualSkillsSection({
     }
   }
 
-  const sortedResumeSkills = [...resumeSkills].sort((a, b) => a.localeCompare(b))
-  const sortedManualSkills = [...skills].sort((a, b) => a.skillName.localeCompare(b.skillName))
-  const total = (resumeCount ?? 0) + (manualCount ?? 0)
+  const allChips = [
+    ...resumeSkills.map(name => ({ type: 'resume', name, id: `resume-${name}` })),
+    ...activeSkills.map(s => ({ type: 'manual', name: s.skillName, id: s.skillId }))
+  ]
 
-  const emptyState = total === 0 ? (
-    <div className={styles.emptyState}>
-      <Zap size={20} className={styles.emptyStateIcon} />
-      <div className={styles.emptyStateContent}>
-        <span className={styles.emptyStateTitle}>No skills on profile</span>
-        <span className={styles.emptyStateDesc}>
-          Enhance your profile and opportunities by{' '}
-          <Link to="/resumes" className={styles.inlineLink}>
-            uploading a resume
-          </Link>{' '}
-          or adding skills manually below.
-        </span>
-      </div>
+  const visibleChips = (isEditing || showAll) ? allChips : allChips.slice(0, INITIAL_VISIBLE_COUNT)
+  const hiddenCount = allChips.length - visibleChips.length
+
+  const emptyState = allChips.length === 0 ? (
+    <div style={{ width: '100%' }}>
+      <EmptyState
+        icon={<Zap size={36} />}
+        title="No skills on profile"
+        description={
+          <>
+            Enhance your profile and opportunities by{' '}
+            <Link to="/resumes" className={styles.inlineLink}>
+              uploading a resume
+            </Link>{' '}
+            or adding skills manually below.
+          </>
+        }
+      />
     </div>
   ) : null
 
+  const actions = isEditing ? (
+    <div style={{ display: 'flex', gap: '0.5rem' }}>
+      <Button size="sm" onClick={handleSave} disabled={isSaving}>
+        {isSaving ? 'Saving...' : 'Save'}
+      </Button>
+      <Button variant="secondary" size="sm" onClick={handleCancel} disabled={isSaving}>
+        Cancel
+      </Button>
+    </div>
+  ) : (
+    <Button variant="secondary" size="sm" onClick={handleEdit}>
+      Manage
+    </Button>
+  )
+
   return (
     <SectionCard
-      title="Effective Skills"
+      title="Skills"
       description="Your complete skill profile combining resume extraction and manual additions."
+      actions={actions}
     >
       <div className={`${styles.container}${isEditing ? ` ${styles.containerEditing}` : ''}`}>
         <div className={styles.statsSummary}>
-          <div className={styles.statItem}>
-            <span className={styles.statLabel}>Effective Skills</span>
-            <span className={styles.statValue}>{total}</span>
-          </div>
-          <div className={styles.statDivider} />
           <div className={styles.statItem}>
             <span className={styles.statLabel}>Resume Skills</span>
             <span className={styles.statValue}>{resumeCount}</span>
@@ -166,23 +227,25 @@ export function ManualSkillsSection({
           <div className={styles.statDivider} />
           <div className={styles.statItem}>
             <span className={styles.statLabel}>Manual Skills</span>
-            <span className={styles.statValue}>{manualCount}</span>
+            <span className={styles.statValue}>{skills.length}</span>
           </div>
         </div>
 
-        {!hasActiveResume && (
-          <div className={styles.emptyState}>
-            <AlertCircle size={16} className={styles.emptyStateIcon} />
-            <div className={styles.emptyStateContent}>
-              <span className={styles.emptyStateTitle}>No active resume</span>
-              <span className={styles.emptyStateDesc}>
-                Upload and activate a resume in the{' '}
-                <Link to="/resumes" className={styles.inlineLink}>
-                  Resumes
-                </Link>{' '}
-                section to automatically populate resume skills.
-              </span>
-            </div>
+        {!hasActiveResume && !isEditing && (
+          <div style={{ width: '100%' }}>
+            <EmptyState
+              icon={<AlertCircle size={36} />}
+              title="No active resume"
+              description={
+                <>
+                  Upload and activate a resume in the{' '}
+                  <Link to="/resumes" className={styles.inlineLink}>
+                    Resumes
+                  </Link>{' '}
+                  section to automatically populate resume skills.
+                </>
+              }
+            />
           </div>
         )}
 
@@ -275,56 +338,57 @@ export function ManualSkillsSection({
         )}
 
         <div className={styles.badgeList}>
-          {total === 0 ? (
+          {allChips.length === 0 ? (
             emptyState
           ) : (
             <>
-              {sortedResumeSkills.map(name =>
-                isEditing ? (
-                  <SkillBadge
-                    key={`resume-${name}`}
-                    name={name}
-                    variant="resume"
-                    title="Extracted from your active resume. Edit or replace your active resume to change this skill."
-                  />
-                ) : (
-                  <span
-                    key={`resume-${name}`}
-                    className={styles.viewBadgeResume}
-                    title="Extracted from your active resume. Edit or replace your active resume to change this skill."
-                  >
-                    {name}
-                  </span>
-                )
-              )}
-
-              {sortedManualSkills.map(us =>
-                isEditing ? (
-                  <RemovableSkillBadge
-                    key={`manual-${us.skillId}`}
-                    name={us.skillName}
-                    variant="manual"
-                    onRemove={() => handleRemoveSkill(us.skillId)}
-                    title="Added manually."
-                  />
-                ) : (
-                  <span
-                    key={`manual-${us.skillId}`}
-                    className={styles.viewBadgeManual}
-                    title="Added manually."
-                  >
-                    {us.skillName}
-                  </span>
-                )
-              )}
-
-              {manualCount === 0 && !isEditing && onEditClick && (
+              {visibleChips.map(chip => {
+                if (chip.type === 'resume') {
+                  return isEditing ? (
+                    <SkillBadge
+                      key={`resume-${chip.name}`}
+                      name={chip.name}
+                      variant="resume"
+                      title="Extracted from your active resume."
+                    />
+                  ) : (
+                    <span
+                      key={`resume-${chip.name}`}
+                      className={styles.viewBadgeResume}
+                      title="Extracted from your active resume."
+                    >
+                      {chip.name}
+                    </span>
+                  )
+                } else {
+                  return isEditing ? (
+                    <RemovableSkillBadge
+                      key={`manual-${chip.id}`}
+                      name={chip.name}
+                      variant="manual"
+                      onRemove={() => handleRemoveSkill(chip.id)}
+                      title="Added manually."
+                    />
+                  ) : (
+                    <span
+                      key={`manual-${chip.id}`}
+                      className={styles.viewBadgeManual}
+                      title="Added manually."
+                    >
+                      {chip.name}
+                    </span>
+                  )
+                }
+              })}
+              
+              {!isEditing && hiddenCount > 0 && (
                 <button
                   type="button"
                   className={styles.addSkillAction}
-                  onClick={onEditClick}
+                  onClick={() => setShowAll(true)}
+                  style={{ border: '1px dashed var(--border-default)', color: 'var(--text-secondary)' }}
                 >
-                  + Add Manual Skills
+                  + {hiddenCount} more
                 </button>
               )}
             </>

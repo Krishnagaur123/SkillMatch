@@ -1,6 +1,6 @@
 .root {
   padding-block: 6rem;
-  background-color: var(--bg-page);
+  background-color: var(--surface-background);
 }
 
 .container {
@@ -64,16 +64,16 @@
   padding: 2rem;
   border: 1px solid var(--border-default);
   border-radius: var(--radius-xl);
-  background-color: var(--bg-card);
+  background-color: var(--surface-primary);
   cursor: pointer;
   outline: none;
-  box-shadow: 0 1px 3px oklch(0 0 0 / 0.02);
+  box-shadow: var(--shadow-sm);
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card:hover {
-  border-color: var(--border-strong);
-  box-shadow: 0 12px 30px oklch(0 0 0 / 0.06);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-lg);
 }
 
 .card:focus-visible {

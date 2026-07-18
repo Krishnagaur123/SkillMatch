@@ -1,6 +1,7 @@
 .badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.375rem;
   padding: 0.25rem 0.625rem;
   border-radius: var(--radius-sm);
@@ -9,228 +10,35 @@
   line-height: 1.2;
   white-space: nowrap;
   user-select: none;
-}
-
-.variantDefault {
-  background-color: var(--accent);
-  color: var(--accent-foreground);
-}
-
-.variantSecondary {
-  background-color: var(--bg-subtle);
-  color: var(--text-secondary);
-}
-
-.variantOutline {
-  background-color: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-default);
-}
-
-.statusBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.375rem 0.75rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 0.8125rem;
   border: 1px solid transparent;
 }
 
-.statusDot {
-  width: 0.375rem;
-  height: 0.375rem;
-  border-radius: 50%;
-  background-color: currentColor;
-  flex-shrink: 0;
+.variantBrand {
+  background-color: color-mix(in srgb, var(--color-brand) 15%, transparent);
+  color: var(--color-brand);
+  border-color: color-mix(in srgb, var(--color-brand) 30%, transparent);
 }
 
-.statusSuccess {
-  background-color: var(--emerald-50);
-  color: var(--emerald-700);
-  border-color: var(--emerald-200);
+.variantSuccess {
+  background-color: color-mix(in srgb, var(--color-success) 15%, transparent);
+  color: var(--color-success);
+  border-color: color-mix(in srgb, var(--color-success) 30%, transparent);
 }
 
-:global(.dark) .statusSuccess {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: var(--emerald-400);
-  border-color: rgba(16, 185, 129, 0.2);
+.variantWarning {
+  background-color: color-mix(in srgb, var(--color-warning) 15%, transparent);
+  color: var(--color-warning);
+  border-color: color-mix(in srgb, var(--color-warning) 30%, transparent);
 }
 
-.statusSuccess .statusDot {
-  background-color: var(--emerald-500);
+.variantError {
+  background-color: color-mix(in srgb, var(--color-error) 15%, transparent);
+  color: var(--color-error);
+  border-color: color-mix(in srgb, var(--color-error) 30%, transparent);
 }
 
-.statusWarning {
-  background-color: var(--amber-50);
-  color: var(--amber-700);
-  border-color: var(--amber-200);
-}
-
-:global(.dark) .statusWarning {
-  background-color: rgba(245, 158, 11, 0.1);
-  color: var(--amber-400);
-  border-color: rgba(245, 158, 11, 0.2);
-}
-
-.statusWarning .statusDot {
-  background-color: var(--amber-500);
-}
-
-.statusError {
-  background-color: var(--rose-50);
-  color: var(--rose-700);
-  border-color: var(--rose-200);
-}
-
-:global(.dark) .statusError {
-  background-color: rgba(244, 63, 94, 0.1);
-  color: var(--rose-400);
-  border-color: rgba(244, 63, 94, 0.2);
-}
-
-.statusError .statusDot {
-  background-color: var(--rose-500);
-}
-
-.statusNeutral {
-  background-color: var(--slate-100);
-  color: var(--slate-700);
-  border-color: var(--slate-200);
-}
-
-:global(.dark) .statusNeutral {
-  background-color: rgba(148, 163, 184, 0.1);
-  color: var(--slate-300);
-  border-color: rgba(148, 163, 184, 0.2);
-}
-
-.statusNeutral .statusDot {
-  background-color: var(--slate-400);
-}
-
-.statusPrimary {
-  background-color: var(--blue-50);
-  color: var(--blue-700);
-  border-color: var(--blue-200);
-}
-
-:global(.dark) .statusPrimary {
-  background-color: rgba(59, 130, 246, 0.1);
-  color: var(--blue-400);
-  border-color: rgba(59, 130, 246, 0.2);
-}
-
-.statusPrimary .statusDot {
-  background-color: var(--blue-500);
-}
-
-.statusMuted {
-  background-color: var(--slate-50);
-  color: var(--slate-500);
-  border-color: var(--slate-200);
-}
-
-:global(.dark) .statusMuted {
-  background-color: transparent;
-  color: var(--slate-500);
-  border-color: var(--slate-800);
-}
-
-.statusMuted .statusDot {
-  background-color: var(--slate-400);
-}
-
-.skillBadge {
-  padding: 0.375rem 0.625rem;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  outline: none;
-  transition: background-color 0.12s ease, border-color 0.12s ease, transform 0.12s ease;
-}
-
-.skillBadge:hover {
-  transform: translateY(-1px);
-}
-
-.skillBadge:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: 1px;
-}
-
-.skillMatched {
-  background-color: var(--color-brand-50);
-  color: var(--color-brand-700);
-  border: 1px solid var(--color-brand-200);
-}
-
-.skillMatched:hover {
-  background-color: var(--color-brand-100);
-}
-
-.skillResume {
-  background-color: oklch(0.97 0.02 140);
-  color: oklch(0.40 0.12 140);
-  border: 1px solid oklch(0.90 0.05 140);
-}
-
-.skillResume:hover {
-  background-color: oklch(0.94 0.03 140);
-}
-
-.skillManual {
-  background-color: var(--color-brand-50);
-  color: var(--color-brand-700);
-  border: 1px solid var(--color-brand-200);
-}
-
-.skillManual:hover {
-  background-color: var(--color-brand-100);
-}
-
-.skillMissing {
-  background-color: var(--bg-card);
+.variantNeutral {
+  background-color: var(--surface-hover);
   color: var(--text-secondary);
-  border: 1px solid var(--border-default);
-}
-
-.skillMissing:hover {
-  background-color: var(--bg-subtle);
-  border-color: var(--border-strong);
-}
-
-.skillMissingText {
-  font-size: 0.625rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  background-color: var(--bg-subtle);
-  padding: 0.0625rem 0.25rem;
-  border-radius: var(--radius-sm);
-  margin-left: 0.25rem;
-}
-
-.matchBadge {
-  border-radius: 99px;
-  font-weight: 650;
-  padding: 0.25rem 0.75rem;
-}
-
-.matchHigh {
-  background-color: oklch(0.95 0.06 140);
-  color: oklch(0.40 0.15 140);
-  border: 1px solid oklch(0.90 0.08 140);
-}
-
-.matchMid {
-  background-color: oklch(0.95 0.05 80);
-  color: oklch(0.40 0.15 80);
-  border: 1px solid oklch(0.90 0.08 80);
-}
-
-.matchLow {
-  background-color: oklch(0.95 0.05 25);
-  color: oklch(0.40 0.15 25);
-  border: 1px solid oklch(0.90 0.08 25);
+  border-color: var(--border-default);
 }

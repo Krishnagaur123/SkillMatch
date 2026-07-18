@@ -1,0 +1,21 @@
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-heading);
+}
+
+.companyName {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-heading);
+  transition: var(--transition-base);
+}
+
+.companyName:hover {
+  color: var(--color-brand);
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}

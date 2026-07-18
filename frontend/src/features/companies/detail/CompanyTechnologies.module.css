@@ -11,13 +11,13 @@
   padding: 1.5rem;
   border: 1px dashed var(--border-default);
   border-radius: var(--radius-lg);
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
 }
 
 .emptyText {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-style: italic;
   text-align: center;
 }
@@ -33,7 +33,7 @@
   font-weight: 650;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .badgeWrap {
@@ -59,14 +59,14 @@
 
 /* Skill badge — preferred (subtle) */
 .badgePreferred {
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
   color: var(--text-secondary);
   border-color: var(--border-default);
 }
 
 /* Skill badge — good-to-have (muted) */
 .badgeMuted {
-  background-color: var(--bg-card);
-  color: var(--text-muted);
+  background-color: var(--surface-primary);
+  color: var(--text-secondary);
   border-color: var(--border-default);
 }

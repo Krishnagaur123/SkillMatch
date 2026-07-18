@@ -1,0 +1,191 @@
+.root {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding-bottom: var(--spacing-12);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: var(--font-size-h3);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sectionDesc {
+  margin: 0;
+  font-size: var(--font-size-body);
+  color: var(--text-secondary);
+}
+
+.accountGrid {
+  display: flex;
+  gap: var(--spacing-8);
+  align-items: flex-start;
+}
+
+.avatarSection {
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background-color: var(--surface-primary-hover);
+  border: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+.detailsSection {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.fieldRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.fieldLabel {
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.fieldContent {
+  display: flex;
+  align-items: center;
+}
+
+.fieldValue {
+  font-size: var(--font-size-body);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.readActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 400px;
+}
+
+.editActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  width: 100%;
+}
+
+.input {
+  flex-grow: 1;
+  max-width: 320px;
+  height: 36px;
+  padding: 0 var(--spacing-3);
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-body);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.readOnlyTag {
+  margin-left: var(--spacing-3);
+  font-size: var(--font-size-caption);
+  padding: 2px 6px;
+  background-color: var(--surface-primary-hover);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+.settingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settingInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.settingTitle {
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.settingDesc {
+  font-size: var(--font-size-body);
+  color: var(--text-secondary);
+}
+
+.aboutGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-6);
+}
+
+.aboutItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.aboutIcon {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-1);
+}
+
+.aboutLabel {
+  font-size: var(--font-size-caption);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.aboutValue {
+  font-size: var(--font-size-body);
+  color: var(--text-primary);
+  font-weight: 500;
+}

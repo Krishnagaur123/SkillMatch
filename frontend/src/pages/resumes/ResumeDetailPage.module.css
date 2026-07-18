@@ -21,7 +21,7 @@
   gap: 0.5rem;
   font-size: 0.875rem;
   font-weight: 550;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   text-decoration: none;
   width: max-content;
   border-radius: var(--radius-sm);
@@ -73,7 +73,7 @@
 .subtitle {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-top: 0.25rem;
   white-space: nowrap;
   overflow: hidden;
@@ -149,7 +149,7 @@
 
 .emptyText {
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-style: italic;
 }
 
@@ -172,12 +172,12 @@
 }
 
 .deleteBtn {
-  color: oklch(0.55 0.18 20) !important;
-  border-color: oklch(0.55 0.18 20 / 0.2) !important;
+  color: var(--color-error) !important;
+  border-color: color-mix(in srgb, var(--color-error) 20%, transparent) !important;
 }
 
 .deleteBtn:hover {
-  background-color: oklch(0.55 0.18 20 / 0.1) !important;
+  background-color: color-mix(in srgb, var(--color-error) 10%, transparent) !important;
 }
 
 /* Insights list */
@@ -194,13 +194,13 @@
 }
 
 .insightSuccessIcon {
-  color: oklch(0.62 0.17 145);
+  color: var(--color-brand);
   flex-shrink: 0;
   margin-top: 0.125rem;
 }
 
 .insightInfoIcon {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   flex-shrink: 0;
   margin-top: 0.125rem;
 }
@@ -219,7 +219,7 @@
 
 .insightDesc {
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-top: 0.125rem;
   line-height: 1.4;
 }

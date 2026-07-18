@@ -1,0 +1,29 @@
+.title {
+  color: var(--text-heading);
+}
+
+.companyName {
+  color: var(--color-brand);
+}
+
+.companyName:hover {
+  color: color-mix(in srgb, var(--color-brand) 80%, transparent);
+}
+
+.mobileAction {
+  border-top: 1px solid var(--border-default);
+}
+
+.metaInfoContainer {
+  border-bottom: 1px solid var(--border-default);
+}
+
+.metaBadge {
+  background-color: var(--surface-background);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+}
+
+.metaIcon {
+  color: var(--text-secondary);
+}

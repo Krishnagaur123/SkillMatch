@@ -14,9 +14,10 @@
 
 .title {
   margin: 0;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  color: var(--text-heading);
+  letter-spacing: -0.02em;
 }
 
 .description {

@@ -1,53 +1,54 @@
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/common/Card'
+import { Skeleton } from '@/components/feedback/Skeleton'
 
 export function OpportunitySkeleton() {
   return (
-    <Card className="flex flex-col h-full">
+    <Card variant="interactive" className="flex flex-col h-full">
       <CardHeader className="flex flex-row items-start justify-between gap-4 pb-2">
         <div className="flex items-start gap-4 flex-1">
-          <div className="w-12 h-12 rounded-md bg-slate-200 dark:bg-slate-800 animate-pulse shrink-0" />
+          <Skeleton variant="rectangular" className="w-12 h-12 rounded-md shrink-0" />
           <div className="flex flex-col gap-2 w-full pt-1">
-            <div className="h-5 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-3/4" />
-            <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-1/2" />
+            <Skeleton variant="text" className="h-5 w-3/4" />
+            <Skeleton variant="text" className="h-4 w-1/2" />
           </div>
         </div>
         <div className="hidden sm:flex flex-col items-center justify-center shrink-0">
-          <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
-          <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-12 mt-2" />
+          <Skeleton variant="avatar" className="w-16 h-16" />
+          <Skeleton variant="text" className="h-3 w-12 mt-2" />
         </div>
       </CardHeader>
       
       <CardContent className="flex-1 flex flex-col gap-5">
         <div className="flex gap-4">
-          <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-20" />
-          <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-24" />
-          <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-20" />
+          <Skeleton variant="text" className="h-4 w-20" />
+          <Skeleton variant="text" className="h-4 w-24" />
+          <Skeleton variant="text" className="h-4 w-20" />
         </div>
         
-        <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded-lg animate-pulse w-full" />
+        <Skeleton variant="rectangular" className="h-12 w-full rounded-lg" />
         
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-28" />
+            <Skeleton variant="text" className="h-4 w-28" />
             <div className="flex gap-2">
-              <div className="h-6 bg-slate-200 dark:bg-slate-800 rounded-full animate-pulse w-16" />
-              <div className="h-6 bg-slate-200 dark:bg-slate-800 rounded-full animate-pulse w-20" />
-              <div className="h-6 bg-slate-200 dark:bg-slate-800 rounded-full animate-pulse w-24" />
+              <Skeleton variant="rectangular" className="h-6 w-16 rounded-full" />
+              <Skeleton variant="rectangular" className="h-6 w-20 rounded-full" />
+              <Skeleton variant="rectangular" className="h-6 w-24 rounded-full" />
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-32" />
+            <Skeleton variant="text" className="h-4 w-32" />
             <div className="flex gap-2">
-              <div className="h-6 bg-slate-200 dark:bg-slate-800 rounded-full animate-pulse w-24" />
-              <div className="h-6 bg-slate-200 dark:bg-slate-800 rounded-full animate-pulse w-16" />
+              <Skeleton variant="rectangular" className="h-6 w-24 rounded-full" />
+              <Skeleton variant="rectangular" className="h-6 w-16 rounded-full" />
             </div>
           </div>
         </div>
       </CardContent>
       
-      <CardFooter className="pt-4 border-t border-slate-100 dark:border-slate-800 flex gap-3">
-        <div className="h-10 bg-slate-200 dark:bg-slate-800 rounded animate-pulse flex-1" />
-        <div className="h-10 bg-slate-200 dark:bg-slate-800 rounded animate-pulse flex-1" />
+      <CardFooter className="pt-4 flex gap-3" style={{ borderTop: '1px solid var(--border-default)' }}>
+        <Skeleton variant="rectangular" className="h-10 flex-1 rounded" />
+        <Skeleton variant="rectangular" className="h-10 flex-1 rounded" />
       </CardFooter>
     </Card>
   )

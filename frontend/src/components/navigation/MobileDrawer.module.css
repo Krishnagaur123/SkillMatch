@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 49;
-  background-color: oklch(0 0 0 / 0.5);
+  background-color: color-mix(in srgb, var(--surface-primary) 50%, transparent);
 }
 
 .drawer {
@@ -13,6 +13,6 @@
   width: 16rem;
   display: flex;
   flex-direction: column;
-  box-shadow: 4px 0 24px oklch(0 0 0 / 0.3);
+  box-shadow: var(--shadow-md);
   outline: none;
 }

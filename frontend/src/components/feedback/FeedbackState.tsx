@@ -2,11 +2,12 @@ import { forwardRef } from 'react'
 import type { HTMLAttributes, ReactNode } from 'react'
 import { AlertCircle, FolderOpen } from 'lucide-react'
 import { Button } from '../common/Button'
+import { Card } from '../common/Card'
 import styles from './FeedbackState.module.css'
 
 export interface EmptyStateProps extends HTMLAttributes<HTMLDivElement> {
   title: string
-  description?: string
+  description?: ReactNode
   icon?: ReactNode
   actionLabel?: string
   onAction?: () => void
@@ -34,14 +35,14 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
     const primClick = primaryAction ? primaryAction.onClick : onAction
 
     return (
-      <div ref={ref} className={[styles.container, className].filter(Boolean).join(' ')} {...props}>
+      <Card variant="outlined" ref={ref} className={[styles.container, className].filter(Boolean).join(' ')} {...props}>
         <div className={styles.iconWrapper} aria-hidden="true">
           {icon}
         </div>
         <h3 className={styles.title}>{title}</h3>
         {description && <p className={styles.description}>{description}</p>}
         {(hasPrimary || secondaryAction) && (
-          <div className={styles.actionsRow} style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', marginTop: '1rem' }}>
+          <div className={styles.actionsRow}>
             {hasPrimary && primLabel && primClick && (
               <Button variant="primary" size="sm" onClick={primClick}>
                 {primLabel}
@@ -54,7 +55,7 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
             )}
           </div>
         )}
-      </div>
+      </Card>
     )
   }
 )

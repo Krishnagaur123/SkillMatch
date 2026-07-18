@@ -4,23 +4,28 @@ import type { KeyboardEvent, CSSProperties } from 'react'
 import { SectionCard } from '@/components/layout'
 import { RemovableSkillBadge } from '@/components/common'
 import { Search, X, Target } from 'lucide-react'
+import { EmptyState } from '@/components/feedback'
 import type { TargetRoleResponse } from '@/hooks/useTargetRoles'
 import { useDebounce } from '@/hooks/useDebounce'
+import { useUpdateUserProfile } from '@/hooks'
+import { Button } from '@/components/common'
 import styles from './ProfileSection.module.css'
 
 interface TargetRolesSectionProps {
-  isEditing: boolean
-  roleIds: string[]
-  onRoleIdsChange: (ids: string[]) => void
   allRoles: TargetRoleResponse[]
+  currentRoleNames: string[]
 }
 
 export function TargetRolesSection({
-  isEditing,
-  roleIds,
-  onRoleIdsChange,
   allRoles,
+  currentRoleNames,
 }: TargetRolesSectionProps) {
+  const [isEditing, setIsEditing] = useState(false)
+  const [localRoleNames, setLocalRoleNames] = useState<string[]>([])
+  const [isSaving, setIsSaving] = useState(false)
+
+  const { mutateAsync: updateProfileAsync } = useUpdateUserProfile()
+
   const [inputValue, setInputValue] = useState('')
   const debouncedSearch = useDebounce(inputValue, 200)
   const [isOpen, setIsOpen] = useState(false)
@@ -31,10 +36,39 @@ export function TargetRolesSection({
   const inputWrapperRef = useRef<HTMLDivElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  const currentRoles = allRoles.filter(role => roleIds.includes(role.id))
+  const handleEdit = () => {
+    setLocalRoleNames([...currentRoleNames])
+    setIsEditing(true)
+  }
+
+  const handleCancel = () => {
+    setIsEditing(false)
+    setInputValue('')
+    setIsOpen(false)
+  }
+
+  const handleSave = async () => {
+    setIsSaving(true)
+    try {
+      const targetRoleIds = localRoleNames
+        .map(name => allRoles.find(r => r.name === name)?.id)
+        .filter(Boolean) as string[]
+        
+      await updateProfileAsync({ targetRoleIds })
+      setIsEditing(false)
+    } catch (error) {
+      console.error('Failed to update roles', error)
+      alert('Failed to update target roles')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const activeRoleNames = isEditing ? localRoleNames : currentRoleNames
+  const currentRoles = activeRoleNames
 
   const availableRoles = allRoles.filter(role => {
-    const isNotSelected = !roleIds.includes(role.id)
+    const isNotSelected = !activeRoleNames.includes(role.name)
     const matchesSearch = role.name.toLowerCase().includes(debouncedSearch.toLowerCase())
     return isNotSelected && matchesSearch
   })
@@ -77,17 +111,17 @@ export function TargetRolesSection({
     return () => window.removeEventListener('scroll', close, { capture: true })
   }, [isOpen])
 
-  const handleSelectRole = (roleId: string) => {
-    if (roleIds.includes(roleId)) return
-    onRoleIdsChange([...roleIds, roleId])
+  const handleSelectRole = (roleName: string) => {
+    if (localRoleNames.includes(roleName)) return
+    setLocalRoleNames([...localRoleNames, roleName])
     setInputValue('')
     setIsOpen(false)
     setHighlightedIndex(-1)
     inputRef.current?.focus()
   }
 
-  const handleRemoveRole = (roleId: string) => {
-    onRoleIdsChange(roleIds.filter(id => id !== roleId))
+  const handleRemoveRole = (roleName: string) => {
+    setLocalRoleNames(localRoleNames.filter(name => name !== roleName))
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -106,7 +140,7 @@ export function TargetRolesSection({
     } else if (e.key === 'Enter') {
       e.preventDefault()
       if (highlightedIndex >= 0 && highlightedIndex < availableRoles.length) {
-        handleSelectRole(availableRoles[highlightedIndex].id)
+        handleSelectRole(availableRoles[highlightedIndex].name)
       }
     } else if (e.key === 'Escape') {
       e.preventDefault()
@@ -119,21 +153,35 @@ export function TargetRolesSection({
       Use the search above to find and add target roles.
     </p>
   ) : (
-    <div className={styles.emptyState}>
-      <Target size={20} className={styles.emptyStateIcon} />
-      <div className={styles.emptyStateContent}>
-        <span className={styles.emptyStateTitle}>No target roles configured</span>
-        <span className={styles.emptyStateDesc}>
-          Adding target roles helps SkillMatch surface relevant opportunities and improves your match scores.
-        </span>
-      </div>
+    <div style={{ width: '100%' }}>
+      <EmptyState
+        icon={<Target size={36} />}
+        title="No target roles configured"
+        description="Adding target roles helps SkillMatch surface relevant opportunities and improves your match scores."
+      />
     </div>
+  )
+
+  const actions = isEditing ? (
+    <div style={{ display: 'flex', gap: '0.5rem' }}>
+      <Button size="sm" onClick={handleSave} disabled={isSaving}>
+        {isSaving ? 'Saving...' : 'Save'}
+      </Button>
+      <Button variant="secondary" size="sm" onClick={handleCancel} disabled={isSaving}>
+        Cancel
+      </Button>
+    </div>
+  ) : (
+    <Button variant="secondary" size="sm" onClick={handleEdit}>
+      Edit
+    </Button>
   )
 
   return (
     <SectionCard
       title="Target Roles"
       description="Roles you are targeting, used to optimize opportunity matching and alerts."
+      actions={actions}
     >
       <div className={`${styles.container}${isEditing ? ` ${styles.containerEditing}` : ''}`}>
         {isEditing && (
@@ -197,7 +245,7 @@ export function TargetRolesSection({
                           className={`${styles.dropdownItem}${index === highlightedIndex ? ` ${styles.dropdownItemActive}` : ''}`}
                           onMouseEnter={() => setHighlightedIndex(index)}
                           onMouseDown={e => e.preventDefault()}
-                          onClick={() => handleSelectRole(role.id)}
+                          onClick={() => handleSelectRole(role.name)}
                         >
                           {role.name}
                         </li>
@@ -217,16 +265,16 @@ export function TargetRolesSection({
         <div className={styles.badgeList}>
           {currentRoles.length === 0
             ? emptyState
-            : currentRoles.map(role =>
+            : currentRoles.map(roleName =>
                 isEditing ? (
                   <RemovableSkillBadge
-                    key={role.id}
-                    name={role.name}
-                    onRemove={() => handleRemoveRole(role.id)}
+                    key={roleName}
+                    name={roleName}
+                    onRemove={() => handleRemoveRole(roleName)}
                   />
                 ) : (
-                  <span key={role.id} className={styles.viewBadge}>
-                    {role.name}
+                  <span key={roleName} className={styles.viewBadge}>
+                    {roleName}
                   </span>
                 )
               )}

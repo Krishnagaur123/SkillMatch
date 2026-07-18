@@ -19,7 +19,7 @@ export function StrengthsSection({ strengths }: StrengthsSectionProps) {
     <div className={styles.container}>
       <div className={styles.badges}>
         {sortedStrengths.map((skill) => (
-          <Badge key={skill.skillName} variant="secondary" className={styles.badge}>
+          <Badge key={skill.skillName} variant="neutral" className={styles.badge}>
             <Award className="w-3 h-3 mr-1" />
             {skill.skillName}
           </Badge>

@@ -1,0 +1,13 @@
+.empty {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.container {
+  color: var(--text-primary);
+  line-height: 1.625;
+}
+
+.paragraph {
+  font-size: 0.9375rem; /* 15px */
+}

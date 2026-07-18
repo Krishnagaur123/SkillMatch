@@ -1,6 +1,7 @@
 import axios, { type AxiosError, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
+import { API_BASE_URL } from '@/config/constants'
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+const BASE_URL = API_BASE_URL
 
 if (!BASE_URL) {
   throw new Error('VITE_API_BASE_URL environment variable is not set')
@@ -33,8 +34,8 @@ apiClient.interceptors.response.use(
     const { status } = error.response
 
     if (status === 401) {
-      if (window.location.pathname !== '/') {
-        window.location.href = '/'
+      if (!window.location.pathname.startsWith('/auth') && window.location.pathname !== '/') {
+        window.location.href = '/auth?mode=signin'
       }
     }
 

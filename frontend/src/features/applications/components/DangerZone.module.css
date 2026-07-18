@@ -29,7 +29,7 @@
 
 .deleteButton {
   color: var(--error);
-  border-color: rgba(239, 68, 68, 0.3);
+  border-color: color-mix(in srgb, var(--color-error) 15%, transparent);
   width: fit-content;
 }
 

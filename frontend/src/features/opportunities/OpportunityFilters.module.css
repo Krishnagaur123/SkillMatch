@@ -1,0 +1,30 @@
+.container {
+  padding: 1rem;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.select {
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  transition: var(--transition-base);
+}
+
+.select:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: -1px;
+  border-color: transparent;
+}

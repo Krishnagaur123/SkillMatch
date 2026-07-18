@@ -22,8 +22,8 @@
 .removeButton:hover,
 .removeButton:focus-visible {
   opacity: 1;
-  background-color: var(--color-danger-100, oklch(0.94 0.04 25));
-  color: var(--color-danger-700, oklch(0.45 0.16 25));
+  background-color: color-mix(in srgb, var(--color-error) 15%, transparent);
+  color: var(--color-error);
   outline: none;
 }
 

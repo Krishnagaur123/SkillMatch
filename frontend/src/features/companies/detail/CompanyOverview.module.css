@@ -5,14 +5,14 @@
   padding: 2rem 1.5rem;
   border: 1px dashed var(--border-default);
   border-radius: var(--radius-lg);
-  background-color: var(--bg-subtle);
+  background-color: var(--surface-primary-hover);
   text-align: center;
 }
 
 .emptyText {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-style: italic;
 }
 

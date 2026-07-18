@@ -6,6 +6,8 @@ import PublicLayout from '@/app/layouts/PublicLayout'
 import ProtectedLayout from '@/app/layouts/ProtectedLayout'
 
 const LandingPage = lazy(() => import('@/pages/landing/LandingPage'))
+const AuthPage = lazy(() => import('@/features/auth/pages/AuthPage'))
+const AuthCallbackPage = lazy(() => import('@/features/auth/pages/AuthCallbackPage'))
 const DashboardPage = lazy(() => import('@/pages/dashboard/DashboardPage'))
 const ResumesPage = lazy(() => import('@/pages/resumes/ResumesPage'))
 const ResumeDetailPage = lazy(() => import('@/pages/resumes/ResumeDetailPage'))
@@ -17,6 +19,7 @@ const AnalyticsPage = lazy(() => import('@/pages/analytics/AnalyticsPage'))
 const CompaniesPage = lazy(() => import('@/pages/companies/CompaniesPage'))
 const CompanyDetailPage = lazy(() => import('@/pages/companies/CompanyDetailPage'))
 const ProfilePage = lazy(() => import('@/pages/profile/ProfilePage'))
+const SettingsPage = lazy(() => import('@/pages/settings/SettingsPage'))
 const NotFoundPage = lazy(() => import('@/pages/not-found/NotFoundPage'))
 
 export default function AppRouter() {
@@ -26,6 +29,9 @@ export default function AppRouter() {
         <Route element={<PublicLayout />}>
           <Route path={ROUTES.LANDING} element={<LandingPage />} />
         </Route>
+
+        <Route path={ROUTES.AUTH} element={<AuthPage />} />
+        <Route path={ROUTES.AUTH_CALLBACK} element={<AuthCallbackPage />} />
 
         <Route element={<ProtectedLayout />}>
           <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
@@ -39,6 +45,7 @@ export default function AppRouter() {
           <Route path={ROUTES.COMPANIES} element={<CompaniesPage />} />
           <Route path={ROUTES.COMPANY_DETAIL} element={<CompanyDetailPage />} />
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+          <Route path={ROUTES.SETTINGS} element={<SettingsPage />} />
         </Route>
 
         <Route path="/404" element={<NotFoundPage />} />
