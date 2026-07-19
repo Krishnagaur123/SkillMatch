@@ -6,8 +6,19 @@ import {
   UploadCloud,
   ChevronRight,
   ClipboardList,
+  Target,
 } from 'lucide-react'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from 'recharts'
 import {
   PageContainer,
   PageContent,
@@ -16,7 +27,6 @@ import {
 } from '@/components/layout'
 import {
   StatCard,
-  ProgressCard,
   StatusBadge,
   SkillBadge,
   PrimaryButton,
@@ -100,8 +110,8 @@ export default function DashboardPage() {
     navigate(ROUTES.RESUMES)
   }
 
-  // Mock chart tooltip styling matching our theme
-  const customTooltip = ({
+  // Bar chart tooltip
+  const barTooltip = ({
     active,
     payload,
   }: {
@@ -123,7 +133,7 @@ export default function DashboardPage() {
     return null
   }
 
-  // Pre-formatted chart data from analytics
+  // Bar chart data — skills in demand
   const chartData =
     analytics?.skillsInDemand.map((item) => ({
       name: item.skillName,
@@ -131,10 +141,68 @@ export default function DashboardPage() {
       Importance: Math.round(item.marketImportance * 100),
     })) || []
 
+  // Donut chart data — market coverage
+  const coveragePct = analytics?.coverage ?? 0
+  const donutData = [
+    { name: 'Covered', value: coveragePct },
+    { name: 'Missing', value: Math.max(0, 100 - coveragePct) },
+  ]
+
+  // Quick actions with icons
+  const quickActions = [
+    {
+      title: 'Upload & Parse Resume',
+      desc: 'Extract your skills from PDF/DOCX',
+      route: ROUTES.RESUMES,
+      icon: <UploadCloud size={16} />,
+    },
+    {
+      title: 'Explore Job Matches',
+      desc: 'View positions matching your target roles',
+      route: ROUTES.OPPORTUNITIES,
+      icon: <Briefcase size={16} />,
+    },
+    {
+      title: 'Update Target Roles',
+      desc: 'Re-align your market matches',
+      route: ROUTES.PROFILE,
+      icon: <Target size={16} />,
+    },
+    {
+      title: 'View In-Demand Skills',
+      desc: 'See which skills are trending',
+      route: ROUTES.ANALYTICS,
+      icon: <TrendingUp size={16} />,
+    },
+  ]
+
+  // Derive priority level from marketDemand
+  const getPriorityLabel = (demand: number): string => {
+    if (demand >= 0.8) return 'High Impact'
+    if (demand >= 0.6) return 'Recommended'
+    if (demand >= 0.4) return 'Medium'
+    return 'Optional'
+  }
+
+  const getPriorityClass = (demand: number): string => {
+    if (demand >= 0.8) return styles.priorityCritical
+    if (demand >= 0.6) return styles.priorityHigh
+    if (demand >= 0.4) return styles.priorityMedium
+    return styles.priorityLow
+  }
+
+  // Estimate learning time from marketImportance (heuristic)
+  const getEstimatedHours = (importance: number): string => {
+    const hours = Math.round(importance * 40)
+    if (hours <= 4) return `~${hours}h`
+    if (hours <= 16) return `~${hours}h`
+    return `~${Math.round(hours / 8)} days`
+  }
+
   return (
     <PageContainer>
       <PageContent className={styles.root}>
-        {/* Welcome Banner */}
+        {/* Compact Welcome Banner */}
         <div className={styles.welcomeBanner}>
           {isLoading ? (
             <div className={styles.welcomeSkeleton}>
@@ -142,21 +210,23 @@ export default function DashboardPage() {
               <Skeleton variant="text" className={styles.skeletonWelcomeDesc} />
             </div>
           ) : (
-            <div>
-              <h1 className={styles.greeting}>Welcome back, {user?.name || 'User'}!</h1>
-              <p className={styles.targetRoles}>
-                {targetRolesList.length > 0
-                  ? `Targeting roles: ${targetRolesList.join(', ')}`
-                  : 'No target roles configured. Update target roles to see analytics.'}
-              </p>
+            <div className={styles.welcomeInner}>
+              <div>
+                <h1 className={styles.greeting}>Welcome back, {user?.name || 'User'}</h1>
+                <p className={styles.targetRoles}>
+                  {targetRolesList.length > 0
+                    ? targetRolesList.join(' · ')
+                    : 'No target roles configured — update your profile to see analytics.'}
+                </p>
+              </div>
               <p className={styles.motivational}>
-                Here is your market readiness status, skill gaps, and active opportunities.
+                Market readiness · Skill gaps · Active opportunities
               </p>
             </div>
           )}
         </div>
 
-        {/* Dashboard Sections */}
+        {/* KPI Cards */}
         <DashboardSection title="Overview" description="Your core career indicators at a glance.">
           {isLoading ? (
             <div className={styles.kpiGrid}>
@@ -171,7 +241,7 @@ export default function DashboardPage() {
                 <StatCard
                   variant="interactive"
                   title="Market Coverage"
-                  value={`${analytics?.coverage || 0}%`}
+                  value={`${coveragePct}%`}
                   description="Match score against target role postings"
                   icon={<TrendingUp size={20} />}
                   trend={{ value: 'Live', type: 'up' }}
@@ -214,11 +284,59 @@ export default function DashboardPage() {
 
         {/* Main Content Grid */}
         <div className={styles.mainGrid}>
-          {/* Left Column: Visualizations and Roadmap */}
+          {/* Left Column */}
           <div className={styles.leftColumn}>
-            {/* Market Coverage Chart */}
+            {/* Market Coverage — Donut Chart */}
             {isLoading ? (
-              <CardSkeleton style={{ height: '380px' }} />
+              <CardSkeleton style={{ height: '280px' }} />
+            ) : (
+              <ChartCard
+                variant="elevated"
+                title="Market Coverage"
+                description="Overall skill coverage against your target roles"
+                height={220}
+              >
+                <div className={styles.donutWrapper}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={donutData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius="62%"
+                        outerRadius="80%"
+                        startAngle={90}
+                        endAngle={-270}
+                        dataKey="value"
+                        strokeWidth={0}
+                      >
+                        <Cell fill="var(--color-brand)" />
+                        <Cell fill="var(--border-default)" />
+                      </Pie>
+                    </PieChart>
+                  </ResponsiveContainer>
+                  {/* Center label */}
+                  <div className={styles.donutCenter}>
+                    <span className={styles.donutValue}>{coveragePct}%</span>
+                    <span className={styles.donutLabel}>Market Ready</span>
+                  </div>
+                </div>
+                <div className={styles.donutLegend}>
+                  <span className={styles.legendItem}>
+                    <span className={styles.legendDot} style={{ backgroundColor: 'var(--color-brand)' }} />
+                    Covered ({coveragePct}%)
+                  </span>
+                  <span className={styles.legendItem}>
+                    <span className={styles.legendDot} style={{ backgroundColor: 'var(--border-default)' }} />
+                    Missing ({Math.max(0, 100 - coveragePct)}%)
+                  </span>
+                </div>
+              </ChartCard>
+            )}
+
+            {/* Skills in Demand — Bar Chart */}
+            {isLoading ? (
+              <CardSkeleton style={{ height: '300px' }} />
             ) : chartData.length === 0 ? (
               <EmptyState
                 title="No target role data"
@@ -226,17 +344,24 @@ export default function DashboardPage() {
               />
             ) : (
               <ChartCard
+                variant="elevated"
                 title="Skills in Demand"
-                description="Market demand vs importance of target skills"
+                description="Market demand vs importance for your target skills"
                 height={260}
               >
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <BarChart
+                    data={chartData}
+                    margin={{ top: 10, right: 10, left: -20, bottom: 40 }}
+                  >
                     <XAxis
                       dataKey="name"
                       tick={{ fill: 'var(--text-secondary)', fontSize: 10 }}
                       axisLine={false}
                       tickLine={false}
+                      angle={-35}
+                      textAnchor="end"
+                      interval={0}
                     />
                     <YAxis
                       tick={{ fill: 'var(--text-secondary)', fontSize: 10 }}
@@ -244,15 +369,15 @@ export default function DashboardPage() {
                       tickLine={false}
                       domain={[0, 100]}
                     />
-                    <Tooltip content={customTooltip} cursor={{ fill: 'var(--surface-hover)' }} />
-                    <Bar dataKey="Demand" fill="var(--accent)" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="Importance" fill="var(--color-brand)" radius={[4, 4, 0, 0]} />
+                    <Tooltip content={barTooltip} cursor={{ fill: 'var(--surface-hover)' }} />
+                    <Bar dataKey="Demand" fill="var(--color-brand)" radius={[3, 3, 0, 0]} maxBarSize={20} />
+                    <Bar dataKey="Importance" fill="var(--text-secondary)" radius={[3, 3, 0, 0]} maxBarSize={20} />
                   </BarChart>
                 </ResponsiveContainer>
               </ChartCard>
             )}
 
-            {/* Learning Roadmap Progress */}
+            {/* Learning Priorities */}
             <DashboardSection
               title="Next Learning Priorities"
               description="Bridge these skill gaps to expand your market coverage."
@@ -270,35 +395,56 @@ export default function DashboardPage() {
                 />
               ) : (
                 <div className={styles.roadmapGrid}>
-                  {analytics.learningRoadmap.slice(0, 3).map((item) => (
-                    <Link
-                      key={item.skillName}
-                      to={ROUTES.ANALYTICS}
-                      className={styles.roadmapLink}
-                    >
-                      <ProgressCard
-                        variant="interactive"
-                        title={item.skillName}
-                        value="Priority Bridge"
-                        percentage={Math.round(item.estimatedCoverageGain * 100)}
-                        description={`Gain +${Math.round(
-                          item.estimatedCoverageGain * 100
-                        )}% market coverage gain by learning this skill.`}
-                        color="var(--accent)"
-                      />
-                    </Link>
-                  ))}
+                  {analytics.learningRoadmap.slice(0, 3).map((item) => {
+                    // Fix: estimatedCoverageGain is already a decimal (e.g. 0.12 = 12%)
+                    // Do NOT multiply by 100 again if the value is already a percentage
+                    const gainPct = item.estimatedCoverageGain > 1
+                      ? Math.round(item.estimatedCoverageGain)
+                      : Math.round(item.estimatedCoverageGain * 100)
+
+                    return (
+                      <Link
+                        key={item.skillName}
+                        to={ROUTES.ANALYTICS}
+                        className={styles.roadmapLink}
+                      >
+                        <article className={styles.priorityCard}>
+                          <div className={styles.priorityCardHeader}>
+                            <span className={styles.prioritySkillName}>{item.skillName}</span>
+                            <span className={[styles.priorityBadge, getPriorityClass(item.marketDemand)].join(' ')}>
+                              {getPriorityLabel(item.marketDemand)}
+                            </span>
+                          </div>
+
+                          <div className={styles.priorityStats}>
+                            <div className={styles.priorityStat}>
+                              <span className={styles.priorityStatValue}>+{gainPct}%</span>
+                              <span className={styles.priorityStatLabel}>Coverage Gain</span>
+                            </div>
+                            <div className={styles.priorityStat}>
+                              <span className={styles.priorityStatValue}>{getEstimatedHours(item.marketImportance)}</span>
+                              <span className={styles.priorityStatLabel}>Est. Time</span>
+                            </div>
+                          </div>
+
+                          <div className={styles.priorityFooter}>
+                            <span className={styles.priorityAction}>View in Analytics →</span>
+                          </div>
+                        </article>
+                      </Link>
+                    )
+                  })}
                 </div>
               )}
             </DashboardSection>
           </div>
 
-          {/* Right Column: Resume Summary and Quick Actions */}
+          {/* Right Column */}
           <div className={styles.rightColumn}>
             {/* Resume Overview */}
             <SectionCard
               title="Resume Overview"
-              variant={activeResume ? 'interactive' : 'default'}
+              variant={activeResume ? 'interactive' : 'elevated'}
               tabIndex={activeResume ? 0 : undefined}
               role={activeResume ? 'button' : undefined}
               onClick={activeResume ? handleResumeCardClick : undefined}
@@ -371,32 +517,12 @@ export default function DashboardPage() {
             </SectionCard>
 
             {/* Quick Actions */}
-            <SectionCard title="Quick Actions" className={styles.quickActionsCard}>
+            <SectionCard title="Quick Actions" variant="elevated" className={styles.quickActionsCard}>
               <div className={styles.actionsList}>
-                {[
-                  {
-                    title: 'Upload & Parse Resume',
-                    desc: 'Extract your skills from PDF/DOCX',
-                    route: ROUTES.RESUMES,
-                  },
-                  {
-                    title: 'Explore Job Matches',
-                    desc: 'View positions matching your target roles',
-                    route: ROUTES.OPPORTUNITIES,
-                  },
-                  {
-                    title: 'Update Target Roles',
-                    desc: 'Re-align your market matches',
-                    route: ROUTES.PROFILE,
-                  },
-                  {
-                    title: 'View In-Demand Skills',
-                    desc: 'See which skills are trending',
-                    route: ROUTES.ANALYTICS,
-                  },
-                ].map((act) => (
+                {quickActions.map((act) => (
                   <Link key={act.title} to={act.route} className={styles.quickActionLink}>
                     <div className={styles.quickActionItem}>
+                      <span className={styles.quickActionIcon}>{act.icon}</span>
                       <div className={styles.quickActionText}>
                         <span className={styles.quickActionTitle}>{act.title}</span>
                         <span className={styles.quickActionDesc}>{act.desc}</span>

@@ -8,6 +8,8 @@
   /* Global Color System (Light Theme) */
   --surface-background: #F9FAFB;
   --surface-primary: #FFFFFF;
+  --surface-nav: #F3F4F6;
+  --surface-sidebar: #E5E7EB;
   --surface-hover: #F3F4F6;
 
   /* Fix 1a: surface-primary-hover — used by 40+ hover states, was undefined → transparent */
@@ -38,19 +40,19 @@
   --accent-subtle: color-mix(in srgb, var(--color-brand) 10%, transparent);
 
   /* Fix 3: sidebar-bg → surface-primary so sidebar is visually distinct from page */
-  --sidebar-bg: var(--surface-primary);
+  --sidebar-bg: var(--surface-sidebar);
   --sidebar-border: var(--border-default);
   --sidebar-text-primary: var(--text-heading);
   --sidebar-text-secondary: var(--text-secondary);
   /* Fix 1e: sidebar-text-muted — used for user role text, was undefined → invisible */
   --sidebar-text-muted: #9CA3AF;
-  --sidebar-item-hover: var(--surface-hover);
+  --sidebar-item-hover: var(--surface-primary-hover);
   /* Fix 5: active sidebar item — neutral hover fill */
-  --sidebar-item-active: var(--surface-hover);
+  --sidebar-item-active: var(--surface-primary-hover);
 
   /* Fix 2: Strengthen shadow-sm from 5% to 10% — previously below perceptual threshold */
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.10), 0 1px 2px -1px rgb(0 0 0 / 0.06);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.10), 0 2px 4px -2px rgb(0 0 0 / 0.10);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.12), 0 1px 2px -1px rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12), 0 2px 4px -2px rgb(0 0 0 / 0.10);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12), 0 4px 6px -4px rgb(0 0 0 / 0.08);
 
   /* Shared Properties */
@@ -82,6 +84,8 @@
 :root.dark {
   --surface-background: #0F172A;
   --surface-primary: #1E293B;
+  --surface-nav: #0B0F19;
+  --surface-sidebar: #020617;
   --surface-hover: #334155;
   --surface-primary-hover: #2D3A4F;
 
@@ -96,13 +100,13 @@
   --color-surface-900: #0F172A;
   --accent-subtle: color-mix(in srgb, var(--color-brand) 18%, transparent);
 
-  --sidebar-bg: var(--surface-primary);
+  --sidebar-bg: var(--surface-sidebar);
   --sidebar-border: var(--border-default);
   --sidebar-text-primary: var(--text-heading);
   --sidebar-text-secondary: var(--text-secondary);
   --sidebar-text-muted: #64748B;
-  --sidebar-item-hover: var(--surface-hover);
-  --sidebar-item-active: var(--surface-hover);
+  --sidebar-item-hover: var(--surface-primary-hover);
+  --sidebar-item-active: var(--surface-primary-hover);
 
   --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.3);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);
@@ -114,6 +118,8 @@
   :root:not(.light) {
     --surface-background: #0F172A;
     --surface-primary: #1E293B;
+    --surface-nav: #0B0F19;
+    --surface-sidebar: #020617;
     --surface-hover: #334155;
     --surface-primary-hover: #2D3A4F;
 
@@ -128,13 +134,13 @@
     --color-surface-900: #0F172A;
     --accent-subtle: color-mix(in srgb, var(--color-brand) 18%, transparent);
 
-    --sidebar-bg: var(--surface-primary);
+    --sidebar-bg: var(--surface-sidebar);
     --sidebar-border: var(--border-default);
     --sidebar-text-primary: var(--text-heading);
     --sidebar-text-secondary: var(--text-secondary);
     --sidebar-text-muted: #64748B;
-    --sidebar-item-hover: var(--surface-hover);
-    --sidebar-item-active: var(--surface-hover);
+    --sidebar-item-hover: var(--surface-primary-hover);
+    --sidebar-item-active: var(--surface-primary-hover);
 
     --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.3);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);

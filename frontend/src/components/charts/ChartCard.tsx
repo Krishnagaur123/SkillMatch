@@ -1,9 +1,10 @@
 import { forwardRef } from 'react'
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../common/Card'
+import type { CardProps } from '../common/Card'
 import styles from './ChartCard.module.css'
 
-export interface ChartCardProps extends HTMLAttributes<HTMLDivElement> {
+export interface ChartCardProps extends CardProps {
   title: string
   description?: string
   actions?: ReactNode

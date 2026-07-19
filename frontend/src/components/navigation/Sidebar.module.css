@@ -2,10 +2,12 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  /* One step darker than the main surface — separates nav from workspace */
   background-color: var(--sidebar-bg);
-  border-right: 1px solid var(--sidebar-border);
+  border-right: 1px solid var(--border-default);
   overflow: hidden;
 }
+
 
 .header {
   flex-shrink: 0;

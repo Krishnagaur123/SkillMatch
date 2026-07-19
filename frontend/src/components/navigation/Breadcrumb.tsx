@@ -1,5 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
-import { ChevronRight } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
 import { NAV_ITEMS } from '@/config/navigation'
 import styles from './Breadcrumb.module.css'
 
@@ -12,25 +11,9 @@ export default function Breadcrumb() {
 
   return (
     <nav aria-label="Breadcrumb" className={styles.root}>
-      <ol className={styles.list} role="list">
-        <li className={styles.item}>
-          <Link to="/dashboard" className={styles.link}>
-            Home
-          </Link>
-        </li>
-        {matched.route !== '/dashboard' && (
-          <>
-            <li className={styles.separator} aria-hidden="true">
-              <ChevronRight size={14} />
-            </li>
-            <li className={styles.item}>
-              <span className={styles.current} aria-current="page">
-                {matched.title}
-              </span>
-            </li>
-          </>
-        )}
-      </ol>
+      <span className={styles.current} aria-current="page">
+        {matched.title}
+      </span>
     </nav>
   )
 }
