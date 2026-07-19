@@ -68,23 +68,31 @@ export default function OpportunitiesPage() {
           />
         ) : (
           <>
-            <OpportunityFilters
-              location={locationStr}
-              targetRoleId={targetRoleId}
-              sort={sort}
-              onLocationChange={setLocationStr}
-              onTargetRoleChange={setTargetRoleId}
-              onSortChange={setSort}
-            />
+            <div className="flex flex-col gap-2">
+              <OpportunityFilters
+                location={locationStr}
+                targetRoleId={targetRoleId}
+                sort={sort}
+                onLocationChange={setLocationStr}
+                onTargetRoleChange={setTargetRoleId}
+                onSortChange={setSort}
+              />
 
-            {!isFetchingData && !isOppError && (
-              <div className={styles.count}>
-                Showing {totalElements} matching opportunit{totalElements === 1 ? 'y' : 'ies'}
-              </div>
-            )}
+              {!isFetchingData && !isOppError && (
+                <div className="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
+                  <span className="font-bold text-[var(--text-primary)]">
+                    {totalElements} opportunit{totalElements === 1 ? 'y' : 'ies'} found
+                  </span>
+                  <span className="text-[var(--border-default)]">|</span>
+                  <span>
+                    Sorted by {sort === 'matchPercentage,desc' ? 'Best Match' : 'Most Recent'}
+                  </span>
+                </div>
+              )}
+            </div>
 
             {isFetchingData ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 items-start">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
                   <OpportunitySkeleton key={i} />
                 ))}
@@ -106,7 +114,7 @@ export default function OpportunitiesPage() {
                 }}
               />
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 items-start">
                 {oppData?.content.map((opp) => (
                   <OpportunityCard key={opp.opportunityId} opportunity={opp} />
                 ))}

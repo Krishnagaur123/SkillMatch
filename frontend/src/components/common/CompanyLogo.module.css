@@ -3,19 +3,24 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: var(--radius-lg);
-  background-color: var(--slate-50);
-  border: 1px solid var(--border);
+  border-radius: 50%;
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  padding: 0.25rem;
 }
 
 :global(.dark) .root {
-  background-color: var(--slate-800);
+  background-color: var(--surface-hover);
 }
 
 .image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  border-radius: 50%;
 }
 
 .initials {

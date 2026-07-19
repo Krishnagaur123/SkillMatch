@@ -1,18 +1,15 @@
-import { useState } from 'react'
 import { Building2 } from 'lucide-react'
 import { clsx } from 'clsx'
 import styles from './CompanyLogo.module.css'
 
 export interface CompanyLogoProps {
-  src?: string
+  src?: string // kept for interface compatibility but ignored
   name: string
   className?: string
   iconClassName?: string
 }
 
-export function CompanyLogo({ src, name, className = '', iconClassName = '' }: CompanyLogoProps) {
-  const [hasError, setHasError] = useState(false)
-
+export function CompanyLogo({ name, className = '', iconClassName = '' }: CompanyLogoProps) {
   // Get first letter of each word (up to 2 characters) for initials fallback
   const getInitials = (companyName: string) => {
     return companyName
@@ -35,20 +32,6 @@ export function CompanyLogo({ src, name, className = '', iconClassName = '' }: C
 
   const combinedClasses = clsx(styles.root, className)
 
-  if (src && !hasError) {
-    return (
-      <img
-        src={src}
-        alt={`${name} logo`}
-        className={clsx(combinedClasses, styles.image)}
-        loading="lazy"
-        referrerPolicy="no-referrer"
-        onError={() => setHasError(true)}
-      />
-    )
-  }
-
-  // Fallback to initials if name is provided, else generic building icon
   if (name) {
     return (
       <div 

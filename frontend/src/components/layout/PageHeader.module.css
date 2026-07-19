@@ -1,11 +1,14 @@
 .root {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-default);
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem 1.75rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .text {
@@ -16,7 +19,7 @@
 
 .title {
   margin: 0;
-  font-size: var(--font-size-h1);
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.2;
   color: var(--text-heading);
@@ -25,7 +28,7 @@
 
 .description {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
 }
 

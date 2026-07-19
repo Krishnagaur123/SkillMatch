@@ -284,7 +284,7 @@ export default function ResumesPage() {
 
             {/* Right Column: Upload Resume form */}
             <div className={styles.rightColumn}>
-              <SectionCard title="Upload Resume">
+              <SectionCard title="Upload Resume" variant="elevated">
                 <form onSubmit={handleUploadSubmit} className={styles.uploadForm}>
                   <FormField label="Resume Title (Optional)" error={undefined}>
                     <input

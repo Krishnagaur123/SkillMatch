@@ -1,15 +1,8 @@
 .container {
-  padding: 1rem;
+  padding: 0;
+  margin-bottom: 0.5rem;
 }
 
-.label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.25rem;
-}
 
 .select {
   width: 100%;

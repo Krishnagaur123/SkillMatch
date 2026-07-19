@@ -13,11 +13,11 @@ export function SkillGroup({ title, skills, isMissing = false }: SkillGroupProps
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1.5">
       <h4 className={`flex items-center gap-1.5 ${styles.title}`}>
         {title}
       </h4>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-1.5">
         {skills.map((skill) => (
           <SkillBadge 
             key={skill} 

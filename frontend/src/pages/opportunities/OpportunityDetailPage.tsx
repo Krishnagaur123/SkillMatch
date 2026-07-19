@@ -1,9 +1,11 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { ArrowLeft, CheckCircle2, AlertTriangle, Info, Circle } from 'lucide-react'
 import { Button } from '@/components/common/Button'
+import { Card } from '@/components/common/Card'
 import { ApiErrorState } from '@/components/feedback'
 import { SkillGroup } from '@/features/opportunities/SkillGroup'
 import { useOpportunityDetail, useOpportunityMatch } from '@/hooks/useOpportunityDetail'
+import type { OpportunityRecommendation } from '@/hooks/useOpportunities'
 import { 
   OpportunityDetailSkeleton, 
   OpportunityHero, 
@@ -17,11 +19,14 @@ import styles from './OpportunityDetailPage.module.css'
 export default function OpportunityDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const location = useLocation()
   
   const { data: opportunity, isLoading, error, refetch } = useOpportunityDetail(id || '')
   
-  // Try to find the match recommendation from cache
-  const match = useOpportunityMatch(id || '')
+  // Get match from routing state first (reliable), fallback to cache
+  const routerMatch = location.state?.match as OpportunityRecommendation | undefined
+  const cacheMatch = useOpportunityMatch(id || '')
+  const match = routerMatch || cacheMatch
 
   if (isLoading) {
     return (
@@ -57,16 +62,13 @@ export default function OpportunityDetailPage() {
         matchPercentage={match?.matchPercentage} 
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-6">
-        <div className="lg:col-span-2 flex flex-col gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
+        <div className="lg:col-span-2 flex flex-col gap-6">
           
-          <section className="flex flex-col gap-4">
-            <h2 className={styles.sectionTitle}>Match Analysis</h2>
-            <MatchSummary match={match} />
-          </section>
+          <MatchSummary match={match} />
 
-          <section className="flex flex-col gap-4">
-            <h2 className={styles.sectionTitle}>Skills Breakdown</h2>
+          <Card className="p-6 flex flex-col gap-5">
+            <h2 className="text-xl font-semibold text-[var(--text-heading)] m-0">Skills Breakdown</h2>
             <div className="flex flex-col gap-4">
               {match ? (
                 <>
@@ -107,12 +109,9 @@ export default function OpportunityDetailPage() {
                 </>
               )}
             </div>
-          </section>
+          </Card>
 
-          <section className="flex flex-col gap-4">
-            <h2 className={styles.sectionTitle}>About the Role</h2>
-            <OpportunityDescription description={opportunity.description} />
-          </section>
+          <OpportunityDescription description={opportunity.description} />
 
           <section className={`flex flex-col gap-4 pt-4 lg:hidden ${styles.mobileCompanyPreview}`}>
             <CompanyPreview company={opportunity.company} />

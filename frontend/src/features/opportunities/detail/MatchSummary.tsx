@@ -10,13 +10,15 @@ interface MatchSummaryProps {
 export function MatchSummary({ match }: MatchSummaryProps) {
   if (!match) {
     return (
-      <Card variant="muted" padding="md" className={styles.summaryContainer}>
-        <Lightbulb className={`w-6 h-6 shrink-0 mt-0.5 ${styles.iconInfo}`} />
-        <div className="flex flex-col gap-1">
-          <h3 className={styles.title}>Match Information Unavailable</h3>
-          <p className={styles.description}>
-            We couldn't load your personalized match score for this opportunity. Review the requirements below to determine if this is a good fit.
-          </p>
+      <Card className="p-6">
+        <div className="flex items-start gap-4">
+          <Lightbulb className={`w-6 h-6 shrink-0 mt-0.5 ${styles.iconInfo}`} />
+          <div className="flex flex-col gap-1.5 pt-0.5">
+            <h3 className="text-xl font-semibold text-[var(--text-heading)] m-0">Match Information Unavailable</h3>
+            <p className="text-base text-[var(--text-secondary)] m-0">
+              We couldn't load your personalized match score for this opportunity. Review the requirements below to determine if this is a good fit.
+            </p>
+          </div>
         </div>
       </Card>
     )
@@ -56,15 +58,17 @@ export function MatchSummary({ match }: MatchSummaryProps) {
   }
 
   return (
-    <Card variant="muted" padding="md" className={styles.summaryContainer}>
-      {icon}
-      <div className="flex flex-col gap-1">
-        <h3 className={styles.title}>
-          {title}
-        </h3>
-        <p className={styles.description}>
-          {description}
-        </p>
+    <Card className="p-6">
+      <div className="flex items-start gap-4">
+        {icon}
+        <div className="flex flex-col gap-1.5 pt-0.5">
+          <h3 className="text-xl font-semibold text-[var(--text-heading)] m-0">
+            {title}
+          </h3>
+          <p className="text-base text-[var(--text-secondary)] m-0">
+            {description}
+          </p>
+        </div>
       </div>
     </Card>
   )

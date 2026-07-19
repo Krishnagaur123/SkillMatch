@@ -68,15 +68,32 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
   const insight = deriveInsight(opportunity)
 
   return (
-    <Card variant="interactive" className="flex flex-col h-full">
-      <CardHeader className="flex flex-row items-start justify-between gap-4 pb-2">
-        <div className="flex items-start gap-4 flex-1">
-          <Link to={`/companies/${company.id}`} state={{ from: routerLocation.pathname }} className="shrink-0 group">
+    <Card 
+      variant="interactive" 
+      className="flex flex-col min-h-[520px]"
+      onClick={() => navigate(`/opportunities/${opportunityId}`, { state: { match: opportunity } })}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          navigate(`/opportunities/${opportunityId}`, { state: { match: opportunity } })
+        }
+      }}
+    >
+      <CardHeader className="flex flex-row items-start justify-between gap-3 pb-2">
+        <div className="flex items-start gap-3 flex-1">
+          <Link 
+            to={`/companies/${company.id}`} 
+            state={{ from: routerLocation.pathname }} 
+            className="shrink-0 group"
+            onClick={(e) => e.stopPropagation()}
+          >
             <CompanyLogo
               src={company.logoUrl}
               name={company.name}
-              className="w-12 h-12 rounded-md group-hover:ring-2 ring-primary/20 transition-all"
-              iconClassName="w-6 h-6"
+              className="group-hover:ring-2 ring-accent/20 transition-all"
+              iconClassName="w-5 h-5"
             />
           </Link>
           <div className="flex flex-col">
@@ -87,6 +104,7 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
               to={`/companies/${company.id}`} 
               state={{ from: routerLocation.pathname }}
               className={styles.companyName}
+              onClick={(e) => e.stopPropagation()}
             >
               {company.name}
             </Link>
@@ -98,24 +116,24 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
         </div>
       </CardHeader>
 
-      <CardContent className="flex-1 flex flex-col gap-5">
-        <div className={`flex items-center gap-4 text-sm flex-wrap ${styles.metaInfo}`}>
-          <div className="flex items-center gap-1.5">
-            <MapPin className="w-4 h-4" />
-            <span>{location || 'Remote / Unknown'}</span>
+      <CardContent className="flex flex-col gap-4">
+        <div className={`flex items-center gap-3 text-sm flex-wrap ${styles.metaInfo}`}>
+          <div className="flex items-center gap-1">
+            <MapPin className="w-3.5 h-3.5" />
+            <span>{location || 'Remote'}</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Briefcase className="w-4 h-4" />
+          <div className="flex items-center gap-1">
+            <Briefcase className="w-3.5 h-3.5" />
             <span className="capitalize">{employmentType?.toLowerCase().replace('_', ' ') || 'Full time'}</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4" />
+          <div className="flex items-center gap-1">
+            <Clock className="w-3.5 h-3.5" />
             <span className="capitalize">{experienceLevel?.toLowerCase() || 'Mid level'}</span>
           </div>
         </div>
 
         {/* Mobile match score */}
-        <div className={`sm:hidden flex items-center gap-4 py-2 ${styles.mobileMatch}`}>
+        <div className={`sm:hidden flex items-center gap-4 py-1.5 ${styles.mobileMatch}`}>
            <span className="text-sm font-semibold">Match Score</span>
            <MatchScoreBadge score={matchPercentage} className="scale-75 origin-left" />
         </div>
@@ -126,30 +144,30 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
           </p>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           <SkillGroup 
             title={
-              <><CheckCircle2 className={`w-4 h-4 ${styles.iconSuccess}`} /> Skills You Have</>
+              <><CheckCircle2 className={`w-3.5 h-3.5 ${styles.iconSuccess}`} /> Skills You Have</>
             } 
             skills={matchedSkills} 
           />
           <SkillGroup 
             title={
-              <><AlertTriangle className={`w-4 h-4 ${styles.iconWarning}`} /> Missing Required</>
+              <><AlertTriangle className={`w-3.5 h-3.5 ${styles.iconWarning}`} /> Missing Required</>
             } 
             skills={missingRequiredSkills} 
             isMissing 
           />
           <SkillGroup 
             title={
-              <><Info className={`w-4 h-4 ${styles.iconInfo}`} /> Missing Preferred</>
+              <><Info className={`w-3.5 h-3.5 ${styles.iconInfo}`} /> Missing Preferred</>
             } 
             skills={missingPreferredSkills} 
             isMissing 
           />
           <SkillGroup 
             title={
-              <><Circle className={`w-4 h-4 ${styles.iconNeutral}`} /> Good To Have</>
+              <><Circle className={`w-3.5 h-3.5 ${styles.iconNeutral}`} /> Good To Have</>
             } 
             skills={missingGoodToHaveSkills} 
             isMissing 
@@ -157,26 +175,20 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className={`pt-4 flex items-center gap-3 ${styles.footer}`}>
-        <Button 
-          variant="secondary" 
-          className="flex-1"
-          onClick={() => navigate(`/opportunities/${opportunityId}`)}
-        >
-          View Details
-        </Button>
-        {applyUrl && (
+      {applyUrl && (
+        <CardFooter className={`pt-3 flex items-center gap-3 mt-auto ${styles.footer}`}>
           <Button 
-            className="flex-1 gap-2"
+            className="w-full gap-2"
             onClick={(e) => {
               e.preventDefault()
+              e.stopPropagation()
               handleApplyClick(opportunityId, applyUrl)
             }}
           >
             Apply Now <ExternalLink className="w-4 h-4" />
           </Button>
-        )}
-      </CardFooter>
+        </CardFooter>
+      )}
       
       <div onClick={(e) => e.preventDefault()}>
         <ApplicationTrackingDialogs

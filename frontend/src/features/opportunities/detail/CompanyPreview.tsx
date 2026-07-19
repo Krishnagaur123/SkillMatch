@@ -15,17 +15,15 @@ export function CompanyPreview({ company }: CompanyPreviewProps) {
   const location = useLocation()
 
   return (
-    <Card variant="interactive">
-      <CardHeader className="pb-4">
-        <h3 className={styles.title}>About the Company</h3>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
+    <Card className="flex flex-col">
+      <CardContent className="p-6 flex flex-col gap-5">
+        <h3 className="text-xl font-semibold text-[var(--text-heading)] m-0">About the Company</h3>
         <div className="flex items-center gap-4">
           <Link to={`/companies/${company.id}`} state={{ from: location.pathname }} className="shrink-0 group">
             <CompanyLogo
               src={company.logoUrl}
               name={company.name}
-              className="w-14 h-14 rounded-lg group-hover:ring-2 ring-primary/20 transition-all"
+              className="group-hover:ring-2 ring-accent/20 transition-all"
               iconClassName="w-6 h-6"
             />
           </Link>
@@ -33,17 +31,17 @@ export function CompanyPreview({ company }: CompanyPreviewProps) {
             <Link 
               to={`/companies/${company.id}`}
               state={{ from: location.pathname }}
-              className={styles.companyName}
+              className={`text-base font-medium text-[var(--text-secondary)] hover:text-[var(--color-brand)] transition-colors ${styles.companyName}`}
             >
               {company.name}
             </Link>
-            <span className={styles.description}>View full profile to see more details and open roles</span>
+            <span className="text-sm text-[var(--text-muted)] leading-tight mt-0.5">View profile to see more details and open roles</span>
           </div>
         </div>
 
         <Button 
           variant="secondary" 
-          className="w-full mt-2 gap-2"
+          className="w-full mt-1 gap-2"
           onClick={() => navigate(`/companies/${company.id}`, { state: { from: location.pathname } })}
         >
           View Company <ExternalLink className="w-4 h-4" />
