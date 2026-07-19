@@ -11,7 +11,7 @@ import { useDebounce } from '@/hooks/useDebounce'
 import { OpportunityFilters } from '@/features/opportunities/OpportunityFilters'
 import { OpportunityCard } from '@/features/opportunities/OpportunityCard'
 import { OpportunitySkeleton } from '@/features/opportunities/OpportunitySkeleton'
-import styles from './OpportunitiesPage.module.css'
+
 
 export default function OpportunitiesPage() {
   const navigate = useNavigate()

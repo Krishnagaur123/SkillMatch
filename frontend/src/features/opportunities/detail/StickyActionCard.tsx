@@ -5,7 +5,7 @@ import { useApplicationTracking } from '@/hooks/useApplicationTracking'
 import { ApplicationTrackingDialogs } from '@/features/applications/components/ApplicationTrackingDialogs'
 import type { OpportunityDetailResponse } from '@/hooks/useOpportunityDetail'
 import type { OpportunityRecommendation } from '@/hooks/useOpportunities'
-import styles from './StickyActionCard.module.css'
+
 
 interface StickyActionCardProps {
   opportunity: OpportunityDetailResponse

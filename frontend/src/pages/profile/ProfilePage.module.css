@@ -1,20 +1,58 @@
-.sections {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-8);
-  margin-top: var(--spacing-6);
-  padding-bottom: var(--spacing-12);
+.pageContainer {
+  padding: 1.5rem;
+  width: 95%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
-.topGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-6);
+.contentLayout {
+  display: flex;
+  flex-direction: column-reverse; /* Completion card on top in mobile */
+  gap: 2rem;
 }
 
 @media (min-width: 1024px) {
-  .topGrid {
-    grid-template-columns: 1fr 1fr;
-    align-items: stretch;
+  .contentLayout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 3rem; /* Increased spacing */
   }
+}
+
+.mainColumn {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sideColumn {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .mainColumn {
+    flex: 6; /* 60% of layout */
+  }
+
+  .sideColumn {
+    flex: 4; /* 40% of layout */
+    width: auto;
+    flex-shrink: 0;
+    position: sticky;
+    top: 2rem; /* Stick to top if scrolling */
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }

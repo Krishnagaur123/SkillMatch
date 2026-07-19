@@ -1,5 +1,4 @@
 import { useAllTargetRoles } from '@/hooks/useTargetRoles'
-import { Card } from '@/components/common/Card'
 import { Input } from '@/components/common/Input'
 import styles from './OpportunityFilters.module.css'
 

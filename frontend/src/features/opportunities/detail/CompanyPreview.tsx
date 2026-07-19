@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { ExternalLink } from 'lucide-react'
 import { Button } from '@/components/common/Button'
-import { Card, CardHeader, CardContent } from '@/components/common/Card'
+import { Card, CardContent } from '@/components/common/Card'
 import { CompanyLogo } from '@/components/common/CompanyLogo'
 import type { OpportunityDetailCompanySummary } from '@/hooks/useOpportunityDetail'
 import styles from './CompanyPreview.module.css'
