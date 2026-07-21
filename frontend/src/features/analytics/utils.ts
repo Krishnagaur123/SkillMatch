@@ -1,12 +1,12 @@
 
 
-export type CoverageCategory = 'Excellent' | 'Strong' | 'Good Progress' | 'Needs Improvement'
+export type CoverageCategory = 'Excellent' | 'Good' | 'Needs Improvement' | 'Low Coverage'
 
 export function getCoverageCategory(coverage: number): CoverageCategory {
-  if (coverage >= 90) return 'Excellent'
-  if (coverage >= 75) return 'Strong'
-  if (coverage >= 60) return 'Good Progress'
-  return 'Needs Improvement'
+  if (coverage >= 85) return 'Excellent'
+  if (coverage >= 70) return 'Good'
+  if (coverage >= 55) return 'Needs Improvement'
+  return 'Low Coverage'
 }
 
 export type ImpactPriority = 'High Impact' | 'Medium Impact' | 'Low Impact'

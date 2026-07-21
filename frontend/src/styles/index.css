@@ -27,8 +27,13 @@
   /* Shared Semantic Tokens */
   --color-brand: #2563EB;
   --color-success: #10B981;
+  --color-emerald: #059669;
   --color-warning: #F59E0B;
+  --color-orange: #F97316;
   --color-error: #EF4444;
+  --color-indigo: #6366F1;
+  --color-purple: #A855F7;
+  --color-cyan: #06B6D4;
   /* Fix 1c: color-surface-900 — used by chart tooltip, was undefined */
   --color-surface-900: #111827;
 
@@ -78,6 +83,7 @@
 
   --spacing-section: 2rem;
   --spacing-element: 1rem;
+
 }
 
 /* Dark Theme Support via class */
@@ -111,6 +117,7 @@
   --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.3);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+
 }
 
 /* Dark Theme Support via system preference */
@@ -145,6 +152,7 @@
     --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.3);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+
   }
 }
 

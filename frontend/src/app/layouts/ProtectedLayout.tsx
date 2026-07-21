@@ -1,9 +1,11 @@
 import { Outlet, Navigate } from 'react-router-dom'
+import { Suspense } from 'react'
 import { Sidebar, TopNavigation, MobileDrawer } from '@/components/navigation'
 import { SidebarContext } from '@/app/providers/SidebarContext'
 import { useSidebarState } from '@/hooks/useSidebarState'
 import { useUserProfile } from '@/hooks/useUserProfile'
 import AuthLoadingScreen from '@/components/feedback/AuthLoadingScreen'
+import PageSpinner from '@/components/feedback/PageSpinner'
 import { ROUTES } from '@/constants/routes'
 import styles from './ProtectedLayout.module.css'
 
@@ -31,7 +33,9 @@ export default function ProtectedLayout() {
             <TopNavigation />
           </div>
           <main className={styles.main}>
-            <Outlet />
+            <Suspense fallback={<PageSpinner />}>
+              <Outlet />
+            </Suspense>
           </main>
         </div>
       </div>

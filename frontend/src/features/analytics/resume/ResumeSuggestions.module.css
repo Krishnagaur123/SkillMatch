@@ -31,12 +31,12 @@
 .successTitle {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--foreground);
+  color: var(--text-primary);
 }
 
 .successDescription {
   font-size: 1rem;
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
   max-width: 400px;
 }
 
@@ -56,13 +56,33 @@
 }
 
 .explanation {
-  font-size: 1.0625rem;
-  color: var(--slate-700);
-  line-height: 1.6;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-weight: 500;
 }
 
-:global(.dark) .explanation {
-  color: var(--slate-300);
+.missingSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.missingTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.recruiterNote {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: 1rem;
 }
 
 .badges {
@@ -74,13 +94,13 @@
 .badge {
   font-size: 0.875rem;
   padding: 0.375rem 1rem;
-  background: white;
-  border: 1px solid var(--border);
-  color: var(--foreground);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
 }
 
 :global(.dark) .badge {
-  background: var(--card);
+  background: var(--surface-primary);
 }
 
 .actions {
@@ -95,8 +115,8 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: var(--primary);
-  color: var(--primary-foreground);
+  background: var(--color-brand);
+  color: white;
   font-weight: 500;
   border-radius: var(--radius-md);
   text-decoration: none;

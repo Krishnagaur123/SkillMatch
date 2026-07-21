@@ -7,7 +7,7 @@
 }
 
 :global(body) {
-  background-color: var(--slate-50);
+  background-color: var(--surface-background);
 }
 
 :global(.dark body) {
@@ -38,15 +38,15 @@
 
 
 .sectionCard {
-  background: white;
+  background: var(--surface-primary);
   border-radius: var(--radius-xl);
   padding: 2.5rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-default);
   box-shadow: var(--shadow-sm);
 }
 
 :global(.dark) .sectionCard {
-  background: var(--card);
+  background: var(--surface-primary);
 }
 
 .section {
@@ -64,7 +64,7 @@
 .sectionTitle {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--foreground);
+  color: var(--text-primary);
   letter-spacing: -0.025em;
   display: flex;
   align-items: center;
@@ -74,13 +74,13 @@
 .sectionIcon {
   width: 24px;
   height: 24px;
-  color: var(--primary);
+  color: var(--color-brand);
   opacity: 0.9;
 }
 
 .sectionDescription {
   font-size: 1.0625rem;
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
 }
 
 .emptyState {
@@ -91,24 +91,24 @@
   gap: 1rem;
   padding: 4rem 2rem;
   text-align: center;
-  background: white;
-  border: 1px solid var(--border);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
 }
 
 :global(.dark) .emptyState {
-  background: var(--card);
+  background: var(--surface-primary);
 }
 
 .emptyTitle {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--foreground);
+  color: var(--text-primary);
 }
 
 .emptyDescription {
   font-size: 1.125rem;
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
   max-width: 500px;
 }
 
@@ -117,8 +117,8 @@
   align-items: center;
   justify-content: center;
   padding: 0.75rem 1.5rem;
-  background: var(--primary);
-  color: var(--primary-foreground);
+  background: var(--color-brand);
+  color: white;
   font-weight: 500;
   border-radius: var(--radius-md);
   text-decoration: none;

@@ -1,15 +1,29 @@
+import { useState } from 'react'
 import { Building2 } from 'lucide-react'
 import { clsx } from 'clsx'
 import styles from './CompanyLogo.module.css'
 
 export interface CompanyLogoProps {
-  src?: string // kept for interface compatibility but ignored
+  id?: string
+  src?: string
   name: string
   className?: string
   iconClassName?: string
 }
 
-export function CompanyLogo({ name, className = '', iconClassName = '' }: CompanyLogoProps) {
+const PALETTES = [
+  'var(--color-brand)',
+  'var(--color-success)',
+  'var(--color-warning)',
+  'var(--color-indigo)',
+  'var(--color-purple)',
+  'var(--color-cyan)',
+  'var(--color-error)',
+]
+
+export function CompanyLogo({ id, src, name, className = '', iconClassName = '' }: CompanyLogoProps) {
+  const [hasError, setHasError] = useState(false)
+
   // Get first letter of each word (up to 2 characters) for initials fallback
   const getInitials = (companyName: string) => {
     return companyName
@@ -20,25 +34,43 @@ export function CompanyLogo({ name, className = '', iconClassName = '' }: Compan
       .toUpperCase()
   }
 
-  // Generate a consistent color based on company name
-  const getColor = (name: string) => {
+  const getSemanticColor = (identifier: string) => {
     let hash = 0
-    for (let i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash)
+    for (let i = 0; i < identifier.length; i++) {
+      hash = identifier.charCodeAt(i) + ((hash << 5) - hash)
     }
-    const h = hash % 360
-    return `hsl(${h}, 70%, 40%)` // darkish color
+    const index = Math.abs(hash) % PALETTES.length
+    return PALETTES[index]
   }
 
   const combinedClasses = clsx(styles.root, className)
 
+  if (src && !hasError) {
+    return (
+      <div className={combinedClasses}>
+        <img 
+          src={src} 
+          alt={`${name} logo`} 
+          className={styles.image} 
+          onError={() => setHasError(true)}
+        />
+      </div>
+    )
+  }
+
   if (name) {
+    const baseColor = getSemanticColor(id || name)
     return (
       <div 
-        className={clsx(combinedClasses, styles.initials)}
-        style={{ backgroundColor: getColor(name), color: 'white' }}
+        className={combinedClasses}
+        style={{
+          backgroundColor: `color-mix(in srgb, ${baseColor} 15%, transparent)`,
+          borderColor: `color-mix(in srgb, ${baseColor} 30%, transparent)`
+        }}
       >
-        {getInitials(name)}
+        <span className={styles.initials} style={{ color: baseColor }}>
+          {getInitials(name)}
+        </span>
       </div>
     )
   }

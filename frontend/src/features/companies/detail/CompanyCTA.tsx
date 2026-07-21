@@ -22,6 +22,7 @@ export function CompanyCTA({ company, onViewOpportunities }: CompanyCTAProps) {
       <div className={styles.actions}>
         <Button
           variant="primary"
+          size="lg"
           fullWidth
           onClick={onViewOpportunities}
           aria-label={`Scroll to open roles at ${name}`}
@@ -31,6 +32,7 @@ export function CompanyCTA({ company, onViewOpportunities }: CompanyCTAProps) {
         {website && (
           <Button
             variant="secondary"
+            size="lg"
             fullWidth
             rightIcon={<ExternalLink size={14} aria-hidden="true" />}
             onClick={() => window.open(website, '_blank', 'noopener,noreferrer')}

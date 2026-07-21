@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { MapPin, Briefcase } from 'lucide-react'
-import { clsx } from 'clsx'
-import { Badge } from '@/components/common/Badge'
+import { Badge, MatchBadge } from '@/components/common/Badge'
 import { CompanyLogo } from '@/components/common/CompanyLogo'
 import type { CompanyListItem } from '@/pages/companies/CompaniesPage'
 import styles from './CompanyCard.module.css'
@@ -10,12 +9,6 @@ interface CompanyCardProps {
   item: CompanyListItem
 }
 
-function getMatchClass(score: number | null): string {
-  if (score === null) return styles.matchLow
-  if (score >= 75) return styles.matchHigh
-  if (score >= 50) return styles.matchMid
-  return styles.matchLow
-}
 
 export function CompanyCard({ item }: CompanyCardProps) {
   const location = useLocation()
@@ -31,9 +24,10 @@ export function CompanyCard({ item }: CompanyCardProps) {
     >
       <div className={styles.header}>
         <CompanyLogo
+          id={id}
           src={logoUrl}
           name={name}
-          className="w-12 h-12 rounded-xl"
+          className={styles.logo}
           iconClassName="w-6 h-6"
         />
         <div className={styles.meta}>
@@ -55,21 +49,25 @@ export function CompanyCard({ item }: CompanyCardProps) {
         <div className={styles.stat}>
           <span className={styles.statLabel}>Open Roles</span>
           <span className={styles.statValue}>
-            <Briefcase size={14} aria-hidden="true" />
-            {openRolesCount}
+            <Briefcase size={14} style={{ color: 'var(--text-secondary)' }} aria-hidden="true" />
+            <span style={{ color: 'var(--color-brand)' }}>{openRolesCount}</span>
           </span>
         </div>
         <div className={styles.stat}>
           <span className={styles.statLabel}>Avg Match</span>
-          <span className={clsx(styles.statValue, getMatchClass(averageMatch))}>
-            {averageMatch !== null ? `${averageMatch}%` : '—'}
-          </span>
+          <div className="mt-1">
+            {averageMatch !== null ? (
+              <MatchBadge score={averageMatch} />
+            ) : (
+              <span className={styles.statValue}>—</span>
+            )}
+          </div>
         </div>
         <div className={styles.stat}>
           <span className={styles.statLabel}>Location</span>
           <span className={styles.statValue}>
-            <MapPin size={14} aria-hidden="true" />
-            {headquarters || 'Remote'}
+            <MapPin size={14} style={{ color: 'var(--text-secondary)' }} aria-hidden="true" />
+            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{headquarters || 'Remote'}</span>
           </span>
         </div>
       </div>

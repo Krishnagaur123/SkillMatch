@@ -1,17 +1,12 @@
 import { Link } from 'react-router-dom'
 import { MapPin, Briefcase, ChevronRight } from 'lucide-react'
+import { MatchBadge } from '@/components/common/Badge'
 import type { OpportunityRecommendation } from '@/hooks/useOpportunities'
 import styles from './CompanyOpportunities.module.css'
 
 interface CompanyOpportunitiesProps {
   opportunities: OpportunityRecommendation[]
   companyName: string
-}
-
-function getMatchClass(score: number): string {
-  if (score >= 75) return [styles.matchScore, styles.matchHigh].join(' ')
-  if (score >= 50) return [styles.matchScore, styles.matchMid].join(' ')
-  return [styles.matchScore, styles.matchLow].join(' ')
 }
 
 function formatType(type: string): string {
@@ -59,9 +54,7 @@ export function CompanyOpportunities({ opportunities, companyName }: CompanyOppo
           </div>
 
           <div className={styles.oppRight}>
-            <span className={getMatchClass(opp.matchPercentage)}>
-              {opp.matchPercentage}% Match
-            </span>
+            <MatchBadge score={opp.matchPercentage} />
             <ChevronRight size={16} className={styles.arrow} aria-hidden="true" />
           </div>
         </Link>

@@ -8,7 +8,7 @@ interface StatusProgressProps {
 }
 
 export function StatusProgress({ status }: StatusProgressProps) {
-  const steps: { key: ApplicationStatus; label: string }[] = [
+  const steps: { key: ApplicationStatus; label: string; date?: string }[] = [
     { key: 'APPLIED', label: 'Applied' },
     { key: 'ONLINE_ASSESSMENT', label: 'Online Assessment' },
     { key: 'INTERVIEW', label: 'Interview' },
@@ -80,6 +80,7 @@ export function StatusProgress({ status }: StatusProgressProps) {
                 {index < steps.length - 1 && <div className={clsx(styles.line, lineClass)} />}
               </div>
               <span className={clsx(styles.label, labelClass)}>{step.label}</span>
+              {step.date && <span className={styles.stepDate}>{step.date}</span>}
             </div>
           )
         })}

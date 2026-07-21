@@ -60,7 +60,7 @@
   color: var(--text-secondary);
 }
 
-/* Settings & Logout — below profile, clearly secondary */
+/* Logout — below profile, clearly secondary */
 .userActions {
   display: flex;
   flex-direction: column;

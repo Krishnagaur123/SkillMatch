@@ -1,6 +1,6 @@
 import { MapPin, Briefcase, Clock, ExternalLink } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
-import { MatchScoreBadge } from '../MatchScoreBadge'
+import { MatchBadge } from '@/components/common/Badge'
 import { Button } from '@/components/common/Button'
 import { CompanyLogo } from '@/components/common/CompanyLogo'
 import { useApplicationTracking } from '@/hooks/useApplicationTracking'
@@ -58,7 +58,7 @@ export function OpportunityHero({ opportunity, matchPercentage }: OpportunityHer
         {/* Mobile action button & score */}
         <div className={`flex items-center justify-between md:hidden w-full pt-4 ${styles.mobileAction}`}>
           {matchPercentage !== undefined && (
-            <MatchScoreBadge score={matchPercentage} />
+            <MatchBadge score={matchPercentage} />
           )}
           {applyUrl && (
             <Button 

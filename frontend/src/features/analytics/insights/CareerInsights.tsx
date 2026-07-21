@@ -9,17 +9,7 @@ interface CareerInsightsProps {
 export function CareerInsights({ analytics }: CareerInsightsProps) {
   const insights = []
 
-  // 1. Strongest market skill
-  if (analytics.topStrengths.length > 0) {
-    insights.push({
-      id: 'strength',
-      icon: <TrendingUp className="w-5 h-5" />,
-      type: 'positive',
-      text: `Your strongest market skill is ${analytics.topStrengths[0].skillName}.`
-    })
-  }
-
-  // 2. Highest-impact learning opportunity
+  // 1. Highest-impact learning opportunity
   const topLearning = [...analytics.learningRoadmap].sort((a, b) => b.estimatedCoverageGain - a.estimatedCoverageGain)[0]
   if (topLearning) {
     insights.push({
@@ -27,6 +17,16 @@ export function CareerInsights({ analytics }: CareerInsightsProps) {
       icon: <Lightbulb className="w-5 h-5" />,
       type: 'action',
       text: `Learning ${topLearning.skillName} could improve your market coverage by ${topLearning.estimatedCoverageGain.toFixed(1)}%.`
+    })
+  }
+
+  // 2. Strongest market skill
+  if (analytics.topStrengths.length > 0) {
+    insights.push({
+      id: 'strength',
+      icon: <TrendingUp className="w-5 h-5" />,
+      type: 'positive',
+      text: `Your strongest market skill is ${analytics.topStrengths[0].skillName}.`
     })
   }
 

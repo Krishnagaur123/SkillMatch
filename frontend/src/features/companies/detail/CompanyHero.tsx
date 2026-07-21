@@ -11,7 +11,7 @@ interface CompanyHeroProps {
 }
 
 export function CompanyHero({ company, onViewOpportunities }: CompanyHeroProps) {
-  const { name, logoUrl, website, industry, openOpportunities, employeeCount } = company
+  const { id, name, logoUrl, website, industry, openOpportunities, employeeCount } = company
   const count = openOpportunities ?? 0
 
   return (
@@ -21,6 +21,7 @@ export function CompanyHero({ company, onViewOpportunities }: CompanyHeroProps) 
         <div className={styles.identity}>
           <CompanyLogo
             key={logoUrl}
+            id={id}
             src={logoUrl}
             name={name}
             className={styles.logo}

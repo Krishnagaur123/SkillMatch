@@ -2,7 +2,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { MapPin, Briefcase, Clock, ExternalLink, CheckCircle2, AlertTriangle, Info, Circle } from 'lucide-react'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/common/Card'
 import { Button } from '@/components/common/Button'
-import { MatchScoreBadge } from './MatchScoreBadge'
+import { MatchBadge } from '@/components/common/Badge'
 import { SkillGroup } from './SkillGroup'
 import { CompanyLogo } from '@/components/common/CompanyLogo'
 import type { OpportunityRecommendation } from '@/hooks/useOpportunities'
@@ -112,7 +112,7 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
         </div>
         
         <div className="shrink-0 hidden sm:block">
-          <MatchScoreBadge score={matchPercentage} />
+          <MatchBadge score={matchPercentage} />
         </div>
       </CardHeader>
 
@@ -135,7 +135,7 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
         {/* Mobile match score */}
         <div className={`sm:hidden flex items-center gap-4 py-1.5 ${styles.mobileMatch}`}>
            <span className="text-sm font-semibold">Match Score</span>
-           <MatchScoreBadge score={matchPercentage} className="scale-75 origin-left" />
+           <MatchBadge score={matchPercentage} className="scale-75 origin-left" />
         </div>
 
         <div className={styles.insightCard}>

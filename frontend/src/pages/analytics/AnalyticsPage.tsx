@@ -5,16 +5,13 @@ import { useCareerAnalytics } from '@/hooks/useCareerAnalytics'
 import { useUserProfile } from '@/hooks/useUserProfile'
 import { useResumes } from '@/hooks/useResumes'
 import { CoverageHero } from '@/features/analytics/overview/CoverageHero'
-import { CareerSnapshot } from '@/features/analytics/overview/CareerSnapshot'
-import { KPIOverview } from '@/features/analytics/overview/KPIOverview'
 import { LearningRoadmap } from '@/features/analytics/roadmap/LearningRoadmap'
 import { MarketDemand } from '@/features/analytics/charts/MarketDemand'
 import { StrengthsSection } from '@/features/analytics/strengths/StrengthsSection'
 import { ResumeSuggestions } from '@/features/analytics/resume/ResumeSuggestions'
 import { CareerInsights } from '@/features/analytics/insights/CareerInsights'
-import { OverallRecommendation } from '@/features/analytics/recommendation/OverallRecommendation'
-import { getOverallRecommendation, getCareerSnapshotSummary } from '@/features/analytics/utils'
-import { Map, TrendingUp, Award, FileText, Activity, LayoutDashboard } from 'lucide-react'
+import { RecommendedNextStep } from '@/features/analytics/recommendation/RecommendedNextStep'
+import { Map, TrendingUp, Award, FileText, Activity } from 'lucide-react'
 import styles from './AnalyticsPage.module.css'
 
 export default function AnalyticsPage() {
@@ -25,11 +22,11 @@ export default function AnalyticsPage() {
   if (analyticsLoading || profileLoading || resumesLoading) {
     return (
       <PageContainer>
-        <PageHeader 
-          title="Career Analytics" 
-          description="Career Intelligence Report"
-        />
         <PageContent>
+          <PageHeader 
+            title="Career Analytics" 
+            description="Career Intelligence Report"
+          />
           <div className="flex items-center justify-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
           </div>
@@ -41,8 +38,8 @@ export default function AnalyticsPage() {
   if (analyticsError) {
     return (
       <PageContainer>
-        <PageHeader title="Career Analytics" description="Career Intelligence Report" />
         <PageContent>
+          <PageHeader title="Career Analytics" description="Career Intelligence Report" />
           <ApiErrorState error={analyticsError} />
         </PageContent>
       </PageContainer>
@@ -53,8 +50,8 @@ export default function AnalyticsPage() {
   if (!userProfile?.targetRoles || userProfile.targetRoles.length === 0) {
     return (
       <PageContainer>
-        <PageHeader title="Career Analytics" description="Career Intelligence Report" />
         <PageContent>
+          <PageHeader title="Career Analytics" description="Career Intelligence Report" />
           <div className={styles.emptyState}>
             <h2 className={styles.emptyTitle}>Target Roles Required</h2>
             <p className={styles.emptyDescription}>
@@ -71,8 +68,8 @@ export default function AnalyticsPage() {
   if (!activeResume) {
     return (
       <PageContainer>
-        <PageHeader title="Career Analytics" description="Career Intelligence Report" />
         <PageContent>
+          <PageHeader title="Career Analytics" description="Career Intelligence Report" />
           <div className={styles.emptyState}>
             <h2 className={styles.emptyTitle}>Active Resume Required</h2>
             <p className={styles.emptyDescription}>
@@ -89,64 +86,28 @@ export default function AnalyticsPage() {
     return null
   }
 
-  const { recommendation, explanation } = getOverallRecommendation(
-    analytics.coverage,
-    analytics.resumeInsights.length > 0
-  )
 
-  const topLearningSkill = [...analytics.learningRoadmap]
-    .sort((a, b) => b.estimatedCoverageGain - a.estimatedCoverageGain)[0]?.skillName
-
-  const summary = getCareerSnapshotSummary(userProfile.targetRoles, topLearningSkill)
 
   return (
     <PageContainer>
-      <PageHeader 
-        title="Career Analytics" 
-        description="Career Intelligence Report" 
-      />
-      
       <PageContent>
+        <PageHeader 
+          title="Career Analytics" 
+          description="Career Intelligence Report" 
+        />
+        
         <div className={styles.container}>
           
           {/* Highest Emphasis */}
           <div className={styles.topSection}>
             <CoverageHero 
-              coverage={analytics.coverage} 
-              targetRoles={userProfile.targetRoles} 
-              summary={summary}
-              nextBestAction={topLearningSkill ? {
-                skillName: topLearningSkill,
-                coverageGain: analytics.learningRoadmap[0].estimatedCoverageGain
-              } : undefined}
-            />
-            <KPIOverview
-              totalSkills={userProfile.skillsCount}
-              targetRoles={userProfile.targetRoles.length}
+              coverage={analytics.coverage}
               resumeStatus={analytics.resumeInsights.length === 0 ? 'Resume Synced' : 'Needs Update'}
-              resumeGaps={analytics.resumeInsights.length}
+              learningRoadmap={analytics.learningRoadmap}
             />
-          </div>
-          
-          <div className={styles.sectionCard}>
-            <section className={styles.section}>
-              <div className={styles.sectionHeader}>
-                <h2 className={styles.sectionTitle}>
-                  <LayoutDashboard className={styles.sectionIcon} />
-                  Career Snapshot
-                </h2>
-              </div>
-              <CareerSnapshot
-                targetRoles={userProfile.targetRoles}
-                coverage={analytics.coverage}
-                resumeStatus={analytics.resumeInsights.length === 0 ? 'Resume Synced' : 'Needs Update'}
-                nextLearningPriority={topLearningSkill}
-                overallRecommendation={recommendation}
-              />
-            </section>
           </div>
 
-          <div className={styles.sectionCard}>
+          <div className={styles.sectionCard} id="learning-roadmap">
             <section className={styles.section}>
               <div className={styles.sectionHeader}>
                 <h2 className={styles.sectionTitle}>
@@ -212,9 +173,8 @@ export default function AnalyticsPage() {
 
           <div className={styles.sectionCard}>
             <section className={styles.section}>
-              <OverallRecommendation 
-                recommendation={recommendation}
-                explanation={explanation}
+              <RecommendedNextStep 
+                analytics={analytics}
               />
             </section>
           </div>

@@ -8,7 +8,7 @@
 .title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--foreground);
+  color: var(--text-primary);
 }
 
 .metrics {
@@ -22,15 +22,15 @@
   flex-direction: column;
   gap: 0.5rem;
   padding: 1.25rem;
-  background: white;
-  border: 1px solid var(--border);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 :global(.dark) .card {
-  background: var(--card);
+  background: var(--surface-primary);
 }
 
 .card:hover {
@@ -41,7 +41,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
 }
 
 .iconWrapper {
@@ -51,8 +51,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--slate-100);
-  color: var(--slate-600);
+  background: var(--surface-hover);
+  color: var(--text-secondary);
 }
 
 .icon {
@@ -68,9 +68,9 @@
 .metricValue {
   font-size: 1.125rem;
   font-weight: 600;
-  color: var(--foreground);
+  color: var(--text-primary);
 }
 
 .metricValue[data-highlight="true"] {
-  color: var(--primary);
+  color: var(--color-brand);
 }

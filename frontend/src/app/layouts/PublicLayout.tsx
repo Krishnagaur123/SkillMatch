@@ -1,4 +1,6 @@
 import { Outlet } from 'react-router-dom'
+import { Suspense } from 'react'
+import PageSpinner from '@/components/feedback/PageSpinner'
 import { LandingNavbar, LandingFooter } from '@/features/landing'
 import styles from './PublicLayout.module.css'
 
@@ -9,7 +11,9 @@ export default function PublicLayout() {
         <LandingNavbar />
       </header>
       <main className={styles.main}>
-        <Outlet />
+        <Suspense fallback={<PageSpinner />}>
+          <Outlet />
+        </Suspense>
       </main>
       <footer className={styles.footer}>
         <LandingFooter />

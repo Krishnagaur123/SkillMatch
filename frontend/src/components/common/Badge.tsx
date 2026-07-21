@@ -10,9 +10,12 @@ const badgeVariants = cva(styles.badge, {
     variant: {
       brand: styles.variantBrand,
       success: styles.variantSuccess,
+      emerald: styles.variantEmerald,
       warning: styles.variantWarning,
+      orange: styles.variantOrange,
       error: styles.variantError,
       neutral: styles.variantNeutral,
+      purple: styles.variantPurple,
     },
   },
   defaultVariants: {
@@ -38,17 +41,18 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
 Badge.displayName = 'Badge'
 
 export interface StatusBadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  status: 'active' | 'pending' | 'success' | 'warning' | 'error' | 'neutral' | string
+  status: 'active' | 'pending' | 'success' | 'warning' | 'error' | 'neutral' | 'purple' | 'brand' | string
 }
 
 export const StatusBadge = forwardRef<HTMLSpanElement, StatusBadgeProps>(
   ({ className, status, children, ...props }, ref) => {
-    let variant: 'success' | 'warning' | 'error' | 'brand' | 'neutral' = 'neutral'
+    let variant: 'success' | 'warning' | 'error' | 'brand' | 'neutral' | 'purple' = 'neutral'
     
     if (status === 'active' || status === 'success') variant = 'success'
     else if (status === 'pending' || status === 'warning') variant = 'warning'
     else if (status === 'error' || status === 'danger' || status === 'rejected') variant = 'error'
-    else if (status === 'primary') variant = 'brand'
+    else if (status === 'primary' || status === 'brand') variant = 'brand'
+    else if (status === 'purple') variant = 'purple'
     
     return (
       <Badge ref={ref} variant={variant} className={className} {...props}>
@@ -61,12 +65,12 @@ StatusBadge.displayName = 'StatusBadge'
 
 export const getApplicationStatusConfig = (status: ApplicationStatus | string) => {
   switch (status) {
-    case 'APPLIED': return { label: 'Applied', state: 'neutral' }
-    case 'ONLINE_ASSESSMENT': return { label: 'Online Assessment', state: 'warning' }
-    case 'INTERVIEW': return { label: 'Interview', state: 'primary' }
-    case 'OFFER': return { label: 'Offer', state: 'success' }
-    case 'REJECTED': return { label: 'Rejected', state: 'danger' }
-    case 'WITHDRAWN': return { label: 'Withdrawn', state: 'muted' }
+    case 'APPLIED': return { label: 'Applied', state: 'brand' } // Slate/Blue
+    case 'ONLINE_ASSESSMENT': return { label: 'Online Assessment', state: 'purple' }
+    case 'INTERVIEW': return { label: 'Interview', state: 'warning' } // Orange
+    case 'OFFER': return { label: 'Offer', state: 'success' } // Green
+    case 'REJECTED': return { label: 'Rejected', state: 'error' } // Red
+    case 'WITHDRAWN': return { label: 'Withdrawn', state: 'neutral' } // Gray
     default: return { label: status, state: 'neutral' }
   }
 }
@@ -113,10 +117,15 @@ export interface MatchBadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 export const MatchBadge = forwardRef<HTMLSpanElement, MatchBadgeProps>(
   ({ className, score, ...props }, ref) => {
-    const variant = score >= 85 ? 'success' : score >= 60 ? 'warning' : 'error'
+    let variant: 'success' | 'emerald' | 'warning' | 'orange' | 'error' = 'error'
+
+    if (score >= 90) variant = 'success'
+    else if (score >= 75) variant = 'emerald'
+    else if (score >= 60) variant = 'warning'
+    else if (score >= 40) variant = 'orange'
 
     return (
-      <Badge ref={ref} variant={variant} className={className} {...props}>
+      <Badge ref={ref} variant={variant} className={[styles.matchBadge, className].filter(Boolean).join(' ')} {...props}>
         {score}% Match
       </Badge>
     )

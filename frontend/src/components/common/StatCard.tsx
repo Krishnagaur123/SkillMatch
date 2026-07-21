@@ -7,6 +7,7 @@ import styles from './StatCard.module.css'
 export interface StatCardProps extends CardProps {
   title: string
   value: string | number
+  valueColor?: string
   description?: string
   icon?: ReactNode
   trend?: {
@@ -16,7 +17,7 @@ export interface StatCardProps extends CardProps {
 }
 
 export const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
-  ({ className, variant, padding, title, value, description, icon, trend, ...props }, ref) => {
+  ({ className, variant, padding, title, value, valueColor, description, icon, trend, ...props }, ref) => {
     return (
       <Card ref={ref} className={className} variant={variant} padding={padding} {...props}>
         <CardContent className={styles.container}>
@@ -25,7 +26,9 @@ export const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
             {icon && <div className={styles.icon}>{icon}</div>}
           </div>
           <div className={styles.valueGroup}>
-            <span className={styles.value}>{value}</span>
+            <span className={styles.value} style={valueColor ? { color: valueColor } : undefined}>
+              {value}
+            </span>
             {trend && (
               <span
                 className={[

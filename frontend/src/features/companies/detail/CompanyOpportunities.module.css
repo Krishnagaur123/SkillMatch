@@ -49,9 +49,9 @@
 }
 
 .oppRow:hover {
-  border-color: var(--border-hover);
+  border-color: color-mix(in srgb, var(--color-brand) 30%, transparent);
   box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .oppRow:focus-visible {
@@ -101,35 +101,6 @@
   flex-shrink: 0;
 }
 
-/* Match score pill */
-.matchScore {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.625rem;
-  border-radius: 99px;
-  font-size: 0.75rem;
-  font-weight: 650;
-  white-space: nowrap;
-  line-height: 1;
-}
-
-.matchHigh {
-  background-color: color-mix(in srgb, var(--color-success) 15%, transparent);
-  color: var(--color-success);
-  border: 1px solid color-mix(in srgb, var(--color-success) 30%, transparent);
-}
-
-.matchMid {
-  background-color: color-mix(in srgb, var(--color-warning) 15%, transparent);
-  color: var(--color-warning);
-  border: 1px solid color-mix(in srgb, var(--color-warning) 30%, transparent);
-}
-
-.matchLow {
-  background-color: var(--surface-primary-hover);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-default);
-}
 
 .arrow {
   color: var(--text-secondary);

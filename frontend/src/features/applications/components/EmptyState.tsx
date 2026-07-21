@@ -10,7 +10,7 @@ export function EmptyState() {
     <BaseEmptyState
       icon={<ClipboardList size={36} />}
       title="No applications yet."
-      description="Track every job application in one place."
+      description="Start applying to opportunities to track your progress."
       actionLabel="Browse Opportunities"
       onAction={() => navigate(ROUTES.OPPORTUNITIES)}
     />

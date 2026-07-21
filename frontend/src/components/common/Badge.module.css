@@ -25,10 +25,22 @@
   border-color: color-mix(in srgb, var(--color-success) 30%, transparent);
 }
 
+.variantEmerald {
+  background-color: color-mix(in srgb, var(--color-emerald) 15%, transparent);
+  color: var(--color-emerald);
+  border-color: color-mix(in srgb, var(--color-emerald) 30%, transparent);
+}
+
 .variantWarning {
   background-color: color-mix(in srgb, var(--color-warning) 15%, transparent);
   color: var(--color-warning);
   border-color: color-mix(in srgb, var(--color-warning) 30%, transparent);
+}
+
+.variantOrange {
+  background-color: color-mix(in srgb, var(--color-orange) 15%, transparent);
+  color: var(--color-orange);
+  border-color: color-mix(in srgb, var(--color-orange) 30%, transparent);
 }
 
 .variantError {
@@ -41,4 +53,20 @@
   background-color: var(--surface-hover);
   color: var(--text-secondary);
   border-color: var(--border-default);
+}
+
+.variantPurple {
+  background-color: color-mix(in srgb, #8B5CF6 15%, transparent);
+  color: #8B5CF6;
+  border-color: color-mix(in srgb, #8B5CF6 30%, transparent);
+}
+
+.matchBadge {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.02em;
 }

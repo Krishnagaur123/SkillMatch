@@ -3,22 +3,22 @@
   flex-direction: column;
   gap: 1.5rem;
   padding: 1.5rem;
-  background: white;
-  border: 1px solid var(--border);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-xl);
   text-decoration: none;
-  transition: all 0.2s ease-in-out;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   box-shadow: var(--shadow-sm);
 }
 
 :global(.dark) .row {
-  background: var(--card);
+  background: var(--surface-primary);
 }
 
 .row:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-light);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  border-color: var(--color-brand);
 }
 
 @media (min-width: 768px) {
@@ -52,24 +52,24 @@
 .title {
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--foreground);
+  color: var(--text-heading);
+}
+
+.companyName {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
 }
 
 .metaInfo {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
-  font-size: 0.875rem;
-  color: var(--muted-foreground);
-}
-
-.companyName {
-  font-weight: 500;
+  color: var(--text-secondary);
 }
 
 .dot {
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
 }
 
 .location {
@@ -106,7 +106,7 @@
   align-items: center;
   gap: 0.375rem;
   font-size: 0.875rem;
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
 }
 
 .dateIcon {
@@ -138,7 +138,7 @@
   gap: 0.25rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--color-brand);
   opacity: 0;
   transform: translateX(-10px);
   transition: all 0.2s ease-in-out;

@@ -1,9 +1,8 @@
 .card {
-  background: white;
   border-radius: var(--radius-xl);
   padding: 1.5rem;
-  border: 1px solid var(--primary-200);
-  background-color: var(--primary-50);
+  border: 1px solid color-mix(in srgb, var(--color-brand) 30%, transparent);
+  background-color: color-mix(in srgb, var(--color-brand) 8%, transparent);
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
@@ -27,14 +26,14 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background-color: white;
+  background-color: var(--surface-primary);
   border-radius: 50%;
-  color: var(--primary);
+  color: var(--color-brand);
   box-shadow: 0 2px 4px var(--border-default);
 }
 
 :global(.dark) .iconWrapper {
-  background-color: var(--slate-800);
+  background-color: var(--surface-primary);
 }
 
 .icon {
@@ -45,15 +44,27 @@
 .title {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--primary-800);
+  color: color-mix(in srgb, var(--color-brand) 85%, black);
 }
 
 :global(.dark) .title {
-  color: var(--primary-400);
+  color: color-mix(in srgb, var(--color-brand) 65%, white);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .actionText {
-  font-size: 1.125rem;
-  font-weight: 500;
-  color: var(--foreground);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.actionDesc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
 }

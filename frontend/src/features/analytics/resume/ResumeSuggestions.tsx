@@ -25,12 +25,25 @@ export function ResumeSuggestions({ insights }: ResumeSuggestionsProps) {
   return (
     <div className={styles.container}>
       <div className={styles.suggestionState}>
-        <div className={styles.badges}>
-          {insights.map((insight) => (
-            <span key={insight.skillName} className={styles.badge}>
-              {insight.skillName}
-            </span>
-          ))}
+        <div className={styles.explanation}>
+          These skills exist in your profile<br />
+          but are missing from your active resume.
+        </div>
+
+        <div className={styles.missingSection}>
+          <h4 className={styles.missingTitle}>Missing Skills</h4>
+          <div className={styles.badges}>
+            {insights.map((insight) => (
+              <span key={insight.skillName} className={styles.badge}>
+                {insight.skillName}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.recruiterNote}>
+          Updating your resume will improve<br />
+          your recruiter visibility.
         </div>
 
         <div className={styles.actions}>

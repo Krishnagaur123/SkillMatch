@@ -19,19 +19,18 @@ const AnalyticsPage = lazy(() => import('@/pages/analytics/AnalyticsPage'))
 const CompaniesPage = lazy(() => import('@/pages/companies/CompaniesPage'))
 const CompanyDetailPage = lazy(() => import('@/pages/companies/CompanyDetailPage'))
 const ProfilePage = lazy(() => import('@/pages/profile/ProfilePage'))
-const SettingsPage = lazy(() => import('@/pages/settings/SettingsPage'))
+
 const NotFoundPage = lazy(() => import('@/pages/not-found/NotFoundPage'))
 
 export default function AppRouter() {
   return (
-    <Suspense fallback={<PageSpinner />}>
-      <Routes>
+    <Routes>
         <Route element={<PublicLayout />}>
           <Route path={ROUTES.LANDING} element={<LandingPage />} />
         </Route>
 
-        <Route path={ROUTES.AUTH} element={<AuthPage />} />
-        <Route path={ROUTES.AUTH_CALLBACK} element={<AuthCallbackPage />} />
+        <Route path={ROUTES.AUTH} element={<Suspense fallback={<PageSpinner />}><AuthPage /></Suspense>} />
+        <Route path={ROUTES.AUTH_CALLBACK} element={<Suspense fallback={<PageSpinner />}><AuthCallbackPage /></Suspense>} />
 
         <Route element={<ProtectedLayout />}>
           <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
@@ -45,12 +44,11 @@ export default function AppRouter() {
           <Route path={ROUTES.COMPANIES} element={<CompaniesPage />} />
           <Route path={ROUTES.COMPANY_DETAIL} element={<CompanyDetailPage />} />
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
-          <Route path={ROUTES.SETTINGS} element={<SettingsPage />} />
+
         </Route>
 
-        <Route path="/404" element={<NotFoundPage />} />
+        <Route path="/404" element={<Suspense fallback={<PageSpinner />}><NotFoundPage /></Suspense>} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
-    </Suspense>
   )
 }

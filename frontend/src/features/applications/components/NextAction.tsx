@@ -7,17 +7,19 @@ interface NextActionProps {
 }
 
 export function NextAction({ status }: NextActionProps) {
-  const getActionText = (status: ApplicationStatus) => {
+  const getActionDetails = (status: ApplicationStatus) => {
     switch (status) {
-      case 'APPLIED': return 'Waiting for recruiter response'
-      case 'ONLINE_ASSESSMENT': return 'Complete your assessment'
-      case 'INTERVIEW': return 'Prepare for your interview'
-      case 'OFFER': return 'Review your offer'
-      case 'REJECTED': return 'Continue applying'
-      case 'WITHDRAWN': return 'No further action'
-      default: return 'No action required'
+      case 'APPLIED': return { action: 'Waiting for recruiter response', desc: 'Typically recruiters respond within 1–2 weeks.' }
+      case 'ONLINE_ASSESSMENT': return { action: 'Complete your assessment', desc: 'Check your email for the assessment link and complete it soon.' }
+      case 'INTERVIEW': return { action: 'Prepare for your interview', desc: 'Review the job description and practice your answers.' }
+      case 'OFFER': return { action: 'Review your offer', desc: 'Carefully evaluate the compensation and benefits package.' }
+      case 'REJECTED': return { action: 'Continue applying', desc: 'Keep your momentum going by finding new opportunities.' }
+      case 'WITHDRAWN': return { action: 'No further action', desc: 'You have successfully withdrawn your application.' }
+      default: return { action: 'No action required', desc: '' }
     }
   }
+
+  const details = getActionDetails(status)
 
   return (
     <div className={styles.card}>
@@ -27,7 +29,10 @@ export function NextAction({ status }: NextActionProps) {
         </div>
         <h2 className={styles.title}>Next Action</h2>
       </div>
-      <p className={styles.actionText}>{getActionText(status)}</p>
+      <div className={styles.content}>
+        <p className={styles.actionText}>{details.action}</p>
+        {details.desc && <p className={styles.actionDesc}>{details.desc}</p>}
+      </div>
     </div>
   )
 }

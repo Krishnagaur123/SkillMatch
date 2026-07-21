@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { CheckCircle2, ThumbsUp, Lightbulb } from 'lucide-react'
 import type { OpportunityRecommendation } from '@/hooks/useOpportunities'
 import styles from './CompanyTechnologies.module.css'
 
@@ -10,6 +11,7 @@ interface SkillGroup {
   label: string
   skills: string[]
   badgeClass: string
+  icon: React.ReactNode
 }
 
 export function CompanyTechnologies({ opportunities }: CompanyTechnologiesProps) {
@@ -43,21 +45,24 @@ export function CompanyTechnologies({ opportunities }: CompanyTechnologiesProps)
       result.push({
         label: 'Required',
         skills: Array.from(required).sort(),
-        badgeClass: styles.badge,
+        badgeClass: `${styles.badgeBase} ${styles.badgeRequired}`,
+        icon: <CheckCircle2 size={14} className={styles.groupIcon} />
       })
     }
     if (preferred.size > 0) {
       result.push({
         label: 'Preferred',
         skills: Array.from(preferred).sort(),
-        badgeClass: `${styles.badge} ${styles.badgePreferred}`,
+        badgeClass: `${styles.badgeBase} ${styles.badgePreferred}`,
+        icon: <ThumbsUp size={14} className={styles.groupIcon} />
       })
     }
     if (goodToHave.size > 0) {
       result.push({
         label: 'Good to Have',
         skills: Array.from(goodToHave).sort(),
-        badgeClass: `${styles.badge} ${styles.badgeMuted}`,
+        badgeClass: `${styles.badgeBase} ${styles.badgeMuted}`,
+        icon: <Lightbulb size={14} className={styles.groupIcon} />
       })
     }
 
@@ -78,7 +83,10 @@ export function CompanyTechnologies({ opportunities }: CompanyTechnologiesProps)
     <div className={styles.root}>
       {groups.map((group) => (
         <div key={group.label} className={styles.group}>
-          <span className={styles.groupLabel}>{group.label}</span>
+          <div className={styles.groupHeader}>
+            {group.icon}
+            <span className={styles.groupLabel}>{group.label}</span>
+          </div>
           <div className={styles.badgeWrap}>
             {group.skills.map((skill) => (
               <span key={skill} className={group.badgeClass}>

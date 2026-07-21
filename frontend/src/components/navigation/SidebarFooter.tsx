@@ -1,4 +1,4 @@
-import { LogOut, Settings } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Avatar from './Avatar'
 import { useSidebar } from '@/app/providers/SidebarContext'
@@ -34,13 +34,9 @@ export default function SidebarFooter() {
         )}
       </Link>
 
-      {/* Settings & Logout — separated from profile with spacing */}
+      {/* Logout — separated from profile with spacing */}
       {!collapsed && (
         <div className={styles.userActions}>
-          <Link to="/settings" className={styles.actionBtn} aria-label="Settings" title="Settings">
-            <Settings size={14} />
-            <span>Settings</span>
-          </Link>
           <button
             type="button"
             className={styles.actionBtn}

@@ -51,8 +51,8 @@
 }
 
 .indicator {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -64,29 +64,29 @@
 
 @media (min-width: 768px) {
   .indicator {
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
     margin: 0 auto;
   }
 }
 
 .dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (min-width: 768px) {
   .dot {
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
   }
 }
 
 .checkIcon {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   color: white;
   animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -98,29 +98,25 @@
 
 @media (min-width: 768px) {
   .checkIcon {
-    width: 14px;
-    height: 14px;
+    width: 24px;
+    height: 24px;
   }
 }
 
 .line {
   position: absolute;
-  background-color: var(--slate-200);
+  background-color: var(--border-default);
   transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
-}
-
-:global(.dark) .line {
-  background-color: var(--slate-700);
 }
 
 /* Vertical line for mobile */
 @media (max-width: 767px) {
   .line {
-    top: 20px;
+    top: 28px;
     bottom: -0.5rem;
-    left: 9px;
-    width: 2px;
+    left: 12px;
+    width: 4px;
   }
   
   /* Hide the line on the last step in mobile */
@@ -132,27 +128,28 @@
 /* Horizontal line for desktop */
 @media (min-width: 768px) {
   .line {
-    top: 11px;
-    left: calc(50% + 12px);
-    right: calc(-50% + 12px);
-    height: 2px;
-    width: calc(100% - 24px);
+    top: 18px;
+    left: calc(50% + 20px);
+    right: calc(-50% + 20px);
+    height: 4px;
+    width: calc(100% - 40px);
   }
 }
 
 .label {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  margin-top: 0.125rem;
+  margin-top: 0.25rem;
   padding-bottom: 1.5rem;
   transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (min-width: 768px) {
   .label {
-    margin-top: 0;
+    margin-top: 0.5rem;
     padding-bottom: 0;
     text-align: center;
+    font-size: 0.9375rem;
   }
 }
 
@@ -160,25 +157,38 @@
   padding-bottom: 0;
 }
 
+.stepDate {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.125rem;
+}
+
+@media (min-width: 768px) {
+  .stepDate {
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+}
+
 /* States */
 
 .indicatorCompleted {
-  background-color: var(--emerald-500);
-  border: 2px solid var(--emerald-500);
+  background-color: var(--color-success);
+  border: 2px solid var(--color-success);
 }
 
 .lineCompleted {
-  background-color: var(--emerald-500);
+  background-color: var(--color-success);
 }
 
 .labelCompleted {
-  color: var(--foreground);
+  color: var(--text-primary);
 }
 
 .indicatorCurrent {
-  background-color: var(--primary);
-  border: 2px solid var(--primary);
-  box-shadow: 0 0 0 4px var(--blue-50);
+  background-color: var(--color-brand);
+  border: 2px solid var(--color-brand);
+  box-shadow: 0 0 0 4px var(--accent-subtle);
   animation: pulse 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -189,8 +199,8 @@
 }
 
 :global(.dark) .indicatorCurrent {
-  background-color: var(--primary);
-  border-color: var(--primary);
+  background-color: var(--color-brand);
+  border-color: var(--color-brand);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-brand) 10%, transparent);
   animation: pulseDark 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -206,18 +216,18 @@
 }
 
 .labelCurrent {
-  color: var(--primary);
+  color: var(--color-brand);
   font-weight: 700;
 }
 
 .indicatorPending {
-  background-color: var(--slate-50);
-  border: 2px solid var(--slate-200);
+  background-color: var(--surface-background);
+  border: 2px solid var(--border-default);
 }
 
 :global(.dark) .indicatorPending {
-  background-color: var(--slate-800);
-  border-color: var(--slate-700);
+  background-color: var(--surface-primary);
+  border-color: var(--border-hover);
 }
 
 .dotPending {
@@ -225,15 +235,15 @@
 }
 
 .linePending {
-  background-color: var(--slate-200);
+  background-color: var(--border-default);
 }
 
 :global(.dark) .linePending {
-  background-color: var(--slate-700);
+  background-color: var(--border-hover);
 }
 
 .labelPending {
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
 }
 
 .terminalBadgeWrapper {
@@ -264,35 +274,35 @@
 }
 
 .badgeRejected .terminalDot {
-  background-color: var(--rose-500);
+  background-color: var(--color-error);
 }
 
 .badgeWithdrawn .terminalDot {
-  background-color: var(--slate-400);
+  background-color: var(--text-secondary);
 }
 
 .badgeRejected {
-  background-color: var(--rose-50);
-  color: var(--rose-700);
-  border: 1px solid var(--rose-200);
+  background-color: color-mix(in srgb, var(--color-error) 10%, transparent);
+  color: var(--color-error);
+  border: 1px solid color-mix(in srgb, var(--color-error) 25%, transparent);
 }
 
 :global(.dark) .badgeRejected {
   background-color: color-mix(in srgb, var(--color-error) 10%, transparent);
-  color: var(--rose-400);
+  color: color-mix(in srgb, var(--color-error) 80%, white);
   border-color: color-mix(in srgb, var(--color-error) 20%, transparent);
 }
 
 .badgeWithdrawn {
-  background-color: var(--slate-100);
-  color: var(--slate-600);
-  border: 1px solid var(--slate-200);
+  background-color: var(--surface-hover);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
 }
 
 :global(.dark) .badgeWithdrawn {
   background-color: color-mix(in srgb, var(--text-secondary) 10%, transparent);
-  color: var(--slate-400);
-  border-color: color-mix(in srgb, var(--text-secondary) 20%, transparent);
+  color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 .summaryBox {
@@ -300,22 +310,22 @@
   flex-direction: column;
   gap: 0.25rem;
   padding: 1rem;
-  background-color: var(--slate-50);
+  background-color: var(--surface-background);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-default);
 }
 
 :global(.dark) .summaryBox {
-  background-color: var(--slate-800);
+  background-color: var(--surface-primary);
 }
 
 .summaryTitle {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--foreground);
+  color: var(--text-primary);
 }
 
 .summarySubtitle {
   font-size: 0.875rem;
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
 }

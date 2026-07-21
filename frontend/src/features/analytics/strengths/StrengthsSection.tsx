@@ -8,8 +8,8 @@ interface StrengthsSectionProps {
 }
 
 export function StrengthsSection({ strengths }: StrengthsSectionProps) {
-  // Ordered strictly by backend importance (descending)
-  const sortedStrengths = [...strengths].sort((a, b) => b.marketImportance - a.marketImportance)
+  // Ordered by backend contribution (priority score)
+  const sortedStrengths = strengths
 
   if (sortedStrengths.length === 0) {
     return null

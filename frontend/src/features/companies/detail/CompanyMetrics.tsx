@@ -23,29 +23,42 @@ export function CompanyMetrics({ company, opportunities }: CompanyMetricsProps) 
 
   const hiringStatus = count > 0 ? 'Active' : 'Paused'
 
+  const getMatchColor = (score: number | null) => {
+    if (score === null) return undefined
+    if (score >= 90) return 'var(--color-success)'
+    if (score >= 75) return 'var(--color-emerald)'
+    if (score >= 60) return 'var(--color-warning)'
+    if (score >= 40) return 'var(--color-orange)'
+    return 'var(--color-error)'
+  }
+
   return (
     <div className={styles.grid} role="region" aria-label="Company key metrics">
       <StatCard
         title="Open Roles"
         value={count}
+        valueColor="var(--color-brand)"
         icon={<Briefcase size={16} aria-hidden="true" />}
         description={count === 1 ? 'position available' : 'positions available'}
       />
       <StatCard
         title="Avg Match"
         value={avgMatch != null ? `${avgMatch}%` : '—'}
+        valueColor={getMatchColor(avgMatch)}
         icon={<TrendingUp size={16} aria-hidden="true" />}
         description={avgMatch != null ? 'across your matched roles' : 'Browse opportunities to see match'}
       />
       <StatCard
         title="Best Match"
         value={bestMatch != null ? `${bestMatch}%` : '—'}
+        valueColor={getMatchColor(bestMatch)}
         icon={<Zap size={16} aria-hidden="true" />}
         description={bestMatch != null ? 'your top matching role' : 'No match data yet'}
       />
       <StatCard
         title="Hiring Status"
         value={hiringStatus}
+        valueColor={count > 0 ? 'var(--color-success)' : undefined}
         icon={<Activity size={16} aria-hidden="true" />}
         description={
           count > 0

@@ -1,5 +1,5 @@
 import AppBrand from '@/components/navigation/AppBrand'
-import { InlineLoader } from '@/components/feedback/Loader'
+import loaderStyles from '@/components/feedback/Loader.module.css'
 import styles from './AuthLoadingScreen.module.css'
 
 interface AuthLoadingScreenProps {
@@ -13,7 +13,7 @@ export default function AuthLoadingScreen({ message = 'Signing you in...' }: Aut
         <AppBrand />
       </div>
       <div className={styles.spinnerContainer}>
-        <InlineLoader />
+        <div className={loaderStyles.spinner} />
       </div>
       <p className={styles.text}>{message}</p>
     </div>

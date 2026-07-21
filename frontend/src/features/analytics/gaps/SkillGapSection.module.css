@@ -6,7 +6,7 @@
 
 .explanation {
   font-size: 1.0625rem;
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
@@ -21,13 +21,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem;
-  background: white;
-  border: 1px solid var(--border);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
 }
 
 :global(.dark) .item {
-  background: var(--card);
+  background: var(--surface-primary);
 }
 
 .skillInfo {
@@ -39,7 +39,7 @@
 .skillName {
   font-size: 1.125rem;
   font-weight: 500;
-  color: var(--foreground);
+  color: var(--text-primary);
 }
 
 .priorityBadge {

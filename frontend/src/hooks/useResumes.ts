@@ -1,4 +1,5 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect, useRef } from 'react'
 import apiClient from '@/services/api/client'
 import { queryKeys } from '@/constants/queryKeys'
 import { apiPut, apiDelete, apiPost } from '@/services/api'
@@ -34,10 +35,34 @@ async function fetchResumes(): Promise<ResumeSummaryResponse[]> {
 }
 
 export function useResumes() {
-  return useQuery<ResumeSummaryResponse[], Error>({
+  const queryClient = useQueryClient()
+  const wasProcessingRef = useRef(false)
+
+  const query = useQuery<ResumeSummaryResponse[], Error>({
     queryKey: queryKeys.resumes.all(),
     queryFn: fetchResumes,
+    refetchInterval: (query) => {
+      const data = query.state.data
+      if (!data) return false
+      const hasProcessing = data.some(r => r.active && ['UPLOADED', 'TEXT_EXTRACTED', 'ANALYZING'].includes(r.status))
+      return hasProcessing ? 3000 : false
+    },
   })
+
+  useEffect(() => {
+    if (!query.data) return
+    const isProcessing = query.data.some(r => r.active && ['UPLOADED', 'TEXT_EXTRACTED', 'ANALYZING'].includes(r.status))
+    
+    if (isProcessing) {
+      wasProcessingRef.current = true
+    } else if (wasProcessingRef.current) {
+      wasProcessingRef.current = false
+      queryClient.invalidateQueries({ queryKey: queryKeys.auth.me() })
+      queryClient.invalidateQueries({ queryKey: queryKeys.analytics.career() })
+    }
+  }, [query.data, queryClient])
+
+  return query
 }
 
 async function fetchResumeDetail(resumeId: string): Promise<ResumeDetailResponse> {

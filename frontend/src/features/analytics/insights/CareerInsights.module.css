@@ -15,15 +15,15 @@
   align-items: center;
   gap: 1rem;
   padding: 1.25rem;
-  background: white;
-  border: 1px solid var(--border);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 :global(.dark) .card {
-  background: var(--card);
+  background: var(--surface-primary);
 }
 
 .card:hover {
@@ -39,13 +39,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--slate-100);
-  color: var(--slate-600);
+  background: var(--surface-hover);
+  color: var(--text-secondary);
 }
 
 :global(.dark) .iconWrapper {
-  background: var(--slate-800);
-  color: var(--slate-300);
+  background: var(--surface-primary);
+  color: var(--text-secondary);
 }
 
 .iconWrapper[data-type="positive"] {
@@ -68,7 +68,7 @@
 
 .text {
   font-size: 1.0625rem;
-  color: var(--foreground);
+  color: var(--text-primary);
   line-height: 1.5;
   font-weight: 500;
 }

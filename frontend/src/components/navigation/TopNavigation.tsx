@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Sun, PanelLeft, Menu, ChevronDown, User, Settings, LogOut } from 'lucide-react'
+import { Sun, PanelLeft, Menu, ChevronDown, User, LogOut } from 'lucide-react'
 import Breadcrumb from './Breadcrumb'
 import Avatar from './Avatar'
 import { useSidebar } from '@/app/providers/SidebarContext'
@@ -89,15 +89,7 @@ export default function TopNavigation() {
                 <User size={14} className={styles.dropdownIcon} />
                 Profile
               </Link>
-              <Link
-                to="/settings"
-                className={styles.dropdownItem}
-                onClick={() => setIsDropdownOpen(false)}
-              >
-                <Settings size={14} className={styles.dropdownIcon} />
-                Settings
-              </Link>
-              
+
               <div className={styles.dropdownDivider} />
               <button
                 type="button"
