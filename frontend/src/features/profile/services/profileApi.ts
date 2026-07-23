@@ -1,4 +1,5 @@
 import { apiGet, apiPut } from '@/services/api'
+import { API_BASE_URL } from '@/config/constants'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -74,14 +75,24 @@ export interface ProfileCompletion {
 
 const PROFILE_BASE = '/api/v1/profile'
 
+const resolveAvatarUrl = (url?: string | null) => {
+  if (!url) return undefined
+  if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) return url
+  return `${API_BASE_URL}${url}`
+}
+
 export async function fetchProfileDetail(): Promise<UserProfileDetail> {
-  return apiGet<UserProfileDetail>(PROFILE_BASE)
+  const data = await apiGet<UserProfileDetail>(PROFILE_BASE)
+  data.profilePictureUrl = resolveAvatarUrl(data.profilePictureUrl)
+  return data
 }
 
 export async function updateProfileDetail(
   payload: UpdateProfileDetailPayload
 ): Promise<UserProfileDetail> {
-  return apiPut<UserProfileDetail, UpdateProfileDetailPayload>(PROFILE_BASE, payload)
+  const data = await apiPut<UserProfileDetail, UpdateProfileDetailPayload>(PROFILE_BASE, payload)
+  data.profilePictureUrl = resolveAvatarUrl(data.profilePictureUrl)
+  return data
 }
 
 export async function fetchProfileCompletion(): Promise<ProfileCompletion> {

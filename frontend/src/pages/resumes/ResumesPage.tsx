@@ -38,6 +38,7 @@ import {
   useUploadResume,
 } from '@/hooks/useResumes'
 import { useUserProfile } from '@/hooks/useUserProfile'
+import { ROUTES } from '@/constants/routes'
 import styles from './ResumesPage.module.css'
 
 export default function ResumesPage() {
@@ -282,8 +283,83 @@ export default function ResumesPage() {
               )}
             </div>
 
-            {/* Right Column: Upload Resume form */}
+            {/* Right Column: Upload Resume form + success card */}
             <div className={styles.rightColumn}>
+              {/* Resume success card — only shown when resume analyzed but no target roles set */}
+              {(() => {
+                const activeResume = resumes?.find(r => r.active)
+                const hasTargetRoles = (user?.targetRoles?.length ?? 0) > 0
+                const showSuccessCard = !!activeResume && !hasTargetRoles
+                if (!showSuccessCard) return null
+                return (
+                  <SectionCard variant="elevated" title="">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
+                        <span style={{
+                          display: 'inline-flex',
+                          padding: '0.25rem 0.625rem',
+                          borderRadius: 'var(--radius-full)',
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          background: 'color-mix(in srgb, var(--color-success) 12%, transparent)',
+                          color: 'var(--color-success)',
+                          letterSpacing: '0.03em',
+                        }}>✓ Resume analyzed</span>
+                        <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
+                          {user?.skillsCount ?? 0} skills extracted.
+                        </span>
+                      </div>
+                      <div>
+                        <p style={{ margin: '0 0 0.25rem', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-heading)' }}>
+                          Next Step
+                        </p>
+                        <p style={{ margin: 0, fontSize: '0.8125rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                          Choose your target roles to generate personalized career analytics.
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        id="resume-success-go-to-profile-btn"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.375rem',
+                          padding: '0.5rem 0.875rem',
+                          borderRadius: 'var(--radius-md)',
+                          fontSize: '0.875rem',
+                          fontWeight: 600,
+                          color: 'var(--color-brand)',
+                          background: 'color-mix(in srgb, var(--color-brand) 8%, transparent)',
+                          border: '1px solid color-mix(in srgb, var(--color-brand) 25%, transparent)',
+                          cursor: 'pointer',
+                          transition: 'all 0.15s ease',
+                          alignSelf: 'flex-start',
+                        }}
+                        onClick={() => {
+                          navigate(ROUTES.PROFILE)
+                          setTimeout(() => {
+                            const el = document.getElementById('target-roles')
+                            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                          }, 300)
+                        }}
+                        onMouseEnter={(e) => {
+                          const btn = e.currentTarget as HTMLButtonElement
+                          btn.style.background = 'color-mix(in srgb, var(--color-brand) 15%, transparent)'
+                          btn.style.borderColor = 'var(--color-brand)'
+                        }}
+                        onMouseLeave={(e) => {
+                          const btn = e.currentTarget as HTMLButtonElement
+                          btn.style.background = 'color-mix(in srgb, var(--color-brand) 8%, transparent)'
+                          btn.style.borderColor = 'color-mix(in srgb, var(--color-brand) 25%, transparent)'
+                        }}
+                      >
+                        Go to Profile →
+                      </button>
+                    </div>
+                  </SectionCard>
+                )
+              })()}
+
               <SectionCard title="Upload Resume" variant="elevated">
                 <form onSubmit={handleUploadSubmit} className={styles.uploadForm}>
                   <FormField label="Resume Title (Optional)" error={undefined}>

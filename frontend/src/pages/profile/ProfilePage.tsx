@@ -12,6 +12,8 @@ import {
   ExperienceSection,
   ContactSection,
   ProfessionalLinksSection,
+  ProfileSkillsCard,
+  ProfileTargetRolesCard,
   useProfileDetail,
   useUpdateProfileDetail,
   profileSchema,
@@ -107,6 +109,8 @@ export default function ProfilePage() {
             {/* Right column on desktop, top on mobile */}
             <div className={styles.sideColumn}>
               <CompletionCard />
+              <ProfileSkillsCard />
+              <ProfileTargetRolesCard />
             </div>
 
             {/* Left column on desktop, bottom on mobile */}

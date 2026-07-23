@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { PageContainer, PageContent, PageHeader } from '@/components/layout'
 import { ApiErrorState } from '@/components/feedback'
 import { useCareerAnalytics } from '@/hooks/useCareerAnalytics'
@@ -11,10 +11,11 @@ import { StrengthsSection } from '@/features/analytics/strengths/StrengthsSectio
 import { ResumeSuggestions } from '@/features/analytics/resume/ResumeSuggestions'
 import { CareerInsights } from '@/features/analytics/insights/CareerInsights'
 import { RecommendedNextStep } from '@/features/analytics/recommendation/RecommendedNextStep'
-import { Map, TrendingUp, Award, FileText, Activity } from 'lucide-react'
+import { Map, TrendingUp, Award, FileText, Activity, CheckCircle, Circle, BarChart2, BookOpen, Target } from 'lucide-react'
 import styles from './AnalyticsPage.module.css'
 
 export default function AnalyticsPage() {
+  const navigate = useNavigate()
   const { data: analytics, isLoading: analyticsLoading, error: analyticsError } = useCareerAnalytics()
   const { data: userProfile, isLoading: profileLoading } = useUserProfile()
   const { data: resumes, isLoading: resumesLoading } = useResumes()
@@ -46,47 +47,96 @@ export default function AnalyticsPage() {
     )
   }
 
-  // Handle empty states gracefully
-  if (!userProfile?.targetRoles || userProfile.targetRoles.length === 0) {
-    return (
-      <PageContainer>
-        <PageContent>
-          <PageHeader title="Career Analytics" description="Career Intelligence Report" />
-          <div className={styles.emptyState}>
-            <h2 className={styles.emptyTitle}>Target Roles Required</h2>
-            <p className={styles.emptyDescription}>
-              Career Analytics requires at least one target role to compare your skills against market demand.
-            </p>
-            <Link to="/profile" className={styles.emptyAction}>Go to Profile</Link>
-          </div>
-        </PageContent>
-      </PageContainer>
-    )
-  }
-
+  // Determine prerequisite state for contextual empty state
   const activeResume = resumes?.find(r => r.active)
-  if (!activeResume) {
+  const hasResume = !!activeResume
+  const hasTargetRoles = (userProfile?.targetRoles?.length ?? 0) > 0
+  const missingPrerequisites = !hasResume || !hasTargetRoles
+
+  if (missingPrerequisites) {
+    const prereqs = [
+      {
+        id: 'resume',
+        label: 'Resume Uploaded',
+        done: hasResume,
+        route: '/resumes',
+        cta: 'Upload Resume',
+      },
+      {
+        id: 'roles',
+        label: 'Target Roles Selected',
+        done: hasTargetRoles,
+        route: '/profile',
+        hash: '#target-roles',
+        cta: 'Add Target Roles',
+      },
+    ]
+    const nextPrereq = prereqs.find(p => !p.done)
     return (
       <PageContainer>
         <PageContent>
           <PageHeader title="Career Analytics" description="Career Intelligence Report" />
           <div className={styles.emptyState}>
-            <h2 className={styles.emptyTitle}>Active Resume Required</h2>
+            <div className={styles.emptyIcon}>
+              <BarChart2 size={40} />
+            </div>
+            <h2 className={styles.emptyTitle}>Career Intelligence isn't available yet.</h2>
             <p className={styles.emptyDescription}>
-              Career Analytics works best when you have an active resume uploaded. We use this to analyze your skill coverage.
+              Complete the following to unlock personalized insights powered by your skills and target roles.
             </p>
-            <Link to="/resumes" className={styles.emptyAction}>Go to Resume Management</Link>
+
+            <ul className={styles.prereqList}>
+              {prereqs.map(p => (
+                <li key={p.id} className={`${styles.prereqItem} ${p.done ? styles.prereqDone : ''}`}>
+                  {p.done
+                    ? <CheckCircle size={16} className={styles.prereqIconDone} />
+                    : <Circle size={16} className={styles.prereqIconPending} />
+                  }
+                  <span>{p.label}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className={styles.unlockList}>
+              <p className={styles.unlockTitle}>Complete the above to unlock:</p>
+              <div className={styles.unlockItems}>
+                {[
+                  { icon: <BarChart2 size={14} />, label: 'Market Readiness Score' },
+                  { icon: <Target size={14} />, label: 'Skill Gap Analysis' },
+                  { icon: <BookOpen size={14} />, label: 'Learning Roadmap' },
+                  { icon: <TrendingUp size={14} />, label: 'Career Insights' },
+                ].map(item => (
+                  <span key={item.label} className={styles.unlockChip}>
+                    {item.icon}{item.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {nextPrereq && (
+              <button
+                type="button"
+                className={styles.emptyAction}
+                onClick={() => {
+                  navigate(nextPrereq.route)
+                  if (nextPrereq.hash) {
+                    setTimeout(() => {
+                      const el = document.getElementById(nextPrereq.hash!.slice(1))
+                      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    }, 300)
+                  }
+                }}
+              >
+                {nextPrereq.cta}
+              </button>
+            )}
           </div>
         </PageContent>
       </PageContainer>
     )
   }
 
-  if (!analytics) {
-    return null
-  }
-
-
+  if (!analytics) return null
 
   return (
     <PageContainer>

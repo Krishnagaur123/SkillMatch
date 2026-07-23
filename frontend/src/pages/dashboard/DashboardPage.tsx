@@ -44,6 +44,8 @@ import { useCareerAnalytics } from '@/hooks/useCareerAnalytics'
 import { useResumes } from '@/hooks/useResumes'
 import { useApplications } from '@/hooks/useApplications'
 import { ROUTES } from '@/constants/routes'
+import { GettingStartedCard } from '@/features/dashboard/GettingStartedCard'
+import { RecommendedNextStepCard } from '@/features/dashboard/RecommendedNextStepCard'
 import styles from './DashboardPage.module.css'
 
 export default function DashboardPage() {
@@ -225,6 +227,9 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
+
+        {/* Getting Started — only shown during onboarding */}
+        <GettingStartedCard />
 
         {/* KPI Cards */}
         <DashboardSection title="Overview" description="Your core career indicators at a glance.">
@@ -468,7 +473,7 @@ export default function DashboardPage() {
                   title="No Active Resume"
                   description="Upload your primary resume to trigger skill extraction and job matching."
                   actionLabel="Upload Resume"
-                  onAction={() => {}}
+                  onAction={() => navigate(ROUTES.RESUMES)}
                 />
               ) : (
                 <div className={styles.resumeCardContent}>
@@ -515,6 +520,9 @@ export default function DashboardPage() {
                 </div>
               )}
             </SectionCard>
+
+            {/* Recommended Next Step */}
+            <RecommendedNextStepCard />
 
             {/* Quick Actions */}
             <SectionCard title="Quick Actions" variant="elevated" className={styles.quickActionsCard}>

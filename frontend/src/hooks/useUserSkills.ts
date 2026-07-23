@@ -31,6 +31,7 @@ function invalidateDependentQueries(queryClient: ReturnType<typeof useQueryClien
   void queryClient.invalidateQueries({ queryKey: queryKeys.analytics.career() })
   void queryClient.invalidateQueries({ queryKey: queryKeys.opportunities.recommended() })
   void queryClient.invalidateQueries({ queryKey: queryKeys.resumes.all() })
+  void queryClient.invalidateQueries({ queryKey: ['profile', 'completion'] })
 }
 
 export function useUserSkills() {

@@ -54,10 +54,17 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
         if (request.name() != null) {
-            if (request.name().isBlank()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Name must not be blank");
+            String sanitizedName = request.name().trim().replaceAll("\\s+", " ");
+            
+            if (sanitizedName.length() < 2 || sanitizedName.length() > 60) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Display name must be between 2 and 60 characters.");
             }
-            userWithRoles.setName(request.name());
+            
+            if (!sanitizedName.matches(".*\\p{L}.*")) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Display name must contain at least one letter.");
+            }
+            
+            userWithRoles.setName(sanitizedName);
         }
 
         if (request.targetRoleIds() != null) {
@@ -106,11 +113,16 @@ public class UserService {
 
         int completionScore = calculateProfileCompletion(user, resumeUploaded, hasUserSkills, educationCount);
 
+        String picture = user.getProfilePictureUrl();
+        if (picture != null && !picture.startsWith("http")) {
+            picture = "/api/v1/users/" + user.getId() + "/avatar";
+        }
+
         return new UserProfileResponse(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
-                user.getProfilePictureUrl(),
+                picture,
                 roleNames,
                 resumeUploaded,
                 skillsCount,

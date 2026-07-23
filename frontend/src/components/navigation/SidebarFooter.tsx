@@ -3,16 +3,22 @@ import { Link } from 'react-router-dom'
 import Avatar from './Avatar'
 import { useSidebar } from '@/app/providers/SidebarContext'
 import { useAuth } from '@/features/auth/hooks/useAuth'
+import { useUserProfile } from '@/hooks/useUserProfile'
 import { ROUTES } from '@/constants/routes'
 import styles from './SidebarFooter.module.css'
 
 export default function SidebarFooter() {
   const { collapsed } = useSidebar()
   const { logout, isLoggingOut } = useAuth()
+  const { data: profile } = useUserProfile()
 
   const handleLogout = () => {
     logout()
   }
+
+  const name = profile?.name || 'User'
+  const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
+  const avatarUrl = profile?.profilePictureUrl
 
   return (
     <footer className={styles.root}>
@@ -25,10 +31,10 @@ export default function SidebarFooter() {
         aria-label="Go to your profile"
         title="View profile"
       >
-        <Avatar initials="KG" size={collapsed ? 'sm' : 'md'} />
+        <Avatar initials={initials} src={avatarUrl} size={collapsed ? 'sm' : 'md'} />
         {!collapsed && (
           <div className={styles.userInfo}>
-            <span className={styles.userName}>Krishna Gaur</span>
+            <span className={styles.userName}>{name}</span>
             <span className={styles.userRole}>Member</span>
           </div>
         )}

@@ -1,8 +1,39 @@
+import { useNavigate } from 'react-router-dom'
 import { CheckCircle } from 'lucide-react'
 import { SectionCard } from '@/components/layout'
 import { Skeleton } from '@/components/feedback'
 import { useProfileCompletion } from '../hooks/useProfileHooks'
+import { ROUTES } from '@/constants/routes'
 import styles from './CompletionCard.module.css'
+
+// ── Constants & Helpers ────────────────────────────────────────────────────────
+
+const SECTION_PRIORITY = [
+  'Professional Headline',
+  'About',
+  'Contact',
+  'Education',
+  'Experience',
+  'Professional Links',
+  'Skills'
+]
+
+const SECTION_BENEFITS: Record<string, string> = {
+  'Professional Headline': 'Helps recruiters quickly understand your career focus and improves profile quality.',
+  'About': 'Helps employers understand your background and career goals.',
+  'Education': 'Improves opportunity matching based on your academic background.',
+  'Experience': 'Enables more accurate career recommendations.',
+  'Skills': 'Strengthens matching accuracy and skill-gap analysis.',
+  'Professional Links': 'Lets recruiters verify your work and projects.',
+  'Contact': 'Makes it easier for recruiters to reach you.',
+}
+
+function getMilestoneMessage(pct: number): string {
+  if (pct <= 30) return "You're just getting started."
+  if (pct <= 60) return "Your profile is taking shape."
+  if (pct < 100) return "Almost there! You're unlocking richer career insights."
+  return "Your Career Intelligence profile is complete."
+}
 
 // ── Radial ring ───────────────────────────────────────────────────────────────
 
@@ -52,6 +83,7 @@ function RadialRing({ percentage }: RingProps) {
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function CompletionCard() {
+  const navigate = useNavigate()
   const { data: completion, isLoading } = useProfileCompletion()
 
   if (isLoading) {
@@ -64,13 +96,41 @@ export function CompletionCard() {
 
   if (!completion) return null
 
-  const { completionPercentage, completedSections, missingSections, nextRecommendedAction } =
-    completion
+  const { completionPercentage, completedSections, missingSections } = completion
+
+  if (completionPercentage === 100) {
+    return (
+      <SectionCard
+        title="🎉 Profile Complete"
+        description="Excellent! Your Career Intelligence profile is fully configured."
+      >
+        <div className={styles.card}>
+          <div className={styles.successState}>
+            <span className={styles.successIcon}>🎉</span>
+            <p className={styles.successText}>
+              You're ready to receive the most accurate recommendations, analytics, and opportunity matches.
+            </p>
+            <button
+              type="button"
+              className={styles.primaryCta}
+              onClick={() => navigate(ROUTES.ANALYTICS)}
+            >
+              View Career Analytics →
+            </button>
+          </div>
+        </div>
+      </SectionCard>
+    )
+  }
+
+  // Determine highest priority missing section
+  const nextSectionName = SECTION_PRIORITY.find(s => missingSections.includes(s)) || missingSections[0]
+  const nextSectionBenefit = nextSectionName ? (SECTION_BENEFITS[nextSectionName] || 'Improves your overall profile quality.') : ''
 
   return (
     <SectionCard
       title="Profile Completion"
-      description="Complete your profile to improve opportunity matching."
+      description={getMilestoneMessage(completionPercentage)}
     >
       <div className={styles.card}>
         {/* Ring + next action */}
@@ -78,13 +138,15 @@ export function CompletionCard() {
           <RadialRing percentage={completionPercentage} />
           <div className={styles.info}>
             <span className={styles.label}>
-              Complete {missingSections.length} more section{missingSections.length === 1 ? '' : 's'}
+              Complete {missingSections.length} more section{missingSections.length === 1 ? '' : 's'} to unlock your full Career Intelligence profile.
             </span>
-            <div className={styles.nextActionWrapper}>
-              <span className={styles.nextStepLabel}>Next Recommended Step</span>
-              <p className={styles.nextAction}>{nextRecommendedAction}</p>
-              <span className={styles.timeEstimate}>Typically takes 2 minutes</span>
-            </div>
+            {nextSectionName && (
+              <div className={styles.nextActionWrapper}>
+                <span className={styles.nextStepLabel}>Next Recommended Step</span>
+                <p className={styles.nextAction}>{nextSectionName}</p>
+                <span className={styles.benefitText}>{nextSectionBenefit}</span>
+              </div>
+            )}
           </div>
         </div>
 

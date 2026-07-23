@@ -26,11 +26,16 @@ public final class UserProfileMapper {
      * @return a fully populated {@link UserProfileDetailResponse}
      */
     public static UserProfileDetailResponse toDetailResponse(UserProfile profile, User user) {
+        String picture = user.getProfilePictureUrl();
+        if (picture != null && !picture.startsWith("http")) {
+            picture = "/api/v1/users/" + user.getId() + "/avatar";
+        }
+
         return new UserProfileDetailResponse(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
-                user.getProfilePictureUrl(),
+                picture,
 
                 profile.getHeadline(),
                 profile.getAbout(),

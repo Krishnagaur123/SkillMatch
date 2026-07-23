@@ -6,12 +6,14 @@ import Avatar from './Avatar'
 import { useSidebar } from '@/app/providers/SidebarContext'
 import { useTheme } from '@/app/providers/ThemeContext'
 import { useAuth } from '@/features/auth/hooks/useAuth'
+import { useUserProfile } from '@/hooks/useUserProfile'
 import styles from './TopNavigation.module.css'
 
 export default function TopNavigation() {
   const { toggleCollapsed, openDrawer } = useSidebar()
   const { toggleTheme } = useTheme()
   const { logout, isLoggingOut } = useAuth()
+  const { data: profile } = useUserProfile()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -32,6 +34,11 @@ export default function TopNavigation() {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [isDropdownOpen])
+
+  const name = profile?.name || 'User'
+  const email = profile?.email || ''
+  const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
+  const avatarUrl = profile?.profilePictureUrl
 
   return (
     <header className={styles.root} role="banner">
@@ -69,15 +76,15 @@ export default function TopNavigation() {
             aria-haspopup="true"
             aria-label="User menu"
           >
-            <Avatar initials="KG" size="sm" />
+            <Avatar initials={initials} src={avatarUrl} size="sm" />
             <ChevronDown size={14} className={styles.avatarChevron} />
           </button>
 
           {isDropdownOpen && (
             <div className={styles.dropdownMenu}>
               <div className={styles.dropdownHeader}>
-                <p className={styles.dropdownName}>Krishna Gaur</p>
-                <p className={styles.dropdownEmail}>member@skillmatch.com</p>
+                <p className={styles.dropdownName}>{name}</p>
+                <p className={styles.dropdownEmail}>{email}</p>
               </div>
               <div className={styles.dropdownDivider} />
               
