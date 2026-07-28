@@ -69,6 +69,15 @@ jobs:
           name: backend-jar
           path: backend/target
 
+      - name: Verify JAR
+        run: |
+          find . -name "*.jar"
+
+      - name: Verify downloaded artifact
+        run: |
+          echo "Backend directory:"
+          ls -R backend
+
       - name: login to dockerhub
         uses: docker/login-action@v3
         with:
