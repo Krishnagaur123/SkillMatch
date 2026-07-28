@@ -8,6 +8,8 @@
 *.iml
 
 target/
+!target/*.jar
+
 build/
 
 *.log
