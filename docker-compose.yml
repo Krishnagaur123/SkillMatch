@@ -4,6 +4,8 @@ services:
     image: postgres:16
     container_name: skillmatch-postgres
 
+    # Development-only credentials.
+    # Production credentials are supplied through environment variables/secrets.
     environment:
       POSTGRES_DB: skillmatch
       POSTGRES_USER: postgres
