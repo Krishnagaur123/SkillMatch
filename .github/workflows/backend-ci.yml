@@ -46,6 +46,11 @@ jobs:
           java-version: '21'
           cache: maven
 
+      - name: Debug Database Configuration
+        run: |
+          echo "DB_URL=$DB_URL"
+          echo "DB_USERNAME=$DB_USERNAME"
+
       - name: Build Backend
         working-directory: backend
         run: mvn clean verify
