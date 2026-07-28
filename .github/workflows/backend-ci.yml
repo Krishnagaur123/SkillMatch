@@ -49,6 +49,8 @@ jobs:
       COOKIE_SECURE: ${{ secrets.COOKIE_SECURE }}
       CORS_ALLOWED_ORIGINS: ${{ secrets.CORS_ALLOWED_ORIGINS }}
       AUTH_REDIRECT_URL: ${{ secrets.AUTH_REDIRECT_URL }}
+      RESUME_STORAGE_PATH: ${{ secrets.RESUME_STORAGE_PATH }}
+      AVATAR_STORAGE_PATH: ${{ secrets.AVATAR_STORAGE_PATH }}
 
     steps:
       - name: Checkout Repository
