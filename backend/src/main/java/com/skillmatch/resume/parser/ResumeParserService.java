@@ -6,17 +6,17 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.Path;
+import java.io.InputStream;
 
 @Service
 public class ResumeParserService {
 
-    public String extractText(Path pdfPath) {
-        try (PDDocument document = Loader.loadPDF(pdfPath.toFile())) {
+    public String extractText(InputStream inputStream) {
+        try (PDDocument document = Loader.loadPDF(inputStream.readAllBytes())) {
             PDFTextStripper stripper = new PDFTextStripper();
             return stripper.getText(document);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to extract text from PDF: " + pdfPath.getFileName(), e);
+            throw new RuntimeException("Failed to extract text from PDF", e);
         }
     }
 }

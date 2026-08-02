@@ -20,10 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,12 +34,10 @@ public class ResumeService {
     private final ResumeRepository resumeRepository;
     private final ResumeParserService resumeParserService;
     private final ResumeAnalysisService resumeAnalysisService;
+    private final ResumeStorageService resumeStorageService;
     private final ResumeSkillRepository resumeSkillRepository;
     private final ResumeEducationRepository resumeEducationRepository;
     private final ResumeExperienceRepository resumeExperienceRepository;
-
-    @Value("${app.resume.storage-path}")
-    private String storagePath;
 
     @Value("${app.resume.max-file-size-mb}")
     private int maxFileSizeMb;
@@ -63,13 +58,10 @@ public class ResumeService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Only PDF files are supported");
         }
 
-        String sanitizedFilename = Path.of(originalFilename).getFileName().toString();
+        int lastSep = Math.max(originalFilename.lastIndexOf('/'), originalFilename.lastIndexOf('\\'));
+        String sanitizedFilename = originalFilename.substring(lastSep + 1);
         if (sanitizedFilename.isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Only PDF files are supported");
-        }
-
-        if (storagePath == null || storagePath.isBlank()) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Storage path is not configured");
         }
 
         User user = currentUserService.getCurrentUser();
@@ -84,30 +76,24 @@ public class ResumeService {
 
         boolean isFirstResume = !resumeRepository.existsByUser(user);
 
-        UUID fileId = UUID.randomUUID();
-        Path storageDir = Paths.get(storagePath);
-        Path destination = storageDir.resolve(fileId + ".pdf");
-
-        try {
-            Files.createDirectories(storageDir);
-            file.transferTo(destination);
-        } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to store file");
-        }
+        String storageKey = resumeStorageService.store(user.getId(), file);
 
         try {
             Resume resume = Resume.builder()
                     .user(user)
                     .title(resolvedTitle)
                     .fileName(sanitizedFilename)
-                    .storagePath(destination.toString())
+                    .storagePath(storageKey)
                     .fileSize(file.getSize())
                     .status(ResumeStatus.UPLOADED)
                     .active(isFirstResume)
                     .build();
 
             try {
-                String text = resumeParserService.extractText(destination);
+                String text;
+                try (InputStream inputStream = resumeStorageService.load(storageKey)) {
+                    text = resumeParserService.extractText(inputStream);
+                }
                 if (text != null && text.length() > MAX_EXTRACTED_TEXT_LENGTH) {
                     text = text.substring(0, MAX_EXTRACTED_TEXT_LENGTH);
                 }
@@ -126,8 +112,8 @@ public class ResumeService {
             return toUploadResponse(resume);
         } catch (Exception e) {
             try {
-                Files.deleteIfExists(destination);
-            } catch (IOException ignored) {
+                resumeStorageService.delete(storageKey);
+            } catch (Exception ignored) {
             }
             throw e;
         }
@@ -156,12 +142,7 @@ public class ResumeService {
         Resume resume = resumeRepository.findByIdAndUser(resumeId, user)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resume not found"));
 
-        Path filePath = Paths.get(resume.getStoragePath());
-        try {
-            Files.deleteIfExists(filePath);
-        } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete file");
-        }
+        resumeStorageService.delete(resume.getStoragePath());
 
         resumeRepository.delete(resume);
     }
