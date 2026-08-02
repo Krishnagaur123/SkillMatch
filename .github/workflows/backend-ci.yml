@@ -51,6 +51,8 @@ jobs:
       AUTH_REDIRECT_URL: ${{ secrets.AUTH_REDIRECT_URL }}
       RESUME_STORAGE_PATH: ${{ secrets.RESUME_STORAGE_PATH }}
       AVATAR_STORAGE_PATH: ${{ secrets.AVATAR_STORAGE_PATH }}
+      S3_REGION: ${{secrets.S3_REGION}}
+      S3_BUCKET: ${{secrets.S3_BUCKET}}
 
     steps:
       - name: Checkout Repository
