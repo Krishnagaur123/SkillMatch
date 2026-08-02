@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -115,7 +117,7 @@ public class UserService {
 
         String picture = user.getProfilePictureUrl();
         if (picture != null && !picture.startsWith("http")) {
-            picture = "/api/v1/users/" + user.getId() + "/avatar";
+            picture = "/api/v1/users/" + user.getId() + "/avatar?v=" + URLEncoder.encode(picture, StandardCharsets.UTF_8);
         }
 
         return new UserProfileResponse(

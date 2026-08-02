@@ -5,6 +5,9 @@ import com.skillmatch.user.dto.UserProfileDetailResponse;
 import com.skillmatch.user.entity.User;
 import com.skillmatch.user.entity.UserProfile;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 /**
  * Centralised mapper for {@link UserProfile} ↔ DTO conversions.
  *
@@ -28,7 +31,7 @@ public final class UserProfileMapper {
     public static UserProfileDetailResponse toDetailResponse(UserProfile profile, User user) {
         String picture = user.getProfilePictureUrl();
         if (picture != null && !picture.startsWith("http")) {
-            picture = "/api/v1/users/" + user.getId() + "/avatar";
+            picture = "/api/v1/users/" + user.getId() + "/avatar?v=" + URLEncoder.encode(picture, StandardCharsets.UTF_8);
         }
 
         return new UserProfileDetailResponse(
