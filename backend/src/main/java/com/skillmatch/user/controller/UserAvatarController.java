@@ -34,15 +34,23 @@ public class UserAvatarController {
     public ResponseEntity<UserProfileResponse> uploadAvatar(@RequestParam("file") MultipartFile file) {
         User user = currentUserService.getCurrentUser();
         
-        // Delete old avatar if it's a local key
         String oldPicture = user.getProfilePictureUrl();
-        if (oldPicture != null && !oldPicture.startsWith("http")) {
-            avatarStorageService.deleteAvatar(oldPicture);
+        String storageKey = avatarStorageService.storeAvatar(user.getId(), file);
+
+        try {
+            user.setProfilePictureUrl(storageKey);
+            userRepository.save(user);
+        } catch (Exception e) {
+            try {
+                avatarStorageService.deleteAvatar(storageKey);
+            } catch (Exception ignored) {
+            }
+            throw e;
         }
 
-        String storageKey = avatarStorageService.storeAvatar(user.getId(), file);
-        user.setProfilePictureUrl(storageKey);
-        userRepository.save(user);
+        if (oldPicture != null) {
+            avatarStorageService.deleteAvatar(oldPicture);
+        }
 
         return ResponseEntity.ok(userService.getCurrentUserProfile());
     }
@@ -52,12 +60,13 @@ public class UserAvatarController {
         User user = currentUserService.getCurrentUser();
         
         String oldPicture = user.getProfilePictureUrl();
-        if (oldPicture != null && !oldPicture.startsWith("http")) {
-            avatarStorageService.deleteAvatar(oldPicture);
-        }
         
         user.setProfilePictureUrl(null);
         userRepository.save(user);
+
+        if (oldPicture != null) {
+            avatarStorageService.deleteAvatar(oldPicture);
+        }
 
         return ResponseEntity.ok(userService.getCurrentUserProfile());
     }

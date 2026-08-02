@@ -43,6 +43,7 @@ export function ProfileHeader() {
 
     uploadAvatar(file, {
       onSuccess: () => {
+        setLocalAvatarPreview(null)
         toastSuccess('Profile photo updated successfully')
       },
       onError: (err: any) => {
