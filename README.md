@@ -576,7 +576,6 @@ These are realistic next steps that have not yet been implemented:
 - **Redis** — Cache opportunity match results and analytics responses. Currently all analytics are computed on every request from live database data.
 - **Amazon RDS** — Move PostgreSQL off the EC2 instance into a managed RDS instance for automated backups, point-in-time recovery, and Multi-AZ failover.
 - **Opportunity Ingestion Pipeline** — Currently, opportunities are seeded via Flyway. A real ingestion service would pull from job APIs or scrapers, normalise skill requirements, and populate the database continuously.
-- **Notification Service** — Send email or in-app notifications when new high-match opportunities appear for a user's target roles.
 - **CloudWatch / Structured Logging** — Ship structured logs from the application container to CloudWatch Logs for centralised log management and alerting.
 - **Distributed Tracing** — Add trace IDs to requests for easier debugging across service calls.
 - **Microservices Extraction** — The modular monolith is designed to allow individual modules (e.g., resume processing, analytics) to be extracted into independent services with their own databases as scale or team structure demands it.
