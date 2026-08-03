@@ -2,6 +2,8 @@
 
 **SkillMatch** is a Career Opportunity Intelligence Platform that goes beyond simple job listings. It helps users understand where they stand in the job market, how well they match specific opportunities, and what skills they need to close the gap.
 
+- **Live Application:** https://skill-match.in
+
 The platform focuses on four core capabilities:
 
 - **Skill Gap Analysis** — Compares skills extracted from a user's active resume against what opportunities in their target roles demand, showing matched skills, missing required skills, and missing preferred skills with weighted scoring.
