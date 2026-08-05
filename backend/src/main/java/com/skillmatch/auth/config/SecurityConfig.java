@@ -49,6 +49,7 @@ public class SecurityConfig {
                             "/api/v1/users/*/avatar",
                             "/actuator/health"
                     ).permitAll()
+                    .requestMatchers("/api/v1/admin/**").authenticated()
                 .anyRequest().authenticated()
             )
 

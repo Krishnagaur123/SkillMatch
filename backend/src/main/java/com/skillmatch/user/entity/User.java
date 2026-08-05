@@ -89,6 +89,10 @@ public class User extends BaseEntity {
     @Builder.Default
     private List<Application> applications = new ArrayList<>();
 
+    @Column(name = "is_admin", nullable = false)
+    @Builder.Default
+    private Boolean isAdmin = false;
+
     @OneToMany(
             mappedBy = "user",
             fetch = FetchType.LAZY,

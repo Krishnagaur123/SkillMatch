@@ -30,4 +30,14 @@ public class CurrentUserService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
     }
+
+    @Transactional(readOnly = true)
+    public User requireAdmin() {
+        User user = getCurrentUser();
+        if (!Boolean.TRUE.equals(user.getIsAdmin())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
+        }
+        return user;
+    }
 }
+
