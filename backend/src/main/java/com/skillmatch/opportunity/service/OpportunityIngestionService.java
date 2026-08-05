@@ -61,14 +61,14 @@ public class OpportunityIngestionService {
         Opportunity opportunity = Opportunity.builder()
                 .company(company)
                 .title(request.title())
-                .description(request.description())
-                .location(request.location())
+                .description(normalize(request.description()))
+                .location(normalize(request.location()))
                 .workMode(request.workMode())
                 .employmentType(request.employmentType())
                 .experienceLevel(request.experienceLevel())
-                .applyUrl(request.applyUrl())
-                .source(request.source())
-                .externalId(request.externalId())
+                .applyUrl(normalize(request.applyUrl()))
+                .source(normalize(request.source()))
+                .externalId(normalize(request.externalId()))
                 .postedAt(request.postedAt())
                 .expiresAt(request.expiresAt())
                 .active(request.active() != null ? request.active() : true)
@@ -112,37 +112,22 @@ public class OpportunityIngestionService {
             opportunity.setTitle(request.title());
         }
         if (request.description() != null) {
-            if (request.description().isBlank()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "description must not be blank");
-            }
-            opportunity.setDescription(request.description());
+            opportunity.setDescription(normalize(request.description()));
         }
         if (request.location() != null) {
-            if (request.location().isBlank()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "location must not be blank");
-            }
-            opportunity.setLocation(request.location());
+            opportunity.setLocation(normalize(request.location()));
         }
         if (request.workMode() != null) opportunity.setWorkMode(request.workMode());
         if (request.employmentType() != null) opportunity.setEmploymentType(request.employmentType());
         if (request.experienceLevel() != null) opportunity.setExperienceLevel(request.experienceLevel());
         if (request.applyUrl() != null) {
-            if (request.applyUrl().isBlank()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "applyUrl must not be blank");
-            }
-            opportunity.setApplyUrl(request.applyUrl());
+            opportunity.setApplyUrl(normalize(request.applyUrl()));
         }
         if (request.source() != null) {
-            if (request.source().isBlank()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "source must not be blank");
-            }
-            opportunity.setSource(request.source());
+            opportunity.setSource(normalize(request.source()));
         }
         if (request.externalId() != null) {
-            if (request.externalId().isBlank()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "externalId must not be blank");
-            }
-            opportunity.setExternalId(request.externalId());
+            opportunity.setExternalId(normalize(request.externalId()));
         }
         if (request.postedAt() != null) opportunity.setPostedAt(request.postedAt());
         if (request.expiresAt() != null) opportunity.setExpiresAt(request.expiresAt());
@@ -218,5 +203,9 @@ public class OpportunityIngestionService {
                 .stream()
                 .map(os -> os.getSkill().getName())
                 .toList();
+    }
+
+    private String normalize(String value) {
+        return (value != null && value.isBlank()) ? null : value;
     }
 }

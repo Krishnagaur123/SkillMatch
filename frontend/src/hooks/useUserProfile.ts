@@ -13,6 +13,7 @@ export interface UserProfileResponse {
   educationCount: number
   experienceCount: number
   profileCompletionPercentage: number
+  isAdmin?: boolean
 }
 
 export interface UpdateUserProfileRequest {

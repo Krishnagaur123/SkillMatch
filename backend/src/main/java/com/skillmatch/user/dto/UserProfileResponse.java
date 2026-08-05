@@ -13,5 +13,6 @@ public record UserProfileResponse(
         int skillsCount,
         int educationCount,
         int experienceCount,
-        int profileCompletionPercentage
+        int profileCompletionPercentage,
+        boolean isAdmin
 ) {}

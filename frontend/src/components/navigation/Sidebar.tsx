@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { Shield } from 'lucide-react'
 import { ROUTES } from '@/constants/routes'
 import { NAV_ITEMS } from '@/config/navigation'
 import { useSidebar } from '@/app/providers/SidebarContext'
+import { useUserProfile } from '@/hooks/useUserProfile'
 import AppBrand from './AppBrand'
 import SidebarNav from './SidebarNav'
 import SidebarFooter from './SidebarFooter'
@@ -13,6 +15,17 @@ const SIDEBAR_COLLAPSED_WIDTH = 64
 
 export default function Sidebar() {
   const { collapsed } = useSidebar()
+  const { data: profile } = useUserProfile()
+
+  const navItems = [...NAV_ITEMS]
+  if (profile?.isAdmin) {
+    navItems.push({
+      id: 'admin_opportunities',
+      title: 'Opportunity Management',
+      icon: Shield,
+      route: ROUTES.ADMIN_OPPORTUNITIES,
+    })
+  }
 
   return (
     <motion.div
@@ -27,7 +40,7 @@ export default function Sidebar() {
           <AppBrand collapsed={collapsed} />
         </Link>
       </div>
-      <SidebarNav items={NAV_ITEMS} />
+      <SidebarNav items={navItems} />
       <SidebarFooter />
     </motion.div>
   )

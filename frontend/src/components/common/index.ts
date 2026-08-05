@@ -10,3 +10,5 @@ export * from './Filters'
 export * from './Table'
 export * from './Form'
 export * from './RemovableSkillBadge'
+export * from './Dialog'
+

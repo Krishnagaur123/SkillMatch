@@ -130,7 +130,8 @@ public class UserService {
                 skillsCount,
                 educationCount,
                 experienceCount,
-                completionScore
+                completionScore,
+                Boolean.TRUE.equals(user.getIsAdmin())
         );
     }
 

@@ -6,6 +6,7 @@ export default function Breadcrumb() {
   const { pathname } = useLocation()
 
   const matched = NAV_ITEMS.find((item) => item.route === pathname)
+    || (pathname === '/admin/opportunities' ? { title: 'Opportunity Management', route: '/admin/opportunities' } : undefined)
 
   if (!matched) return null
 
