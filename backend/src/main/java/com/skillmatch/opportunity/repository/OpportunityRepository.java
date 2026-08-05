@@ -30,4 +30,10 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, UUID> 
     List<Opportunity> findDistinctByActiveTrueAndLocationContainingIgnoreCaseAndOpportunityTargetRolesTargetRoleId(String location, UUID targetRoleId);
 
     Optional<Opportunity> findByIdAndActiveTrue(UUID id);
+
+    boolean existsByCompanyIdAndTitleAndLocationAndEmploymentTypeAndActiveTrue(
+            UUID companyId, String title, String location, com.skillmatch.common.enums.EmploymentType employmentType);
+
+    boolean existsByCompanyIdAndTitleAndLocationAndEmploymentTypeAndActiveTrueAndIdNot(
+            UUID companyId, String title, String location, com.skillmatch.common.enums.EmploymentType employmentType, UUID id);
 }

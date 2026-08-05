@@ -53,6 +53,11 @@ public class OpportunityIngestionService {
         Company company = companyRepository.findById(request.companyId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Company not found"));
 
+        if (opportunityRepository.existsByCompanyIdAndTitleAndLocationAndEmploymentTypeAndActiveTrue(
+                company.getId(), request.title(), request.location(), request.employmentType())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "An active opportunity with the same company, title, location, and employment type already exists.");
+        }
+
         Opportunity opportunity = Opportunity.builder()
                 .company(company)
                 .title(request.title())
@@ -79,6 +84,20 @@ public class OpportunityIngestionService {
 
         Opportunity opportunity = opportunityRepository.findById(opportunityId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opportunity not found"));
+
+        UUID companyIdForCheck = request.companyId() != null ? request.companyId() : opportunity.getCompany().getId();
+        String titleForCheck = request.title() != null ? request.title() : opportunity.getTitle();
+        String locationForCheck = request.location() != null ? request.location() : opportunity.getLocation();
+        com.skillmatch.common.enums.EmploymentType employmentTypeForCheck = request.employmentType() != null ? request.employmentType() : opportunity.getEmploymentType();
+        boolean activeForCheck = request.active() != null ? request.active() : opportunity.getActive();
+
+        if (activeForCheck) {
+            if (opportunityRepository.existsByCompanyIdAndTitleAndLocationAndEmploymentTypeAndActiveTrueAndIdNot(
+                    companyIdForCheck, titleForCheck, locationForCheck, employmentTypeForCheck, opportunityId)) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "An active opportunity with the same company, title, location, and employment type already exists.");
+            }
+        }
+
 
         if (request.companyId() != null && !request.companyId().equals(opportunity.getCompany().getId())) {
             Company company = companyRepository.findById(request.companyId())
