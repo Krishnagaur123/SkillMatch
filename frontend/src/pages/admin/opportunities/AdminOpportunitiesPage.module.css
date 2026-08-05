@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 8px;
+}

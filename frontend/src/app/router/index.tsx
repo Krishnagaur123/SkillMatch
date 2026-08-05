@@ -20,6 +20,8 @@ const CompaniesPage = lazy(() => import('@/pages/companies/CompaniesPage'))
 const CompanyDetailPage = lazy(() => import('@/pages/companies/CompanyDetailPage'))
 const ProfilePage = lazy(() => import('@/pages/profile/ProfilePage'))
 
+const AdminOpportunitiesPage = lazy(() => import('@/pages/admin/opportunities/AdminOpportunitiesPage'))
+
 const NotFoundPage = lazy(() => import('@/pages/not-found/NotFoundPage'))
 
 export default function AppRouter() {
@@ -44,6 +46,8 @@ export default function AppRouter() {
           <Route path={ROUTES.COMPANIES} element={<CompaniesPage />} />
           <Route path={ROUTES.COMPANY_DETAIL} element={<CompanyDetailPage />} />
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+          
+          <Route path={ROUTES.ADMIN_OPPORTUNITIES} element={<AdminOpportunitiesPage />} />
 
         </Route>
 

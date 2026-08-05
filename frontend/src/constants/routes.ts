@@ -12,6 +12,8 @@ export const ROUTES = {
   COMPANY_DETAIL: '/companies/:id',
   PROFILE: '/profile',
 
+  ADMIN_OPPORTUNITIES: '/admin/opportunities',
+
   AUTH: '/auth',
   AUTH_CALLBACK: '/auth/callback',
 } as const
