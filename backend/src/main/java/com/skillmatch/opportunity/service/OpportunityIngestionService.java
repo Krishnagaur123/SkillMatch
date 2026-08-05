@@ -1,11 +1,16 @@
 package com.skillmatch.opportunity.service;
 
+import com.skillmatch.common.enums.SkillImportance;
 import com.skillmatch.company.dto.CompanySummaryResponse;
+import com.skillmatch.company.entity.Company;
+import com.skillmatch.company.repository.CompanyRepository;
 import com.skillmatch.opportunity.dto.OpportunityDetailResponse;
 import com.skillmatch.opportunity.dto.OpportunityIngestionRequest;
 import com.skillmatch.opportunity.dto.OpportunitySummaryResponse;
 import com.skillmatch.opportunity.entity.Opportunity;
 import com.skillmatch.opportunity.repository.OpportunityRepository;
+import com.skillmatch.opportunity.repository.OpportunitySkillRepository;
+import com.skillmatch.opportunity.repository.OpportunityTargetRoleRepository;
 import com.skillmatch.user.service.CurrentUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,6 +28,9 @@ import java.util.UUID;
 public class OpportunityIngestionService {
 
     private final OpportunityRepository opportunityRepository;
+    private final CompanyRepository companyRepository;
+    private final OpportunitySkillRepository opportunitySkillRepository;
+    private final OpportunityTargetRoleRepository opportunityTargetRoleRepository;
     private final CurrentUserService currentUserService;
 
     @Transactional(readOnly = true)
@@ -33,19 +42,139 @@ public class OpportunityIngestionService {
     @Transactional
     public OpportunityDetailResponse createOpportunity(OpportunityIngestionRequest request) {
         currentUserService.requireAdmin();
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+
+        if (request.companyId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "companyId is required");
+        }
+        if (request.title() == null || request.title().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "title is required");
+        }
+
+        Company company = companyRepository.findById(request.companyId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Company not found"));
+
+        Opportunity opportunity = Opportunity.builder()
+                .company(company)
+                .title(request.title())
+                .description(request.description())
+                .location(request.location())
+                .workMode(request.workMode())
+                .employmentType(request.employmentType())
+                .experienceLevel(request.experienceLevel())
+                .applyUrl(request.applyUrl())
+                .source(request.source())
+                .externalId(request.externalId())
+                .postedAt(request.postedAt())
+                .expiresAt(request.expiresAt())
+                .active(request.active() != null ? request.active() : true)
+                .build();
+
+        opportunityRepository.save(opportunity);
+        return toDetailResponse(opportunity);
     }
 
     @Transactional
     public OpportunityDetailResponse updateOpportunity(UUID opportunityId, OpportunityIngestionRequest request) {
         currentUserService.requireAdmin();
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+
+        Opportunity opportunity = opportunityRepository.findById(opportunityId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opportunity not found"));
+
+        if (request.companyId() != null && !request.companyId().equals(opportunity.getCompany().getId())) {
+            Company company = companyRepository.findById(request.companyId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Company not found"));
+            opportunity.setCompany(company);
+        }
+
+        if (request.title() != null) {
+            if (request.title().isBlank()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "title must not be blank");
+            }
+            opportunity.setTitle(request.title());
+        }
+        if (request.description() != null) {
+            if (request.description().isBlank()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "description must not be blank");
+            }
+            opportunity.setDescription(request.description());
+        }
+        if (request.location() != null) {
+            if (request.location().isBlank()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "location must not be blank");
+            }
+            opportunity.setLocation(request.location());
+        }
+        if (request.workMode() != null) opportunity.setWorkMode(request.workMode());
+        if (request.employmentType() != null) opportunity.setEmploymentType(request.employmentType());
+        if (request.experienceLevel() != null) opportunity.setExperienceLevel(request.experienceLevel());
+        if (request.applyUrl() != null) {
+            if (request.applyUrl().isBlank()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "applyUrl must not be blank");
+            }
+            opportunity.setApplyUrl(request.applyUrl());
+        }
+        if (request.source() != null) {
+            if (request.source().isBlank()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "source must not be blank");
+            }
+            opportunity.setSource(request.source());
+        }
+        if (request.externalId() != null) {
+            if (request.externalId().isBlank()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "externalId must not be blank");
+            }
+            opportunity.setExternalId(request.externalId());
+        }
+        if (request.postedAt() != null) opportunity.setPostedAt(request.postedAt());
+        if (request.expiresAt() != null) opportunity.setExpiresAt(request.expiresAt());
+        if (request.active() != null) opportunity.setActive(request.active());
+
+        opportunityRepository.save(opportunity);
+        return toDetailResponse(opportunity);
     }
 
     @Transactional
     public void deleteOpportunity(UUID opportunityId) {
         currentUserService.requireAdmin();
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+
+        Opportunity opportunity = opportunityRepository.findById(opportunityId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Opportunity not found"));
+
+        opportunity.setActive(false);
+        opportunityRepository.save(opportunity);
+    }
+
+    private OpportunityDetailResponse toDetailResponse(Opportunity opportunity) {
+        List<String> targetRoleNames = opportunityTargetRoleRepository
+                .findAllByOpportunityWithTargetRole(opportunity)
+                .stream()
+                .map(otr -> otr.getTargetRole().getName())
+                .toList();
+
+        CompanySummaryResponse company = new CompanySummaryResponse(
+                opportunity.getCompany().getId(),
+                opportunity.getCompany().getName(),
+                opportunity.getCompany().getLogoUrl()
+        );
+
+        return new OpportunityDetailResponse(
+                opportunity.getId(),
+                opportunity.getTitle(),
+                company,
+                opportunity.getLocation(),
+                opportunity.getEmploymentType(),
+                opportunity.getExperienceLevel(),
+                opportunity.getDescription(),
+                opportunity.getApplyUrl(),
+                opportunity.getSource(),
+                opportunity.getPostedAt(),
+                opportunity.getExpiresAt(),
+                opportunity.getActive(),
+                skillNamesByImportance(opportunity, SkillImportance.REQUIRED),
+                skillNamesByImportance(opportunity, SkillImportance.PREFERRED),
+                skillNamesByImportance(opportunity, SkillImportance.GOOD_TO_HAVE),
+                targetRoleNames
+        );
     }
 
     private OpportunitySummaryResponse toSummaryResponse(Opportunity opportunity) {
@@ -62,5 +191,13 @@ public class OpportunityIngestionService {
                 opportunity.getExperienceLevel(),
                 opportunity.getEmploymentType()
         );
+    }
+
+    private List<String> skillNamesByImportance(Opportunity opportunity, SkillImportance importance) {
+        return opportunitySkillRepository
+                .findAllByOpportunityWithSkillAndImportance(opportunity, importance)
+                .stream()
+                .map(os -> os.getSkill().getName())
+                .toList();
     }
 }

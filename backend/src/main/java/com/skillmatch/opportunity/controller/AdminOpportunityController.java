@@ -5,7 +5,6 @@ import com.skillmatch.opportunity.dto.OpportunityDetailResponse;
 import com.skillmatch.opportunity.dto.OpportunityIngestionRequest;
 import com.skillmatch.opportunity.dto.OpportunitySummaryResponse;
 import com.skillmatch.opportunity.service.OpportunityIngestionService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -30,7 +29,7 @@ public class AdminOpportunityController {
 
     @PostMapping
     public ResponseEntity<OpportunityDetailResponse> create(
-            @Valid @RequestBody OpportunityIngestionRequest request) {
+            @RequestBody OpportunityIngestionRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(opportunityIngestionService.createOpportunity(request));
     }
@@ -38,7 +37,7 @@ public class AdminOpportunityController {
     @PutMapping("/{opportunityId}")
     public ResponseEntity<OpportunityDetailResponse> update(
             @PathVariable UUID opportunityId,
-            @Valid @RequestBody OpportunityIngestionRequest request) {
+            @RequestBody OpportunityIngestionRequest request) {
         return ResponseEntity.ok(opportunityIngestionService.updateOpportunity(opportunityId, request));
     }
 
