@@ -55,6 +55,11 @@ The project is intentionally built to demonstrate production-oriented backend en
 - Top strengths: user's skills that align most with market demand
 - Resume insights: skills the user knows but has not included in their active resume
 
+### Admin Opportunity Management
+- Dedicated admin portal for opportunity data ingestion and management
+- Full CRUD capabilities for job postings (Create, Read, Update, Delete)
+- Role-based access control ensuring only users with `isAdmin` privileges can modify the opportunity pipeline
+
 ### Application Tracking
 - Create, update, retrieve, and delete application records
 - Status lifecycle: `APPLIED`, with notes support
@@ -182,10 +187,15 @@ The project is intentionally designed to be extracted into Microservices later. 
 **GitHub Actions**
 - Three-stage pipeline: build & test → Docker build & push → EC2 deployment.
 
-### Deployment
+### Production Deployment
 
-**Docker + Docker Compose**
-- Backend and PostgreSQL are containerised. The Dockerfile uses `eclipse-temurin:21-jre` as the base image. Docker Compose defines service dependencies (backend waits for PostgreSQL health check) and network isolation.
+The production environment intentionally differs from the local development setup:
+- **Compute**: Ubuntu EC2 instance running Nginx (as a host-level reverse proxy) and the Spring Boot backend inside Docker.
+- **Database**: Managed Amazon RDS PostgreSQL placed in private subnets, accessed securely from the EC2 instance.
+- **Storage**: Amazon S3 is used for durable object storage (resumes, avatars).
+- **Local Development**: Continues to use the repository's `docker-compose.yml`, which spins up a local PostgreSQL container alongside the backend.
+
+For a detailed breakdown of the production infrastructure, configuration, and security, see [docs/deployment.md](docs/deployment.md).
 
 ---
 
@@ -205,7 +215,7 @@ Responsible for the full lifecycle of resume files: upload, storage, parsing, an
 
 ### Opportunity Module (`opportunity`)
 
-Stores job opportunities with associated skills, importance levels, employment type, experience level, and location. `OpportunityService` handles CRUD and filtering. `MatchingService` computes weighted match scores between a user's active resume skills and an opportunity's skill requirements. `RecommendationService` fetches all matching opportunities, scores each one against the user's resume, and returns them sorted by match percentage descending with pagination.
+Stores job opportunities with associated skills, importance levels, employment type, experience level, and location. `OpportunityService` handles reading and filtering for users, while `OpportunityIngestionService` provides a secure pipeline for administrators to manage live opportunities. `MatchingService` computes weighted match scores between a user's active resume skills and an opportunity's skill requirements. `RecommendationService` fetches all matching opportunities, scores each one against the user's resume, and returns them sorted by match percentage descending with pagination.
 
 ### Analytics Module (`analytics`)
 
@@ -577,7 +587,6 @@ These are realistic next steps that have not yet been implemented:
 
 - **Redis** — Cache opportunity match results and analytics responses. Currently all analytics are computed on every request from live database data.
 - **Amazon RDS** — Move PostgreSQL off the EC2 instance into a managed RDS instance for automated backups, point-in-time recovery, and Multi-AZ failover.
-- **Opportunity Ingestion Pipeline** — Currently, opportunities are seeded via Flyway. A real ingestion service would pull from job APIs or scrapers, normalise skill requirements, and populate the database continuously.
 - **CloudWatch / Structured Logging** — Ship structured logs from the application container to CloudWatch Logs for centralised log management and alerting.
 - **Distributed Tracing** — Add trace IDs to requests for easier debugging across service calls.
 - **Microservices Extraction** — The modular monolith is designed to allow individual modules (e.g., resume processing, analytics) to be extracted into independent services with their own databases as scale or team structure demands it.
