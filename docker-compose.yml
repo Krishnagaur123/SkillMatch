@@ -28,6 +28,31 @@ services:
     networks:
       - skillmatch-network
 
+  redis:
+    image: redis:7-alpine
+    container_name: skillmatch-redis
+
+    command:
+      - redis-server
+      - --maxmemory
+      - 30mb
+      - --maxmemory-policy
+      - allkeys-lru
+
+    ports:
+      - "127.0.0.1:6379:6379"
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - skillmatch-network
+
 
   backend:
     build:
@@ -43,6 +68,8 @@ services:
 
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
     restart: unless-stopped

@@ -1,5 +1,6 @@
 package com.skillmatch.user.service;
 
+import com.skillmatch.config.CacheConfig;
 import com.skillmatch.resume.repository.ResumeSkillRepository;
 import com.skillmatch.skill.entity.Skill;
 import com.skillmatch.skill.entity.UserSkill;
@@ -9,6 +10,7 @@ import com.skillmatch.user.dto.AddUserSkillRequest;
 import com.skillmatch.user.dto.UserSkillResponse;
 import com.skillmatch.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +50,10 @@ public class UserSkillService {
                 .toList();
     }
 
+    @CacheEvict(
+            cacheNames = CacheConfig.CAREER_ANALYTICS_CACHE,
+            key = "'analytics:career:' + #root.target.currentUserService.getCurrentUserId()"
+    )
     @Transactional
     public UserSkillResponse addSkill(AddUserSkillRequest request) {
         User user = currentUserService.getCurrentUser();
@@ -71,6 +77,10 @@ public class UserSkillService {
     }
 
 
+    @CacheEvict(
+            cacheNames = CacheConfig.CAREER_ANALYTICS_CACHE,
+            key = "'analytics:career:' + #root.target.currentUserService.getCurrentUserId()"
+    )
     @Transactional
     public void removeSkill(UUID skillId) {
         User currentUser = currentUserService.getCurrentUser();

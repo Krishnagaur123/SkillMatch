@@ -6,14 +6,18 @@ import com.skillmatch.analytics.dto.ResumeInsight;
 import com.skillmatch.analytics.dto.SkillDemandItem;
 import com.skillmatch.analytics.model.MarketProfile;
 import com.skillmatch.analytics.model.MarketProfile.MarketSkillEntry;
+import com.skillmatch.config.CacheConfig;
 import com.skillmatch.opportunity.repository.OpportunitySkillRepository;
 import com.skillmatch.resume.repository.ResumeSkillRepository;
 import com.skillmatch.skill.repository.UserSkillRepository;
 import com.skillmatch.user.entity.User;
-import com.skillmatch.user.service.CurrentUserService;
+import com.skillmatch.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Set;
@@ -26,14 +30,20 @@ public class CareerAnalyticsService {
 
     private static final int MAX_ITEMS = 10;
 
-    private final CurrentUserService        currentUserService;
+    private final UserRepository             userRepository;
     private final OpportunitySkillRepository opportunitySkillRepository;
-    private final ResumeSkillRepository     resumeSkillRepository;
-    private final UserSkillRepository       userSkillRepository;
+    private final ResumeSkillRepository      resumeSkillRepository;
+    private final UserSkillRepository        userSkillRepository;
 
+
+    @Cacheable(
+            cacheNames = CacheConfig.CAREER_ANALYTICS_CACHE,
+            key = "'analytics:career:' + #userId"
+    )
     @Transactional(readOnly = true)
-    public CareerAnalyticsResponse getCareerAnalytics() {
-        User user = currentUserService.getCurrentUser();
+    public CareerAnalyticsResponse getCareerAnalytics(UUID userId) {
+        User user = userRepository.findWithTargetRolesById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
         // Collect the user's target role IDs (already eagerly joined on User).
         Set<UUID> targetRoleIds = user.getTargetRoles().stream()

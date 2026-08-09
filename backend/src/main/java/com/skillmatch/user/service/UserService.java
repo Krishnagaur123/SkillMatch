@@ -1,5 +1,6 @@
 package com.skillmatch.user.service;
 
+import com.skillmatch.config.CacheConfig;
 import com.skillmatch.resume.entity.Resume;
 import com.skillmatch.resume.repository.ResumeEducationRepository;
 import com.skillmatch.resume.repository.ResumeExperienceRepository;
@@ -13,6 +14,7 @@ import com.skillmatch.user.dto.UserProfileResponse;
 import com.skillmatch.user.entity.User;
 import com.skillmatch.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +48,10 @@ public class UserService {
         return buildResponse(userWithRoles);
     }
 
+    @CacheEvict(
+            cacheNames = CacheConfig.CAREER_ANALYTICS_CACHE,
+            key = "'analytics:career:' + #root.target.currentUserService.getCurrentUserId()"
+    )
     @Transactional
     public UserProfileResponse updateCurrentUserProfile(UpdateUserProfileRequest request) {
         User user = currentUserService.getCurrentUser();

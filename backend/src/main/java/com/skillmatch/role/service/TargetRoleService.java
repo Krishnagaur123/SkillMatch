@@ -1,5 +1,6 @@
 package com.skillmatch.role.service;
 
+import com.skillmatch.config.CacheConfig;
 import com.skillmatch.role.dto.TargetRoleResponse;
 import com.skillmatch.role.dto.UpdateTargetRolesRequest;
 import com.skillmatch.role.entity.TargetRole;
@@ -8,6 +9,7 @@ import com.skillmatch.user.entity.User;
 import com.skillmatch.user.repository.UserRepository;
 import com.skillmatch.user.service.CurrentUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,10 @@ public class TargetRoleService {
                 .toList();
     }
 
+    @CacheEvict(
+            cacheNames = CacheConfig.CAREER_ANALYTICS_CACHE,
+            key = "'analytics:career:' + #root.target.currentUserService.getCurrentUserId()"
+    )
     @Transactional
     public List<TargetRoleResponse> updateCurrentUserTargetRoles(UpdateTargetRolesRequest request) {
         if (request == null || request.targetRoleIds() == null) {

@@ -1,5 +1,6 @@
 package com.skillmatch.resume.service;
 
+import com.skillmatch.config.CacheConfig;
 import com.skillmatch.resume.dto.ResumeDetailResponse;
 import com.skillmatch.resume.dto.ResumeSummaryResponse;
 import com.skillmatch.resume.dto.ResumeUploadResponse;
@@ -12,6 +13,7 @@ import com.skillmatch.resume.repository.ResumeRepository;
 import com.skillmatch.resume.repository.ResumeSkillRepository;
 import com.skillmatch.user.entity.User;
 import com.skillmatch.user.service.CurrentUserService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,6 +44,10 @@ public class ResumeService {
     @Value("${app.resume.max-file-size-mb}")
     private int maxFileSizeMb;
 
+    @CacheEvict(
+            cacheNames = CacheConfig.CAREER_ANALYTICS_CACHE,
+            key = "'analytics:career:' + #root.target.currentUserService.getCurrentUserId()"
+    )
     @Transactional
     public ResumeUploadResponse uploadResume(MultipartFile file, String titleParam) {
         if (file.isEmpty()) {
@@ -136,6 +142,10 @@ public class ResumeService {
         return toDetailResponse(resume);
     }
 
+    @CacheEvict(
+            cacheNames = CacheConfig.CAREER_ANALYTICS_CACHE,
+            key = "'analytics:career:' + #root.target.currentUserService.getCurrentUserId()"
+    )
     @Transactional
     public void deleteResume(UUID resumeId) {
         User user = currentUserService.getCurrentUser();
@@ -147,6 +157,10 @@ public class ResumeService {
         resumeRepository.delete(resume);
     }
 
+    @CacheEvict(
+            cacheNames = CacheConfig.CAREER_ANALYTICS_CACHE,
+            key = "'analytics:career:' + #root.target.currentUserService.getCurrentUserId()"
+    )
     @Transactional
     public ResumeDetailResponse activateResume(UUID resumeId) {
         User user = currentUserService.getCurrentUser();
