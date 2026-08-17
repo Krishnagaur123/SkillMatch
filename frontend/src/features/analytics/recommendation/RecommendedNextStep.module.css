@@ -1,8 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 2.5rem;
+  gap: 1.25rem;
+  padding: 2rem;
   background: color-mix(in srgb, var(--color-brand) 5%, transparent);
   border: 1px solid color-mix(in srgb, var(--color-brand) 20%, transparent);
   border-radius: var(--radius-xl);
@@ -16,17 +16,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   background: var(--color-brand);
   color: white;
   border-radius: var(--radius-lg);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .icon {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
 
 .content {
@@ -36,7 +36,7 @@
 }
 
 .title {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-primary);
   margin: 0;
@@ -55,21 +55,21 @@
 }
 
 .label {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   color: var(--text-secondary);
   font-weight: 500;
 }
 
 .skillName {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .metricsRow {
   display: flex;
-  gap: 2rem;
-  margin-top: 0.5rem;
+  gap: 1.5rem;
+  margin-top: 0.25rem;
 }
 
 .metric {
@@ -79,7 +79,7 @@
 }
 
 .metricLabel {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-secondary);
@@ -87,13 +87,13 @@
 }
 
 .metricValuePrimary {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 700;
   color: var(--color-success);
 }
 
 .metricValueSecondary {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -102,7 +102,7 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 }
 
 .whyLabel {

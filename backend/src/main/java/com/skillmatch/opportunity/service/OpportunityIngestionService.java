@@ -36,7 +36,7 @@ public class OpportunityIngestionService {
     @Transactional(readOnly = true)
     public Page<OpportunitySummaryResponse> listAllOpportunities(Pageable pageable) {
         currentUserService.requireAdmin();
-        return opportunityRepository.findAll(pageable).map(this::toSummaryResponse);
+        return opportunityRepository.findByActiveTrue(pageable).map(this::toSummaryResponse);
     }
 
     @Transactional

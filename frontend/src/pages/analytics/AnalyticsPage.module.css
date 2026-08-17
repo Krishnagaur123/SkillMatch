@@ -40,7 +40,7 @@
 .sectionCard {
   background: var(--surface-primary);
   border-radius: var(--radius-xl);
-  padding: 2.5rem;
+  padding: 2rem;
   border: 1px solid var(--border-default);
   box-shadow: var(--shadow-sm);
 }
@@ -52,7 +52,7 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .sectionHeader {

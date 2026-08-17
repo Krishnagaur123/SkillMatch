@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
-import { ArrowRight, ArrowDown, Lightbulb, CheckCircle2, ChevronRight, BookOpen, Sparkles, Info, FileText } from 'lucide-react'
+import { ArrowDown, ChevronRight, BookOpen, Sparkles, Info, FileText } from 'lucide-react'
 import styles from './CoverageHero.module.css'
 import { getCoverageCategory, type CoverageCategory } from '../utils'
 import type { LearningRoadmapItem } from '@/hooks/useCareerAnalytics'
@@ -17,7 +17,6 @@ export function CoverageHero({ coverage, resumeStatus, learningRoadmap }: Covera
 
   const topSkills = useMemo(() => learningRoadmap.slice(0, 3), [learningRoadmap])
   const remainingCount = Math.max(0, learningRoadmap.length - 3)
-  const topSkill = topSkills.length > 0 ? topSkills[0] : null
 
   const hoveredSkill = hoveredIndex !== null ? topSkills[hoveredIndex] : null
   const projectedGain = hoveredSkill ? hoveredSkill.estimatedCoverageGain : 0
@@ -205,47 +204,6 @@ export function CoverageHero({ coverage, resumeStatus, learningRoadmap }: Covera
           )}
         </div>
 
-        {/* BOTTOM BANNER: Next Best Action spans left and center */}
-        <div className={styles.bottomBannerCol}>
-          {topSkill ? (
-            <div className={styles.actionCard}>
-              <div className={styles.actionLeft}>
-                <div className={styles.actionHeader}>
-                  <Lightbulb size={18} className={styles.actionIcon} />
-                  <span className={styles.actionHeaderTitle}>NEXT BEST ACTION</span>
-                </div>
-                <span className={styles.actionSkill}>Learn {topSkill.skillName}</span>
-                <p className={styles.actionExplanation}>
-                  Highest impact recommendation for your selected roles.
-                </p>
-              </div>
-              <div className={styles.actionMiddle}>
-                <span className={styles.gainLabel}>ESTIMATED GAIN</span>
-                <span className={styles.gainValue}>+{topSkill.estimatedCoverageGain.toFixed(1)}%</span>
-              </div>
-              <div className={styles.actionRight}>
-                <button onClick={scrollToRoadmap} className={styles.actionButton}>
-                  View Learning Roadmap <ArrowRight size={16} />
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className={styles.actionCardEmpty}>
-              <CheckCircle2 size={24} className={styles.successIcon} />
-              <div className={styles.actionEmptyText}>
-                <span className={styles.actionSkill}>Market Ready</span>
-                <p className={styles.actionExplanation}>
-                  You're already covering the major market requirements for your selected roles.
-                </p>
-              </div>
-            </div>
-          )}
-          
-          <div className={styles.footerNote}>
-            <Lightbulb size={14} className={styles.footerIcon} />
-            <span>Recommendations are based on market demand, importance, and your current profile coverage.</span>
-          </div>
-        </div>
 
       </div>
     </section>
