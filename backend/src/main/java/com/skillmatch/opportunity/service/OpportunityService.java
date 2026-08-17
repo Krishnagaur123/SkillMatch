@@ -86,7 +86,8 @@ public class OpportunityService {
                 companySummary,
                 opportunity.getLocation(),
                 opportunity.getExperienceLevel(),
-                opportunity.getEmploymentType()
+                opportunity.getEmploymentType(),
+                opportunity.getActive()
         );
     }
 

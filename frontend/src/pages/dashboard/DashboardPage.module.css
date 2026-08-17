@@ -12,7 +12,7 @@
   min-height: 50dvh;
 }
 
-/* Welcome Banner — compact two-row layout */
+/* Welcome Banner */
 .welcomeBanner {
   background-color: var(--surface-primary);
   border: 1px solid var(--border-default);
@@ -70,12 +70,15 @@
   height: 0.875rem;
 }
 
-/* KPI Section */
+.overviewSection {
+  gap: 1rem;
+}
+
+/* KPI Cards */
 .kpiGrid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.25rem;
-  margin-top: 0.75rem;
 }
 
 @media (min-width: 640px) {
@@ -90,126 +93,23 @@
   }
 }
 
-/* Main content grid */
-.mainGrid {
+/* Resume Overview + Recommended Next Step panel */
+.resumePanel {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.75rem;
+  gap: 1.5rem;
 }
 
 @media (min-width: 1024px) {
-  .mainGrid {
-    grid-template-columns: 1.1fr 0.9fr;
+  .resumePanel {
+    grid-template-columns: 1.15fr 0.85fr;
   }
 }
 
-.leftColumn,
-.rightColumn {
+.nextStepWrapper {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
-}
-
-/* Chart Card & Tooltip styling */
-.chartTooltip {
-  background-color: var(--color-surface-900);
-  border: 1px solid var(--border-hover);
-  border-radius: var(--radius-md);
-  padding: 0.625rem 0.875rem;
-  box-shadow: var(--shadow-lg);
-}
-
-.tooltipTitle {
-  margin: 0;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.25rem;
-}
-
-.tooltipVal {
-  margin: 0;
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
-}
-
-/* Donut Chart */
-.donutWrapper {
-  position: relative;
-  width: 100%;
   height: 100%;
-}
-
-.donutCenter {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: none;
-}
-
-.donutValue {
-  font-size: 1.75rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--text-heading);
-  line-height: 1;
-}
-
-.donutLabel {
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-top: 0.25rem;
-}
-
-.donutLegend {
-  display: flex;
-  gap: 1.25rem;
-  justify-content: center;
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border-default);
-}
-
-.legendItem {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-}
-
-.legendDot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-/* Learning Priority Cards */
-.roadmapGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
-  margin-top: 0.75rem;
-}
-
-@media (min-width: 640px) {
-  .roadmapGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.roadmapSkeletonGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
 }
 
 /* Resume panel content */
@@ -326,124 +226,7 @@
   gap: 0.75rem;
 }
 
-/* Priority Card */
-.priorityCard {
-  display: flex;
-  flex-direction: column;
-  gap: 0.875rem;
-  padding: 1rem;
-  background-color: var(--surface-primary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
-  height: 100%;
-}
-
-.roadmapLink:hover .priorityCard {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-  border-color: var(--border-hover);
-}
-
-.priorityCardHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.prioritySkillName {
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: var(--text-heading);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
-
-.priorityBadge {
-  font-size: 0.625rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.1875rem 0.5rem;
-  border-radius: var(--radius-full);
-  flex-shrink: 0;
-}
-
-.priorityCritical {
-  background-color: #FEE2E2;
-  color: #991B1B;
-}
-
-:root.dark .priorityCritical {
-  background-color: rgba(239,68,68,0.15);
-  color: #FCA5A5;
-}
-
-.priorityHigh {
-  background-color: #FEF3C7;
-  color: #92400E;
-}
-
-:root.dark .priorityHigh {
-  background-color: rgba(245,158,11,0.15);
-  color: #FCD34D;
-}
-
-.priorityMedium {
-  background-color: #EFF6FF;
-  color: #1E40AF;
-}
-
-:root.dark .priorityMedium {
-  background-color: rgba(37,99,235,0.15);
-  color: #93C5FD;
-}
-
-.priorityLow {
-  background-color: var(--surface-hover);
-  color: var(--text-secondary);
-}
-
-.priorityStats {
-  display: flex;
-  gap: 1rem;
-}
-
-.priorityStat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-}
-
-.priorityStatValue {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--text-heading);
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-
-.priorityStatLabel {
-  font-size: 0.625rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-secondary);
-}
-
-.priorityFooter {
-  margin-top: auto;
-}
-
-.priorityAction {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--color-brand);
-}
-
-/* Quick Actions List */
+/* Quick Actions */
 .quickActionsCard {
   overflow: hidden;
 }
@@ -530,8 +313,7 @@
   transform: translateX(2px);
 }
 
-.kpiLink,
-.roadmapLink {
+.kpiLink {
   text-decoration: none;
   color: inherit;
   display: flex;
@@ -539,14 +321,211 @@
   border-radius: var(--radius-lg);
 }
 
-.kpiLink:focus-visible,
-.roadmapLink:focus-visible {
+.kpiLink:focus-visible {
   outline: var(--focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
 
-.kpiLink > :global(.card),
-.roadmapLink > :global(.card) {
+.kpiLink > :global(.card) {
   width: 100%;
 }
 
+/* ── Your Top Opportunities ────────────────────────────── */
+
+.opportunitiesCard {
+  overflow: visible;
+}
+
+.opportunitiesModule {
+  position: relative;
+}
+
+.opportunitiesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+
+@media (min-width: 640px) {
+  .opportunitiesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .opportunitiesGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Blur / dim content on hover or keyboard focus */
+@media (hover: hover) {
+  .opportunitiesModule:hover .opportunitiesGrid,
+  .opportunitiesModule:focus-within .opportunitiesGrid {
+    filter: blur(2px);
+    opacity: 0.4;
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+/* Overlay — centered CTA */
+.opportunitiesOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1;
+}
+
+@media (hover: hover) {
+  .opportunitiesModule:hover .opportunitiesOverlay,
+  .opportunitiesModule:focus-within .opportunitiesOverlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Hide overlay on touch devices */
+@media (hover: none) {
+  .opportunitiesOverlay {
+    display: none;
+  }
+}
+
+.exploreBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.625rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--color-brand);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.exploreBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.exploreBtn:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Mobile fallback — always visible on touch screens */
+.exploreMobileFallback {
+  display: none;
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+@media (hover: none) {
+  .exploreMobileFallback {
+    display: block;
+  }
+}
+
+.exploreBtnMobile {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5625rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-brand);
+  background-color: color-mix(in srgb, var(--color-brand) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-brand) 25%, transparent);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.exploreBtnMobile:hover {
+  background-color: color-mix(in srgb, var(--color-brand) 15%, transparent);
+  border-color: var(--color-brand);
+}
+
+.exploreBtnMobile:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Opportunity mini-cards */
+.opportunityMiniCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding: 1.125rem 1.25rem;
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.miniCardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.miniCardLogo {
+  flex-shrink: 0;
+}
+
+.miniCardTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.miniCardTitle {
+  font-size: 0.9375rem;
+  font-weight: 650;
+  color: var(--text-heading);
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.miniCardCompany {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.miniCardBadge {
+  flex-shrink: 0;
+}
+
+.miniCardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.miniCardMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}

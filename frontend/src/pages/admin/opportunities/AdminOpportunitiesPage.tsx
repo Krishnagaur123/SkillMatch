@@ -9,7 +9,7 @@ import { extractApiError } from '@/services/api/errors'
 import styles from './AdminOpportunitiesPage.module.css'
 
 export default function AdminOpportunitiesPage() {
-  const { data, isLoading, error } = useAdminOpportunities()
+  const { data, isLoading, error } = useAdminOpportunities({ sort: 'createdAt,desc' })
   
   const [isCreateOpen, setIsCreateOpen] = useState(false)
   const [editId, setEditId] = useState<string | null>(null)

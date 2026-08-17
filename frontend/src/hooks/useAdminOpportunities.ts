@@ -70,7 +70,7 @@ export function useCreateAdminOpportunity() {
       return response.data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['opportunities', 'admin'] })
+      queryClient.invalidateQueries({ queryKey: ['opportunities'] })
     },
   })
 }
@@ -83,7 +83,7 @@ export function useUpdateAdminOpportunity() {
       return response.data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['opportunities', 'admin'] })
+      queryClient.invalidateQueries({ queryKey: ['opportunities'] })
     },
   })
 }
@@ -96,7 +96,7 @@ export function useDeleteAdminOpportunity() {
       return response.data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['opportunities', 'admin'] })
+      queryClient.invalidateQueries({ queryKey: ['opportunities'] })
     },
   })
 }

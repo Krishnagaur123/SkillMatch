@@ -193,7 +193,8 @@ public class OpportunityIngestionService {
                 company,
                 opportunity.getLocation(),
                 opportunity.getExperienceLevel(),
-                opportunity.getEmploymentType()
+                opportunity.getEmploymentType(),
+                opportunity.getActive()
         );
     }
 

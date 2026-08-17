@@ -12,5 +12,6 @@ public record OpportunitySummaryResponse(
         CompanySummaryResponse company,
         String location,
         ExperienceLevel experienceLevel,
-        EmploymentType employmentType
+        EmploymentType employmentType,
+        Boolean active
 ) {}
